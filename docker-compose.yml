@@ -1,40 +1,52 @@
-version: "3"
+version: "3.3"
+
 services:
+    nginx:
+        image: tutum/nginx
+        ports:
+            - "7080:80"
+        links:
+            - phpfpm
+        volumes:
+            # - type: volume
+            # source: django_database
+            # target: /var/lib/postgresql/data
 
-  nginx:
-    image: tutum/nginx
-    ports:
-      - "7080:80"
-    links:
-      - phpfpm
-    volumes:
-      - ./nginx/default:/etc/nginx/sites-available/default
-      - ./nginx/default:/etc/nginx/sites-enabled/default
 
-      - ./logs/nginx-error.log:/var/log/nginx/error.log
-      - ./logs/nginx-access.log:/var/log/nginx/access.log
+            - ./nginx/default:/etc/nginx/sites-available/default
+            - ./nginx/default:/etc/nginx/sites-enabled/default
 
-  phpfpm:
-    build: .
-    links:
-      - database:mysql
-    volumes:
-      - ./public:/usr/share/nginx/html
+            - ./logs/nginx-error.log:/var/log/nginx/error.log
+            - ./logs/nginx-access.log:/var/log/nginx/access.log
 
-  database:
-    image: mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD: admin
+    phpfpm:
+        build: .
+        links:
+            - database:mysql
+        volumes:
+            - ./public:/usr/share/nginx/html
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-#    restart: always
-    links:
-      - database:mysql
-    ports:
-      - "7081:80"
-    environment:
-      PMA_HOST: mysql
-      PMA_USER: root
-      PMA_PASSWORD: admin
-      PMA_ARBITRARY: 1
+    database:
+        image: mariadb
+        volumes:
+            - type: volume
+              source: lemp_database
+              target: /var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: admin
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+#        restart: always
+        links:
+            - database:mysql
+        ports:
+            - "7081:80"
+        environment:
+            PMA_HOST: mysql
+            PMA_USER: root
+            PMA_PASSWORD: admin
+            PMA_ARBITRARY: 1
+
+volumes: 
+    lemp_database:
