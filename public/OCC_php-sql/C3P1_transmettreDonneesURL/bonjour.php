@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <?php
-  include("../c2p7_inclurePortionPages/entete.php");
-  include("../c2p7_inclurePortionPages/menus.php");
+  include("../C2P7_inclurePortionPages/entete.php");
+  include("../C2P7_inclurePortionPages/menus.php");
   ?>
 	
   <body>
@@ -34,7 +34,7 @@
   </body>
 
   <?php
-  include("../c2p7_inclurePortionPages/pied_de_page.php");
+  include("../C2P7_inclurePortionPages/pied_de_page.php");
   ?>
 </html> 
 

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8"/>
 		<title>Mon super blog !</title>
-		<link rel="stylesheet" href="styles.css"/>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
 	</head>
 
 	<body>
@@ -26,7 +26,7 @@
 					<h3><?php echo($one_billet['titre'] . $one_billet['date_creation_formatee']); ?></h3>
 					<p>
 						<?php echo($one_billet['contenu']); ?><br/>
-						<a href=<?php echo ('"commentaires.php?id_billet=' . $one_billet['id'] . '"');?>>Commentaires</a>
+						<a href=<?php echo ('"commentaires.php?id_billet=' . $one_billet['ID'] . '"');?>>Commentaires</a>
 					</p>
 				</div>
 			<?php
