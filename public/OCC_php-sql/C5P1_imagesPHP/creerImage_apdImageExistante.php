@@ -4,9 +4,9 @@
 // WARINIG: The'header' function mustbe used before any HTML-code !
 header("Content-type: image/jpeg");
 
-$image = imagecreatefromjpeg("couchersoleil.jpg");
-// $image = imagecreatefrompng("couchersoleil.png"); If file was png-format
+$image = imagecreatefromjpeg("images/couchersoleil.jpg");
+// $image = imagecreatefrompng("images/couchersoleil.png"); If file was png-format
 
-
+imagejpeg($image);
 
 ?>
