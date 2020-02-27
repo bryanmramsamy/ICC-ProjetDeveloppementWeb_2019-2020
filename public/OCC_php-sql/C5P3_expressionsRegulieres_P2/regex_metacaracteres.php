@@ -4,7 +4,7 @@ echo("<h1>Les métacaractères</h1><br/>");
 
 echo ("preg_match(\"#impatient \\!#\", \"Je suis impatient !\")<br/>&nbsp;");
 
-#      # ! ^ $ ( ) [ ] { } ? +* . \ |
+#      # ! ^ $ ( ) [ ] { } ? + * . \ |
 
 if (preg_match("#impatient \!#", "Je suis impatient !")) {
     echo ('vrai');  # Should be true
