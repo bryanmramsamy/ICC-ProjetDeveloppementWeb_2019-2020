@@ -49,23 +49,7 @@
 
 <form method='post'>
     <p>
-        <textarea id="texte" name="texte" rows="8" cols="45">Accepte les BB-code: [b] pour mettre le texte en gars [/b], [i] pour mettre le texte en italic [/i], [color=red] pour mettre le texte en rouge [/color], [color=blue] pour mettre le texte en blue [/color] et accepte aussi green, yellow, purple et olive. Vous pouvez aussi entrer des liens http://monLien.com ou https://monLien.com?page=1&skin=blue ou encore des adresse mail comme mon.mail@mondomaine.dom</textarea>
+        <textarea id="texte" name="texte" rows="8" cols="45">Accepte les BB-code: [b] pour mettre le texte en gars [/b], [i] pour mettre le texte en italic [/i], [color=red] pour mettre le texte en rouge [/color], [color=blue] pour mettre le texte en blue [/color] et accepte aussi green, yellow, purple et olive. Vous pouvez aussi entrer des liens http://monLien.com ou https://monLien.com?page=1&skin=blue ou encore des adresse mail comme mon.mail@mondomaine.dom &lt;test&gt;blablabla&lt;/test&gt;</textarea>
         <input type='submit' value="Soumettre texte" />
     </p>
 </form>
-
-<?php
-
-
-// echo ("preg_match(\"#impatient \\!#\", \"Je suis impatient !\")<br/>&nbsp;");
-
-// # preg_replace('#regex#', 'replacement_text', 'text_in_which_search_is_made')
-// if (preg_replace("#impatient \!#", "Je suis impatient !")) {
-//     echo ('vrai');  # Should be true
-// } else {
-//     echo ('faux');
-// }
-
-// echo ("<br/><br/>");
-
-?>
