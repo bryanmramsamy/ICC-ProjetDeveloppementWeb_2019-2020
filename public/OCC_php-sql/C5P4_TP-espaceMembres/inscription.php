@@ -11,7 +11,7 @@ if (isset($_SESSION['pseudo']) && !empty($_SESSION['pseudo'])) header('Location:
         
         <br/>
 
-        <?php if ($_GET['error_pseudo']) echo('<strong>Ce pseudonyme est déjà utilisé ! Veuillez en chosir un autre.</strong>'); ?>
+        <?php if ($_GET['error_pseudo']) echo('<strong>Pseudonyme invalide. Veuilelz réésayer.</strong>'); ?>
 
         <label for='password'>Mot de passe</label>
         <input name='password' type='password' required/>

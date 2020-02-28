@@ -9,26 +9,23 @@ try {
 }
 
 # Check if pseudo already exist in database
-if (isset($_POST['pseudo'])
-    && !empty($_POST['pseudo'])) {
+if (isset($_POST['pseudo']) && !empty($_POST['pseudo'])) {
     
     $pseudo = htmlspecialchars($_POST['pseudo']);
 
-    $all_pseudo = $database->query('SELECT pseudo FROM membres');
+    $request = $database->prepare('SELECT pseudo FROM membres WHERE pseudo = ?');
+    $request->execute(array($pseudo));
+    $result = $request->fetch();
 
-    $pseudo_already_exist = false;
-    while ($one_pseudo = $all_pseudo->fetch() &&!$pseudo_already_exist) {
-        $pseudo_already_exist = ($one_pseudo == $pseudo);
-    }
+    $pseudo_exist = false;
+    if (isset($result) && !empty($result)) $pseudo_exist = true;
 
-    $all_pseudo->closeCursor();
+    $request->closeCursor();
 }
 
 # Check if password and confirmation match
-if (isset($_POST['password'])
-    && !empty($_POST['password'])
-    && isset($_POST['confirm_password'])
-    && !empty($_POST['confirm_password'])) {
+if (isset($_POST['password']) && !empty($_POST['password'])
+    && isset($_POST['confirm_password']) && !empty($_POST['confirm_password'])) {
         
     $password = password_hash(htmlspecialchars($_POST['password']), PASSWORD_DEFAULT);
     $confirm_password = htmlspecialchars($_POST['confirm_password']);
@@ -47,8 +44,8 @@ if (isset($_POST['mail'])
 
 }
 
-# Send error:
-if (!$pseudo_already_exist && !$password_mismatch && !$mail_invalid) {
+# Store data into $_SESSION or show errors if data are incorrect:
+if (!$pseudo_exist && !$password_mismatch && !$mail_invalid) {
 
     $_SESSION['pseudo'] = $pseudo;
     $_SESSION['pass'] = $password;
@@ -57,7 +54,7 @@ if (!$pseudo_already_exist && !$password_mismatch && !$mail_invalid) {
     header('Location: inscription-insert.php');
 
 } else {
-    header('Location: inscription.php?error_pseudo='.$pseudo_already_exist.'&error_password='.$password_mismatch.'&error_mail='.$mail_invalid);
+    header('Location: inscription.php?error_pseudo='.$pseudo_exist.'&error_password='.$password_mismatch.'&error_mail='.$mail_invalid);
 }
 
 ?>

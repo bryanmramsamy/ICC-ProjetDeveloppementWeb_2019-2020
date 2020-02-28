@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 # Database access
@@ -19,7 +18,6 @@ $request->execute(array(
 
 $request->closeCursor();
 
-unset($_SESSION['pass']);
 unset($_SESSION['email']);
 
 $request = $database->prepare('SELECT id FROM membres WHERE pseudo = ?');
