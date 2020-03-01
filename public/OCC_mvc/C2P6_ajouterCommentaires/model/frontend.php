@@ -45,3 +45,19 @@ function getComments($postID){
     return $comments;
 
 }
+
+
+function postComment($postID, $author, $comment){
+    $db = dbConnect();
+
+    $comments = $db->prepare('INSERT INTO comments (post_id, author, comment, comment_date) VALUES (:post_id, :author, :comment, NOW())');
+
+    $insertSucceed = $comments->execute(array(
+        'post_id' => $postID,
+        'author' => $author,
+        'comment' => $comment
+    ));
+
+    return $insertSucceed;
+
+}
