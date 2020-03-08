@@ -7,6 +7,7 @@ require_once('model/CommentManager.php');
 use \OpenClassrooms\Blog\Model\PostManager;
 use \OpenClassrooms\Blog\Model\CommentManager;
 
+
 function listPosts(){
     #$postManager = new \OpenClassrooms\Blog\Model\PostManager();
     $postManager = new PostManager();  # use
@@ -15,6 +16,7 @@ function listPosts(){
     require('view/frontend/listPostsView.php');
 
 }
+
 
 function post(){
     $postManager = new \OpenClassrooms\Blog\Model\PostManager();
@@ -39,4 +41,29 @@ function addComment($postID, $author, $comment){
     } else {
         header('Location: index.php?action=post&id=' . $postID);
     }
+}
+
+
+function getComment() {
+    $commentManager = new CommentManager();
+
+    $comment = $commentManager->getComment($_GET['id']);
+
+    require('view/frontend/editCommentView.php');
+
+}
+
+
+function setComment($postID, $commentID, $comment) {
+    $commentManager = new CommentManager();
+
+    $updateSucceed = $commentManager->setComment($commentID, $comment);
+
+    if ($updateSucceed === false) {
+        throw new Exception('Mise à jour du commentaire impossible. Paramètres manquants ou invalides !');
+        
+    } else {
+        header('Location: index.php?action=post&id=' . $postID);
+    }
+
 }
