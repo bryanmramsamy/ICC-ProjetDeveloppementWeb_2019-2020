@@ -1,9 +1,7 @@
-<?php session_start(); ?>
-
 <?php if (isset($_SESSION['userID']) && isset($_SESSION['userID'])) { ?>
     
     <p>
-        Bonjour <?= $_SESSION['userID'] ?>
+        Bonjour <?= $_SESSION['username'] ?>
         <br />
         <a href="index.php?action=disconnect">Déconnection</a>
     </p>

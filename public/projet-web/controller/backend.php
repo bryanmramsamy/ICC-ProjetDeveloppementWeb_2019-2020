@@ -5,11 +5,11 @@ require_once('models/UserManager.php');
 use ProjetWeb\Model\UserManager;
 
 
-function connect() {
+// function connect() {
 
-    require('views/backend/connect.php');
+//     require('views/backend/connect.php');
 
-}
+// }
 
 
 /**
