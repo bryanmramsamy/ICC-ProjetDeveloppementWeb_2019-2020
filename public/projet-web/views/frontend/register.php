@@ -18,6 +18,7 @@ if (isset($_SESSION['userID']) && isset($_SESSION['userID'])) {
             <div>
                 <label for='input_username'>Pseudonyme : </label>
                 <input type='text' id='input_username' name='input_username' required/>
+                <?php if ($_GET['error_code'] == 1 || $_GET['error_code'] == 3) print("<strong>Pseudonyme déjà existant ! Veuillez en choisir un autre !</strong>"); ?>
             </div>
 
             <div>
@@ -28,6 +29,7 @@ if (isset($_SESSION['userID']) && isset($_SESSION['userID'])) {
             <div>
                 <label for='input_password_confirmation'>Confirmation du mot de passe : </label>
                 <input type='password' id='input_password_confirmation' name='input_password_confirmation' required/>
+                <?php if ($_GET['error_code'] <= 2) print("<strong>Les mots de passe ne correspondent pas !</strong>"); ?>
             </div>
 
             <div>
@@ -43,11 +45,6 @@ if (isset($_SESSION['userID']) && isset($_SESSION['userID'])) {
             <div>
                 <label for='input_first_name'>Prénom : </label>
                 <input type='text' id='input_first_name' name='input_first_name' />
-            </div>
-
-            <div>
-                <label for='input_birthday'>Date de naissance : </label>
-                <input type='date' id='input_birthday' name='input_birthday' />
             </div>
 
             <div>

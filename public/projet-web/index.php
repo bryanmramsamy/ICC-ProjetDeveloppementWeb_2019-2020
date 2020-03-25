@@ -37,8 +37,7 @@ try {
                               $_POST['input_password_confirmation'],
                               (isset($_POST['input_email']) && !empty($_POST['input_email'])) ? $_POST['input_email'] : 'null',
                               (isset($_POST['input_last_name']) && !empty($_POST['input_last_name'])) ? $_POST['input_last_name'] : 'null',
-                              (isset($_POST['input_first_name']) && !empty($_POST['input_first_name'])) ? $_POST['input_first_name'] : 'null',
-                              (isset($_POST['input_birthday']) && !empty($_POST['input_birthday'])) ? $_POST['input_birthday'] : 'null');
+                              (isset($_POST['input_first_name']) && !empty($_POST['input_first_name'])) ? $_POST['input_first_name'] : 'null');
 
             } else {
                 register();
@@ -59,6 +58,6 @@ try {
     
 } catch (Exception $e) {
     echo ('Erreur: ' . $e->getMessage());
-    echo ("<a href='index.php'>Revenir à l'accueil</a>");
+    echo ("<br/><a href='index.php'>Revenir à l'accueil</a>");
 
 }

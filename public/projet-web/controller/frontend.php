@@ -27,7 +27,7 @@ function register(){
 }
 
 
-function register_post($username, $password, $password_confirmation, $email, $last_name, $first_name, $birthday){
+function register_post($username, $password, $password_confirmation, $email, $last_name, $first_name){
 
     $userManager = new UserManager();
     $error_code_register = 0;
@@ -54,14 +54,12 @@ function register_post($username, $password, $password_confirmation, $email, $la
         $cleaned_email = htmlspecialchars($email);
         $cleaned_last_name = htmlspecialchars($last_name);
         $cleaned_first_name = htmlspecialchars($first_name);
-        $cleaned_birthday = htmlspecialchars($birthday);
 
         $creation_succeed = $userManager->createUser($cleaned_username,
                                                      $cleaned_password,
                                                      $cleaned_email,
                                                      $cleaned_last_name,
-                                                     $cleaned_first_name,
-                                                     $cleaned_birthday);
+                                                     $cleaned_first_name);
 
         if ($creation_succeed) {
             $_SESSION['userID'] = $userManager->getID($cleaned_username);
