@@ -35,39 +35,42 @@ function register_post($username, $password, $password_confirmation, $email, $la
 
     // Check if username already exist
     $cleaned_username = htmlspecialchars($username);
+    echo($cleaned_username);
     $userID = $userManager->getID($cleaned_username);
-    if($userID > 0) $error_code_register + 1;
+    echo($userID);
+    if(empty($userID) || $userID > 0) $error_code_register + 1;
 
 
     // Check if password and password_confirmation match
-    $cleaned_password = password_hash(htmlspecialchars($password), PASSWORD_DEFAULT);
+    $cleaned_password = htmlspecialchars($password);
     $cleaned_password_confirmation = htmlspecialchars($password_confirmation);
 
-    $passwords_match = password_verify($cleaned_password_confirmation, $cleaned_password);
-    if (!$passwords_match) $error_code_register + 2;
+    if ($cleaned_password_confirmation != $cleaned_password) $error_code_register + 2;
+    else $cleaned_password = password_hash(htmlspecialchars($password), PASSWORD_DEFAULT);
 
+    print("error_code_register = " . $error_code_register);
 
-    if ($error_code_register != 0) {
-        header('Location: views/frontend/register.php?error=' . $error_code_register);
+    // if ($error_code_register != 0) {
+    //     header('Location: views/frontend/register.php?error=' . $error_code_register);
 
-    } else {
-        $cleaned_email = htmlspecialchars($email);
-        $cleaned_last_name = htmlspecialchars($last_name);
-        $cleaned_first_name = htmlspecialchars($first_name);
+    // } else {
+    //     $cleaned_email = htmlspecialchars($email);
+    //     $cleaned_last_name = htmlspecialchars($last_name);
+    //     $cleaned_first_name = htmlspecialchars($first_name);
 
-        $creation_succeed = $userManager->createUser($cleaned_username,
-                                                     $cleaned_password,
-                                                     $cleaned_email,
-                                                     $cleaned_last_name,
-                                                     $cleaned_first_name);
+    //     $creation_succeed = $userManager->createUser($cleaned_username,
+    //                                                  $cleaned_password,
+    //                                                  $cleaned_email,
+    //                                                  $cleaned_last_name,
+    //                                                  $cleaned_first_name);
 
-        if ($creation_succeed) {
-            $_SESSION['userID'] = $userManager->getID($cleaned_username);
-            $_SESSION['username'] = $cleaned_username;
-            header('Location: index.php');
+    //     if ($creation_succeed) {
+    //         $_SESSION['userID'] = $userManager->getID($cleaned_username);
+    //         $_SESSION['username'] = $cleaned_username;
+    //         header('Location: index.php');
 
-        } else {
-            throw new Exception("Creation du nouvel utilisateur échouée !");
-        }
-    }
+    //     } else {
+    //         throw new Exception("Creation du nouvel utilisateur échouée !");
+    //     }
+    // }
 }

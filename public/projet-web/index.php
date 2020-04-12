@@ -29,8 +29,7 @@ try {
             # $username, $hashed_password, $email, $last_name, $first_name, $birthday
             if (isset($_POST['input_username']) && !empty($_POST['input_username'])
                 && isset($_POST['input_password']) && !empty($_POST['input_password'])
-                && isset($_POST['input_password_confirmation']) && !empty($_POST['input_password_confirmation'])
-                && isset($_POST['input_username']) && !empty($_POST['input_username'])) {
+                && isset($_POST['input_password_confirmation']) && !empty($_POST['input_password_confirmation'])) {
                 
                 register_post($_POST['input_username'],
                               $_POST['input_password'],
@@ -42,11 +41,6 @@ try {
             } else {
                 register();
             }
-            
-
-            htmlspecialchars($_POST['input_username']);
-
-            register_post();
 
         }
 
