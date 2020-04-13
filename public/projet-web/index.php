@@ -7,8 +7,28 @@ require('controller/frontend.php');
 try {
     if (isset($_GET['action']) && !empty($_GET['action'])) {
         switch ($_GET['action']) {
+            case 'admin':
+                home();
+                break;
+
+            case 'forbidden':
+                home();
+                break;
+
             case 'home':
                 home();
+                break;
+
+            case 'profile':
+                profile();
+                break;
+
+            case 'register':
+                register();
+                break;
+            
+            case 'register_post':
+                register_post();
                 break;
 
             case 'signin':
@@ -21,14 +41,6 @@ try {
 
             case 'signout':
                 signout();
-                break;
-
-            case 'register':
-                register();
-                break;
-            
-            case 'register_post':
-                register_post();
                 break;
 
             default:

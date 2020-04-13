@@ -33,6 +33,8 @@
     <p>
         Bonjour <?= $_SESSION['username'] ?>
         <br />
+        <a href="index.php?action=profile">Voir votre profile</a>
+        <br />
         <a href="index.php?action=signout">Déconnexion</a>
     </p>
 

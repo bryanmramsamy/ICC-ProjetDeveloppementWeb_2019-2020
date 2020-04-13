@@ -29,19 +29,19 @@
             <footer>
                 <!-- TEST ZONE -->
                     <?php 
-                        require_once('models/UserManager.php');
+                        // require_once('models/UserManager.php');
 
-                        use \ProjetWeb\Model\UserManager;
+                        // use \ProjetWeb\Model\UserManager;
 
 
-                        $user = 'bryan';
-                        $id = '2';
+                        // $user = 'bryan';
+                        // $id = '2';
 
-                        $um = new UserManager();
+                        // $um = new UserManager();
 
-                        // $um->getUser($username, $isID);
-                        $u = $um->getUser_byUsername($user);
-                        echo ($u['id']);
+                        // // $um->getUser($username, $isID);
+                        // $u = $um->getUser_byUsername($user);
+                        // echo ($u['id']);
                         
 
                     ?>

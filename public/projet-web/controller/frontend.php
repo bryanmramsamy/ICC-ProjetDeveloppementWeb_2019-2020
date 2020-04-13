@@ -10,11 +10,18 @@ function home(){
 }
 
 
-function signin(){
-    require('views/frontend/signin.php');
+function profile(){
+    $userManager = new UserManager();
+    $profile = $userManager->getUser_byID($_SESSION['userID']);
+    require('views/frontend/profile.php');
 }
 
 
 function register(){
     require('views/frontend/register.php');
+}
+
+
+function signin(){
+    require('views/frontend/signin.php');
 }
