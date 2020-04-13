@@ -3,12 +3,12 @@
     <p>
         Bonjour <?= $_SESSION['username'] ?>
         <br />
-        <a href="index.php?action=disconnect">Déconnection</a>
+        <a href="index.php?action=signout">Déconnection</a>
     </p>
 
 <?php } else { ?>
     
-    <form action="index.php?action=connect" method="post">
+    <form action="views/backend/signin_post.php" method="post">
 
         <div>
             <label for='input_username'>Pseudonyme : </label>

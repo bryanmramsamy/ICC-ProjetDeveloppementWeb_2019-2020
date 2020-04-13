@@ -11,7 +11,7 @@ if (isset($_SESSION['userID']) && isset($_SESSION['userID'])) {
 ?>
 
     <section id="home_section">
-        <form action="index.php?action=register_post" method="post">
+        <form action="views/backend/register_post.php" method="POST">
 
             <h1>Veuillez compléter le formulaire de vos informations afin de vous inscrire sur ICC-2020 Web Project</h1>
 

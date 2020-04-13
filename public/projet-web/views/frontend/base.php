@@ -9,7 +9,7 @@
         <div id="main_wrapper">
             <header>
                 <h1>ICC-2020 Web Project</h1>
-                <h2>Bienvenu sur le site de vente de matériel et de documentation informatique !</h2>
+                <h2>Bienvenue sur le site de vente de matériel et de documentation informatique !</h2>
 
                 <div id="login_area">
                     <?php require("signin.php") ?>
@@ -27,7 +27,25 @@
             </div>  <!-- main_body -->
 
             <footer>
+                <!-- TEST ZONE -->
+                    <?php 
+                        require_once('models/UserManager.php');
 
+                        use \ProjetWeb\Model\UserManager;
+
+
+                        $user = 'bryan';
+                        $id = '2';
+
+                        $um = new UserManager();
+
+                        // $um->getUser($username, $isID);
+                        $u = $um->getUser_byUsername($user);
+                        echo ($u['id']);
+                        
+
+                    ?>
+                <!-- END TEST ZONE -->
             </footer>
         </div>  <!--main_wrapper -->
     </body>
