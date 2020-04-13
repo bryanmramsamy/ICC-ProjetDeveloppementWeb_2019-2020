@@ -1,31 +1,31 @@
 <?php
-    if (isset($_GET['post_signin_signal']) && !empty($_GET['post_signin_signal'])) {
-        switch ($_GET['post_signin_signal']) {
-            case 'connected':
-                $post_signin_msg = "Vous vous êtes connectés avec succès en tant que " . $_SESSION['username'];
-                break;
+    switch ($_GET['post_signin_signal']) {
+        case 'connected':
+            $post_signal_msg = "Vous vous êtes connectés avec succès en tant que " . $_SESSION['username'];
+            break;
 
-            case 'inactive':
-                $post_signin_msg = "Votre compte a été désactivé. Veuillez vous connecter avec un autre compte.";
-                break;
+        case 'inactive':
+            $post_signal_msg = "Votre compte a été désactivé. Veuillez vous connecter avec un autre compte.";
+            break;
 
-            case 'not_found':
-                $post_signin_msg = "Votre compte n'existe pas. Veuillez vous créer un compte.";
-                break;
+        case 'incorrect_credentials':
+            $post_signal_msg = "Votre pseudonyme ou votre mot de passe est incorrect. Veuillez réessayer.";
+            break;
 
-            case 'invalid_input':
-                $post_signin_msg = "Les données entrées sont incorrectes. Veuillez réessayer.";
-                break;
+        case 'invalid_input':
+            $post_signal_msg = "Les données entrées ne sont pas complètes. Veuillez réessayer.";
+            break;
 
-            case 'disconnected':
-                $post_signin_msg = "Vous avez été déconnecté avec succès.";
-                break;
-        }
-
-        echo("<strong>" . $post_signin_msg . "</strong>");
-
+        case 'disconnected':
+            $post_signal_msg = "Vous avez été déconnecté avec succès.";
+            break;
     }
 
+    if ($_GET['post_register_signal'] == 'created') {
+        $post_signal_msg = "Votre compte a été créé avec succès.";
+    }
+
+    echo("<strong>" . $post_signal_msg . "</strong>");
 
     if (isset($_SESSION['userID']) && !empty($_SESSION['userID'])) {
 ?>

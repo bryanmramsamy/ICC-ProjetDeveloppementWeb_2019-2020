@@ -8,7 +8,7 @@
     <body>
         <div id="main_wrapper">
             <header>
-                <h1>ICC-2020 Web Project</h1>
+                <h1><a href="index.php">ICC-2020 Web Project</a></h1>
                 <h2>Bienvenue sur le site de vente de matériel et de documentation informatique !</h2>
 
                 <div id="login_area">

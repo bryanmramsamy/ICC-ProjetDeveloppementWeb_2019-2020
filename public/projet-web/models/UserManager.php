@@ -7,7 +7,7 @@ require_once('models/Manager.php');
 
 class UserManager extends Manager {
 
-    private function getUser($wanted_user, $isID){  // Tested and approved !
+    private function getUser($wanted_user, $isID){
         $db = $this->dbConnect();
 
         $value_type = ($isID ? 'id' : 'username');
@@ -19,31 +19,28 @@ class UserManager extends Manager {
         return $user;
     }
 
-    public function getUser_byID($user){  // Tested and approved !
+    public function getUser_byID($user){
         return $this->getUser($user, true);
     }
 
-    public function getUser_byUsername($user){  // Tested and approved !
+    public function getUser_byUsername($user){
         return $this->getUser($user, false);
     }
 
-    // public function createUser($username, $hashed_password, $email, $last_name, $first_name) {
-    //     $db = $this->dbConnect();
 
-    //     $req = $db->prepare('INSERT INTO users (username, passwd, email, register_date, last_name, first_name) VALUES (:username, :passwd, :email, NOW(), :last_name, :first_name)');
+    public function createUser($username, $hashed_password, $email, $last_name, $first_name) {
+         $db = $this->dbConnect();
 
-    //     $creation_succeed = $req->execute(array(
-    //         'username' => $username,
-    //         'passwd' => $hashed_password,
-    //         'email' => $email,
-    //         'last_name' => $last_name,
-    //         'first_name' => $first_name
-    //     ));
+         $req = $db->prepare('INSERT INTO users (username, passwd, email, register_date, last_name, first_name) VALUES (:username, :passwd, :email, NOW(), :last_name, :first_name)');
 
-    //     return $creation_succeed;
-    // }
+        $creation_succeeded = $req->execute(array(
+            'username' => $username,
+            'passwd' => $hashed_password,
+            'email' => $email,
+            'last_name' => $last_name,
+            'first_name' => $first_name
+        ));
 
-
-
+        return $creation_succeeded;
+    }
 }
-
