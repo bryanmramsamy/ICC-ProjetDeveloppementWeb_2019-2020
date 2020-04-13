@@ -3,7 +3,10 @@
 <?php
 
 if (isset($_SESSION['userID']) && isset($_SESSION['userID'])) {
-    header('Location: index.php');
+    // header('Location: index.php'); // Not working
+    echo("Vous êtes déjà connecté en tant que " . $_SESSION['username'] . " ! <a href='index.php'>Cliquez ici pour retourner à l'accueil.</a>)");
+
+    // TODO: Redirect to index.php
 
 } else {
     ob_start();
@@ -11,7 +14,7 @@ if (isset($_SESSION['userID']) && isset($_SESSION['userID'])) {
 ?>
 
     <section id="home_section">
-        <form action="views/backend/register_post.php" method="POST">
+        <form action="views/backend/register_post.php" method="post">
 
             <h1>Veuillez compléter le formulaire de vos informations afin de vous inscrire sur ICC-2020 Web Project</h1>
 

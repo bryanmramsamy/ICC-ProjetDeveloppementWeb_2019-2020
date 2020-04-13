@@ -1,23 +1,47 @@
-<?php if (isset($_SESSION['userID']) && isset($_SESSION['userID'])) { ?>
+<?php if (isset($_SESSION['userID']) && !empty($_SESSION['userID'])) { ?>
     
     <p>
         Bonjour <?= $_SESSION['username'] ?>
         <br />
-        <a href="index.php?action=signout">Déconnection</a>
+        <a href="index.php?action=signout">Déconnexion</a>
     </p>
 
 <?php } else { ?>
+
+    <?php
+        if (isset($_GET['post_signin_signal']) && !empty($_GET['post_signin_signal'])) {
+            switch ($_GET['post_signin_signal']) {
+                case 'success':
+                    $post_signin_msg = "Vous vous êtes connectés avec succès en tant que " . $_SESSION['username'];
+                    break;
+
+                case 'inactive':
+                    $post_signin_msg = "Votre compte a été désactivé. Veuillez vous connecter avec un autre compte.";
+                    break;
+
+                case 'not_found':
+                    $post_signin_msg = "Votre compte n'existe pas. Veuillez vous créer un compte.";
+                    break;
+
+                case 'invalid_input':
+                    $post_signin_msg = "Les données entrées sont incorrectes. Veuillez réessayer.";
+                    break;
+            }
+
+            echo("<strong>" . $post_signin_msg . "</strong>");
+        }
+    ?>
     
-    <form action="views/backend/signin_post.php" method="post">
+    <form action="index.php?action=signin_post" method="post">
 
         <div>
-            <label for='input_username'>Pseudonyme : </label>
-            <input type='text' id='input_username' name='input_username' />
+            <label for='username'>Pseudonyme : </label>
+            <input type='text' id='username' name='username' />
         </div>
 
         <div>
-            <label for='input_password'>Mot de passe : </label>
-            <input type='password' id='input_password' name='input_password' />
+            <label for='password'>Mot de passe : </label>
+            <input type='password' id='password' name='password' />
         </div>
 
         <div>
@@ -25,10 +49,6 @@
         </div>
 
     </form>
-
-    <?php if($_GET['invalid_credentials'] == true){ ?>
-        <p><strong>Pseudonyme ou mot de passe incorrect : Veuillez réessayer</strong></p>
-    <?php } ?>
     <p><a href="index.php?action=register">Créer un compte</a></p>
 
 <?php } ?>

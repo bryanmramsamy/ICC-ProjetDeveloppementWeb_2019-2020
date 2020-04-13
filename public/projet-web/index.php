@@ -17,9 +17,12 @@ try {
                 signin();
                 break;
 
+            case 'signin_post':
+                signin_post();
+                break;
+
             case 'signout':
                 signout();
-                home();
                 break;
 
             case 'register':
