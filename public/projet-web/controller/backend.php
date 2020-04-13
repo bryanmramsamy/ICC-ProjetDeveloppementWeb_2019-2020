@@ -27,7 +27,7 @@ function signin_post(){
                 $_SESSION['user_last_name'] = $user_found['last_name'];
                 $_SESSION['user_first_name'] = $user_found['first_name'];
 
-                $post_signin_signal = 'success';
+                $post_signin_signal = 'connected';
             } else {
                 $post_signin_signal = 'inactive';
             }
@@ -38,5 +38,18 @@ function signin_post(){
     } else {
         $post_signin_signal = 'invalid_input';
     }
+    header('Location: index.php?post_signin_signal=' . $post_signin_signal);
+}
+
+
+function signout(){
+    unset($_SESSION['userID']);
+    unset($_SESSION['username']);
+    unset($_SESSION['user_email']);
+    unset($_SESSION['user_role_lvl']);
+    unset($_SESSION['user_last_name']);
+    unset($_SESSION['user_first_name']);
+
+    $post_signin_signal = 'disconnected';
     header('Location: index.php?post_signin_signal=' . $post_signin_signal);
 }
