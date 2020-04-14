@@ -15,7 +15,7 @@ try {
                 break;
 
             case 'forbidden':
-                home();
+                forbidden();
                 break;
 
             case 'home':

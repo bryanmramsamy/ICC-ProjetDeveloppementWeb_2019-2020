@@ -1,19 +1,21 @@
-<?php $title = "Mini-Chat | Page " . $actual_page; ?>
+<?php if ($_SESSION['user_role_lvl'] < 10) header('Location: index.php?action=forbidden'); ?>
 
-<?php ob_start(); ?>
+    <?php $title = "Mini-Chat | Page " . $actual_page; ?>
 
-<section id="minichat">
+    <?php ob_start(); ?>
 
-    <?php while ($message = $messages->fetch()){ ?>
-        <div class="minichat-message">
-            <strong><?= htmlspecialchars($message['username']); ?></strong> a envoyé le <em><?= ($message['date_creation']); ?></em>:
-            <br/>
-            <p><?= nl2br(htmlspecialchars($message['message'])) ?></p>
-        </div>
-    <?php } ?>
+    <section id="minichat">
 
-    <?php require('pagination.php'); ?>
-</section>
+        <?php while ($message = $messages->fetch()){ ?>
+            <div class="minichat-message">
+                <strong><?= htmlspecialchars($message['username']); ?></strong> a envoyé le <em><?= ($message['date_creation']); ?></em>:
+                <br/>
+                <p><?= nl2br(htmlspecialchars($message['message'])) ?></p>
+            </div>
+        <?php } ?>
 
-<?php $main_section = ob_get_clean(); ?>
-<?php require('base.php'); ?>
+        <?php require('pagination.php'); ?>
+    </section>
+
+    <?php $main_section = ob_get_clean(); ?>
+    <?php require('base.php'); ?>

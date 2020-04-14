@@ -7,6 +7,11 @@ use \ProjetWeb\Model\MiniChatManager;
 use \ProjetWeb\Model\UserManager;
 
 
+function forbidden(){
+    require('views/frontend/forbidden.php');
+}
+
+
 function home(){
     require('views/frontend/home.php');
 }
