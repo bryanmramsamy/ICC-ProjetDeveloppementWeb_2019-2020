@@ -9,7 +9,7 @@ class MiniChatManager extends Manager {
     private function getMessages_byRange($range_begin, $range_end){
         $db = $this->dbConnect();
 
-        $req = $db->query('SELECT * FROM minichat ORDER BY date_edition DESC LIMIT ' . $range_begin . ',' . $range_end);
+        $req = $db->query('SELECT minichat.*, users.id, users.username FROM minichat INNER JOIN users ON minichat.userID = users.id ORDER BY date_edition DESC LIMIT ' . $range_begin . ',' . $range_end);
 
         return $req;
     }

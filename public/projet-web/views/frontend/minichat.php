@@ -6,7 +6,7 @@
 
     <?php while ($message = $messages->fetch()){ ?>
         <div class="minichat-message">
-            <strong><?= htmlspecialchars($message['userID']); ?></strong> a envoyé le <em><?= ($message['date_creation']); ?></em>:
+            <strong><?= htmlspecialchars($message['username']); ?></strong> a envoyé le <em><?= ($message['date_creation']); ?></em>:
             <br/>
             <p><?= nl2br(htmlspecialchars($message['message'])) ?></p>
         </div>
