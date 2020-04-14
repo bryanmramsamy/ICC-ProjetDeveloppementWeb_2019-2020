@@ -1,12 +1,21 @@
 <?php
 
+require_once('models/MiniChatManager.php');
 require_once('models/UserManager.php');
 
+use \ProjetWeb\Model\MiniChatManager;
 use \ProjetWeb\Model\UserManager;
 
 
 function home(){
     require('views/frontend/home.php');
+}
+
+
+function minichat($page){
+    $minichatManager = new MiniChatManager();
+    $messages = $minichatManager->getMessages_byPage($page);
+    require('views/frontend/minichat.php');
 }
 
 

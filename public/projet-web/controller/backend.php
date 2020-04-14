@@ -12,6 +12,7 @@ function set_session($user){
     $_SESSION['user_role_lvl'] = $user['role_lvl'];
     $_SESSION['user_last_name'] = $user['last_name'];
     $_SESSION['user_first_name'] = $user['first_name'];
+    $_SESSION['user_image'] = $user['image'];
 }
 
 
@@ -22,6 +23,7 @@ function unset_session(){
     unset($_SESSION['user_role_lvl']);
     unset($_SESSION['user_last_name']);
     unset($_SESSION['user_first_name']);
+    unset($_SESSION['user_image']);
 }
 
 

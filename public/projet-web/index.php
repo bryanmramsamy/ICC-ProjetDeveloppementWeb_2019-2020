@@ -19,6 +19,16 @@ try {
                 home();
                 break;
 
+            case 'minichat':
+                if (isset($_GET['page']) && !empty($_GET['page'])){
+                    $page = $_GET['page'];
+                } else {
+                    $page = 1;
+                }
+                
+                minichat($page);
+                break;
+
             case 'profile':
                 profile();
                 break;

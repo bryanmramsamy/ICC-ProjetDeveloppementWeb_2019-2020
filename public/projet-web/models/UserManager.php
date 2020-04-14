@@ -2,8 +2,8 @@
 
 namespace ProjetWeb\Model;
 
-
 require_once('models/Manager.php');
+
 
 class UserManager extends Manager {
 
