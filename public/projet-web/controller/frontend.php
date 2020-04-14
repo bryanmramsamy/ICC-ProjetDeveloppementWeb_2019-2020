@@ -12,9 +12,11 @@ function home(){
 }
 
 
-function minichat($page){
+function minichat($page, $nb_message_per_page){
     $minichatManager = new MiniChatManager();
-    $messages = $minichatManager->getMessages_byPage($page);
+    $messages = $minichatManager->getMessages_byPage($page, $nb_message_per_page);
+    $actual_page = $minichatManager->getActualPage($page, $nb_message_per_page);
+    $total_page = $minichatManager->getTotalPages($nb_message_per_page);
     require('views/frontend/minichat.php');
 }
 

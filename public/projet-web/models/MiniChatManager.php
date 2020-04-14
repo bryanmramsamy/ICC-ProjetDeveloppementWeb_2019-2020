@@ -6,10 +6,10 @@ require_once('models/Manager.php');
 
 class MiniChatManager extends Manager {
 
-    private function getMessages_byRange($range_begin, $range_end){
+    private function getMessages_byRange($offset, $row_count){
         $db = $this->dbConnect();
 
-        $req = $db->query('SELECT minichat.*, users.id, users.username FROM minichat INNER JOIN users ON minichat.userID = users.id ORDER BY date_edition DESC LIMIT ' . $range_begin . ',' . $range_end);
+        $req = $db->query('SELECT minichat.*, users.id, users.username FROM minichat INNER JOIN users ON minichat.userID = users.id ORDER BY date_edition DESC LIMIT ' . $offset . ',' . $row_count);
 
         return $req;
     }
@@ -27,27 +27,32 @@ class MiniChatManager extends Manager {
     }
 
 
-    public function getMessages_byPage($page){
+    public function getTotalPages($nb_message_per_page){
         $nb_message = $this->getMessagesCount();
-        $nb_message_per_page = 10;
-        $nb_page = intdiv($nb_message, $nb_message_per_page) + 1;
+        return intdiv($nb_message, $nb_message_per_page) + 1;
+    }
+
+
+    public function getActualPage($page, $nb_message_per_page){
+        $total_pages = $this->getTotalPages($nb_message_per_page);
 
         if ($page < 1) {
             $page = 1;
-        } else if ($page > $nb_page) {
-            $page = $nb_page;
+        } else if ($page > $total_pages) {
+            $page = $total_pages;
         }
+
+        return $page;
+    }
+
+
+    public function getMessages_byPage($page, $nb_message_per_page){
+        $actual_page = $this->getActualPage($page, $nb_message_per_page);
         
+        $offset = $nb_message_per_page * ($actual_page - 1);
+        $row_count = $nb_message_per_page;
 
-        $range_begin = 0 + $nb_message_per_page * ($page - 1);
-        $range_end = ($nb_message_per_page - 1) + $nb_message_per_page * ($page - 1);
-
-        // $range_begin = 0;
-        // $range_end = 6;
-
-        echo ($range_begin . " + " . $range_end . "<br/><br/>" . $nb_message_per_page . " + " . $nb_message . " + " . $nb_page);
-
-        return $this->getMessages_byRange($range_begin, $range_end);
+        return $this->getMessages_byRange($offset, $row_count);
     }
 
 

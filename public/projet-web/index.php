@@ -4,6 +4,9 @@ session_start();
 require('controller/backend.php');
 require('controller/frontend.php');
 
+
+const MINICHAT_NB_MESSAGE_PER_PAGE = 10;
+
 try {
     if (isset($_GET['action']) && !empty($_GET['action'])) {
         switch ($_GET['action']) {
@@ -24,9 +27,9 @@ try {
                     $page = $_GET['page'];
                 } else {
                     $page = 1;
-                }
-                
-                minichat($page);
+                };
+
+                minichat($page, MINICHAT_NB_MESSAGE_PER_PAGE);
                 break;
 
             case 'profile':
