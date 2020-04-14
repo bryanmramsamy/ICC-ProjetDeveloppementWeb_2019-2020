@@ -4,6 +4,10 @@
 
     <?php ob_start(); ?>
 
+    <section id="minichat_new_message">
+        <?php require('minichat_new_message.php'); ?>
+    </section>
+
     <section id="minichat">
 
         <?php while ($message = $messages->fetch()){ ?>

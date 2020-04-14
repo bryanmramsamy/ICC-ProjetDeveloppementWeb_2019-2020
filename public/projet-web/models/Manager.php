@@ -12,18 +12,16 @@ class Manager {
         return $db;
     }
 
+    protected function getNumberEntries($db_table){
+        $db = $this->dbConnect();
 
-    // protected function getNumberEntries($db_table){
-    //     $db = $this->dbConnect();
+        $req = $db->query('SELECT COUNT(*) AS count_entries FROM ' . $db_table);
+        $nb_entries = $req->fetch();
 
-    //     $req = $db->prepare('SELECT COUNT(*) AS count_entries FROM :db_table');
-    //     $req->execute(array('db_table' => $db_table));
-    //     $nb_entries = $req->fetch();
+        $req->closeCursor();
 
-    //     $req->closeCursor();
-
-    //     return $nb_entries['count_entries'];
-    // }
+        return $nb_entries['count_entries'];
+    }
 
 
     // public function getTotalPages($nb_message_per_page){

@@ -32,6 +32,10 @@ try {
                 minichat($page, MINICHAT_NB_MESSAGE_PER_PAGE);
                 break;
 
+            case 'minichat_post':
+                minichat_post();
+                break;
+
             case 'profile':
                 profile();
                 break;

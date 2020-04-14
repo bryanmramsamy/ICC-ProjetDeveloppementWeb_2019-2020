@@ -15,7 +15,6 @@ function set_session($user){
     $_SESSION['user_image'] = $user['image'];
 }
 
-
 function unset_session(){
     unset($_SESSION['userID']);
     unset($_SESSION['username']);
@@ -26,6 +25,9 @@ function unset_session(){
     unset($_SESSION['user_image']);
 }
 
+function minichat_post($user){
+    
+}
 
 function signin_post(){
     if (isset($_POST['username']) && !empty($_POST['username'])
@@ -37,8 +39,6 @@ function signin_post(){
         $userManager = new UserManager;
 
         $user_found = $userManager->getUser_byUsername($cleaned_username);
-
-        // TODO: Add password verifiction !
 
         if (!empty($user_found) && password_verify($cleaned_password, $user_found['passwd'])) {
             if ($user_found['active'] == true) {
@@ -58,14 +58,12 @@ function signin_post(){
     header('Location: index.php?post_signin_signal=' . $post_signin_signal);
 }
 
-
 function signout(){
     unset_session();
 
     $post_signin_signal = 'disconnected';
     header('Location: index.php?post_signin_signal=' . $post_signin_signal);
 }
-
 
 function register_post(){
     if (isset($_POST['username']) && !empty($_POST['username'])

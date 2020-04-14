@@ -15,28 +15,14 @@ class MiniChatManager extends Manager {
     }
 
 
-    // private function getNumberMessages(){
-    //     return $this->getNumberEntries('minichat');
-    // }
-
-
     private function getNumberMessages(){
-        $db = $this->dbConnect();
-
-        $req = $db->query('SELECT COUNT(*) AS nb_message FROM minichat');
-        $nb_message = $req->fetch();
-
-        $req->closeCursor();
-
-        return $nb_message['nb_message'];
+        return $this->getNumberEntries('minichat');
     }
-
 
     public function getTotalPages($nb_message_per_page){
         $nb_message = $this->getNumberMessages();
         return intdiv($nb_message, $nb_message_per_page) + 1;
     }
-
 
     public function getActualPage($page, $nb_message_per_page){
         $total_pages = $this->getTotalPages($nb_message_per_page);
@@ -50,7 +36,6 @@ class MiniChatManager extends Manager {
         return $page;
     }
 
-
     public function getMessages_byPage($page, $nb_message_per_page){
         $actual_page = $this->getActualPage($page, $nb_message_per_page);
         
@@ -59,7 +44,6 @@ class MiniChatManager extends Manager {
 
         return $this->getMessages_byRange($offset, $row_count);
     }
-
 
     // public function getUser_byID($user){
     //     return $this->getUser($user, true);
