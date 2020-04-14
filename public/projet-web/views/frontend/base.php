@@ -17,8 +17,8 @@
             </header>
 
             <div id="main_body">
-                <nav>
-
+                <nav id="navigation_section">
+                    <?php require("navigation.php") ?>
                 </nav>
 
                 <div id="main_section">

@@ -15,7 +15,12 @@ class MiniChatManager extends Manager {
     }
 
 
-    private function getMessagesCount(){
+    // private function getNumberMessages(){
+    //     return $this->getNumberEntries('minichat');
+    // }
+
+
+    private function getNumberMessages(){
         $db = $this->dbConnect();
 
         $req = $db->query('SELECT COUNT(*) AS nb_message FROM minichat');
@@ -28,7 +33,7 @@ class MiniChatManager extends Manager {
 
 
     public function getTotalPages($nb_message_per_page){
-        $nb_message = $this->getMessagesCount();
+        $nb_message = $this->getNumberMessages();
         return intdiv($nb_message, $nb_message_per_page) + 1;
     }
 
