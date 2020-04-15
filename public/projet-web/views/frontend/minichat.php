@@ -11,9 +11,15 @@
 
     <section id="minichat">
 
-        <?php while ($message = $messages->fetch()){ ?>
+        <?php while ($message = $messages->fetch()){ 
+            if ($message['last_name'] != null && $message['first_name'] != null){
+                $displayed_name = $message['first_name'] . " " . $message['last_name'];
+            } else {
+                $displayed_name = $message['username'];
+            } // TODO: Put in separate file
+        ?>
             <div class="minichat-message">
-                <strong><?= htmlspecialchars($message['username']); ?></strong> a envoyé le <em><?= ($message['date_creation']); ?></em>:
+                <strong><?= htmlspecialchars($displayed_name); ?></strong> a envoyé le <em><?= ($message['date_creation']); ?></em>:
                 <br/>
                 <p><?= nl2br(htmlspecialchars($message['message'])) ?></p>
             </div>

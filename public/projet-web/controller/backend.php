@@ -15,7 +15,26 @@ function set_session($user){
     $_SESSION['user_last_name'] = $user['last_name'];
     $_SESSION['user_first_name'] = $user['first_name'];
     $_SESSION['user_image'] = $user['image'];
+    // $_SESSION['user_displayed_name'] = get_user_displayed_name($user['id']);
 }
+
+// function get_user_displayed_name($userID){
+
+//     $userManager = new UserManager;
+//     $user = $userManager->getUser_byID($userID);
+
+//     if (empty($user['first_name']) && empty($user['last_name'])) {
+//         $displayed_name = $user['username'];
+//     } else if (empty($user['first_name'])) {
+//         $displayed_name = "M./Mme." . $user['last_name'];
+//     } else if (empty($user['last_name'])) {
+//         $displayed_name = $user['first_name'];
+//     } else {
+//         $displayed_name = $user['first_name'] . " " . $user['last_name'];
+//     }
+
+//     return $displayed_name;
+// }
 
 function unset_session(){
     unset($_SESSION['userID']);
@@ -25,6 +44,7 @@ function unset_session(){
     unset($_SESSION['user_last_name']);
     unset($_SESSION['user_first_name']);
     unset($_SESSION['user_image']);
+    unset($_SESSION['user_displayed_name']);
 }
 
 function minichat_post(){
