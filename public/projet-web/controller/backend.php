@@ -1,7 +1,9 @@
 <?php
 
+require_once('models/MiniChatManager.php');
 require_once('models/UserManager.php');
 
+use \ProjetWeb\Model\MiniChatManager;
 use \ProjetWeb\Model\UserManager;
 
 
@@ -25,8 +27,21 @@ function unset_session(){
     unset($_SESSION['user_image']);
 }
 
-function minichat_post($user){
+function minichat_post(){
+    if ($_SESSION['user_role_lvl'] < 10) header('Location: index.php?action=forbidden');
     
+    $cleaned_message = htmlspecialchars($_POST['message']);
+
+    $minichatManager = new MiniChatManager();
+    $creation_succeeded = $minichatManager->newMessage($cleaned_message);
+
+    if ($creation_succeeded) {
+        $post_message_signal = 'created';
+    } else {
+        $post_message_signal = 'creation_failed';
+    }
+    
+    header('Location: index.php?action=minichat&post_new_message_signal=' . $post_new_message_signal);
 }
 
 function signin_post(){
@@ -115,7 +130,7 @@ function register_post(){
     }
 
     if ($post_register_signal == 'created') {
-        header('Location: index.php');
+        header('Location: index.php?post_register_signal=' . $post_register_signal);
     } else {
         header('Location: index.php?action=register&post_register_signal=' . $post_register_signal);
     }

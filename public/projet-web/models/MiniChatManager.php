@@ -14,7 +14,6 @@ class MiniChatManager extends Manager {
         return $req;
     }
 
-
     private function getNumberMessages(){
         return $this->getNumberEntries('minichat');
     }
@@ -54,19 +53,15 @@ class MiniChatManager extends Manager {
     // }
 
 
-    // public function createUser($username, $hashed_password, $email, $last_name, $first_name) {
-    //      $db = $this->dbConnect();
+    public function newMessage($message) {
+        $db = $this->dbConnect();
 
-    //      $req = $db->prepare('INSERT INTO users (username, passwd, email, register_date, last_name, first_name) VALUES (:username, :passwd, :email, NOW(), :last_name, :first_name)');
+        $req = $db->prepare('INSERT INTO minichat (userID, message, date_creation, date_edition) VALUES (:userID, :message, NOW(), NOW())');
+        $creation_succeeded = $req->execute(array(
+            'userID' => $_SESSION['userID'],
+            'message' => $message
+        ));
 
-    //     $creation_succeeded = $req->execute(array(
-    //         'username' => $username,
-    //         'passwd' => $hashed_password,
-    //         'email' => $email,
-    //         'last_name' => $last_name,
-    //         'first_name' => $first_name
-    //     ));
-
-    //     return $creation_succeeded;
-    // }
+        return $creation_succeeded;
+    }
 }

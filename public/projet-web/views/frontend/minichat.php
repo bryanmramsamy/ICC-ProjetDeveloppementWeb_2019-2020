@@ -6,6 +6,7 @@
 
     <section id="minichat_new_message">
         <?php require('minichat_new_message.php'); ?>
+        <?php require('post_message_signal.php'); ?>
     </section>
 
     <section id="minichat">

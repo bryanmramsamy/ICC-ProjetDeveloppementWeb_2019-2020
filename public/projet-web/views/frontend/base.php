@@ -27,25 +27,7 @@
             </div>  <!-- main_body -->
 
             <footer>
-                <!-- TEST ZONE -->
-                    <?php 
-                        // require_once('models/UserManager.php');
 
-                        // use \ProjetWeb\Model\UserManager;
-
-
-                        // $user = 'bryan';
-                        // $id = '2';
-
-                        // $um = new UserManager();
-
-                        // // $um->getUser($username, $isID);
-                        // $u = $um->getUser_byUsername($user);
-                        // echo ($u['id']);
-                        
-
-                    ?>
-                <!-- END TEST ZONE -->
             </footer>
         </div>  <!--main_wrapper -->
     </body>
