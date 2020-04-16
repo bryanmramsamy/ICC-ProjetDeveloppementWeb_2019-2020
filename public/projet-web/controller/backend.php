@@ -53,7 +53,7 @@ function minichat_post(){
     $cleaned_message = htmlspecialchars($_POST['message']);
 
     $minichatManager = new MiniChatManager();
-    $creation_succeeded = $minichatManager->newMessage($cleaned_message);
+    $creation_succeeded = $minichatManager->createMessage($cleaned_message);
 
     if ($creation_succeeded) {
         $post_message_signal = 'created';

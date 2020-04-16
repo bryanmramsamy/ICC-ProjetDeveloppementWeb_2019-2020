@@ -7,52 +7,25 @@ require_once('models/Manager.php');
 
 class PostManager extends Manager {
 
-    public function getPosts($offset, $row_count){
-        $db = $this->dbConnect();
+    private $db_table = 'posts';
 
-        $req = $db->query('SELECT posts.* FROM posts INNER JOIN users ON posts.created_by = users.id ORDER BY date_edited DESC LIMIT ' . $offset . ',' . $row_count);
+    public function getPosts_byPage($page, $nb_post_per_page){
+        $query = 'SELECT posts.*, users.id, users.username, users.last_name, users.first_name FROM posts INNER JOIN users ON posts.created_by = users.id ORDER BY date_edited DESC';
 
-        return $req;
-    }
- 
-    private function getNumberMessages(){
-        return $this->getNumberEntries('posts');
+        return $this->getEntries_byPage($this->db_table, $query, $page, $nb_post_per_page);
     }
 
-    public function getTotalPages($nb_message_per_page){
-        $nb_message = $this->getNumberMessages();
-        return intdiv($nb_message, $nb_message_per_page) + 1;
+    public function getActualPagePost($page, $nb_post_per_page){
+        return $this->getActualPage($this->db_table, $page, $nb_post_per_page);
     }
 
-    public function getActualPage($page, $nb_message_per_page){
-        $total_pages = $this->getTotalPages($nb_message_per_page);
-
-        if ($page < 1) {
-            $page = 1;
-        } else if ($page > $total_pages) {
-            $page = $total_pages;
-        }
-
-        return $page;
+    public function getTotalPagesPost($nb_post_per_page){
+        return $this->getTotalPages($this->db_table, $nb_post_per_page);
     }
 
-    public function getMessages_byPage($page, $nb_message_per_page){
-        $actual_page = $this->getActualPage($page, $nb_message_per_page);
-        
-        $offset = $nb_message_per_page * ($actual_page - 1);
-        $row_count = $nb_message_per_page;
-
-        return $this->getMessages_byRange($offset, $row_count);
+    public function getPost($key, $value){
+        return $this->getEntry($db_table, $key, $value);
     }
-
-    // public function getUser_byID($user){
-    //     return $this->getUser($user, true);
-    // }
-
-    // public function getUser_byUsername($user){
-    //     return $this->getUser($user, false);
-    // }
-
 
     public function newMessage($message) {
         $db = $this->dbConnect();

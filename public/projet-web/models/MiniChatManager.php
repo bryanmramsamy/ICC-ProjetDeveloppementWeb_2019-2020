@@ -22,15 +22,13 @@ class MiniChatManager extends Manager {
         return $this->getTotalPages($this->db_table, $nb_message_per_page);
     }
 
-    public function newMessage($message) {
-        $db = $this->dbConnect();
-
-        $req = $db->prepare('INSERT INTO minichat (userID, message, date_creation, date_edition) VALUES (:userID, :message, NOW(), NOW())');
-        $creation_succeeded = $req->execute(array(
+    public function createMessage($message) {
+        $query = 'INSERT INTO minichat (userID, message, date_creation, date_edition) VALUES (:userID, :message, NOW(), NOW())';
+        $data_array = array(
             'userID' => $_SESSION['userID'],
             'message' => $message
-        ));
+        );
 
-        return $creation_succeeded;
+        return $this->createEntry($query, $data_array);
     }
 }

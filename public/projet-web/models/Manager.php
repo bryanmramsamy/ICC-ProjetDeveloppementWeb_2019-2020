@@ -12,19 +12,31 @@ class Manager {
         return $db;
     }
 
-    # Calcule nombre de message par page et appelle l'execution de la requête
-    protected function getEntries_byPage($db_table, $query, $page, $nb_message_per_page){
-        $actual_page = $this->getActualPage($db_table, $page, $nb_message_per_page);
+    protected function getEntry($db_table, $key, $value){
+        $db = $this->dbConnect();
+
+        $request = $db->prepare('SELECT * FROM ' . $db_table . ' WHERE ' . $key . ' = ? ');
+        $request->execute(array($value));
+        $entry = $request->fetch();
+
+        $request->closeCursor();
+
+        return $entry;
+    }
+
+    # Calcule nombre de message par page et appelle l'execution de la requestuête
+    protected function getEntries_byPage($db_table, $query, $page, $nb_entries_per_page){
+        $actual_page = $this->getActualPage($db_table, $page, $nb_entries_per_page);
         
-        $offset = $nb_message_per_page * ($actual_page - 1);
-        $row_count = $nb_message_per_page;
+        $offset = $nb_entries_per_page * ($actual_page - 1);
+        $row_count = $nb_entries_per_page;
 
         return $this->getEntries_byRange($query, $offset, $row_count);
     }
 
     # Vérifie si la page passé en paramètre est valide
-    protected function getActualPage($db_table, $page, $nb_message_per_page){
-        $total_pages = $this->getTotalPages($db_table, $nb_message_per_page);
+    protected function getActualPage($db_table, $page, $nb_entries_per_page){
+        $total_pages = $this->getTotalPages($db_table, $nb_entries_per_page);
 
         if ($page < 1) {
             $page = 1;
@@ -36,28 +48,38 @@ class Manager {
     }
 
     # Compte le nombre de pages total selon le nombre de nombre de message
-    protected function getTotalPages($db_table, $nb_message_per_page){
-        $nb_message = $this->getNumberEntries($db_table);
-        return intdiv($nb_message, $nb_message_per_page) + 1;
+    protected function getTotalPages($db_table, $nb_entries_per_page){
+        $nb_entries = $this->getNumberEntries($db_table);
+        return intdiv($nb_entries, $nb_entries_per_page) + 1;
     }
 
     private function getNumberEntries($db_table){
         $db = $this->dbConnect();
 
-        $req = $db->query('SELECT COUNT(*) AS count_entries FROM ' . $db_table);
-        $nb_entries = $req->fetch();
+        $request = $db->query('SELECT COUNT(*) AS count_entries FROM ' . $db_table);
+        $nb_entries = $request->fetch();
 
-        $req->closeCursor();
+        $request->closeCursor();
 
         return $nb_entries['count_entries'];
     }
 
-    # Effectue la requête en utilisant offset en row_count calculé dans getMessage_byPage
+    # Effectue la requestuête en utilisant offset en row_count calculé dans getMessage_byPage
     protected function getEntries_byRange($query, $offset, $row_count){
         $db = $this->dbConnect();
 
-        $req = $db->query($query . ' LIMIT ' . $offset . ',' . $row_count);
+        $request = $db->query($query . ' LIMIT ' . $offset . ',' . $row_count);
 
-        return $req;
+        return $request;
+    }
+
+    protected function createEntry($query, $data_array){
+        $db = $this->dbConnect();
+
+        $request = $db->prepare($query);
+        $creation_succeeded = $request->execute($data_array);
+        $request->closeCursor();
+
+        return $creation_succeeded;
     }
 }
