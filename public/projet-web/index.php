@@ -5,7 +5,7 @@ require('controller/backend.php');
 require('controller/frontend.php');
 
 
-const MINICHAT_NB_MESSAGE_PER_PAGE = 5;
+const MINICHAT_NB_MESSAGE_PER_PAGE = 10;
 
 try {
     if (isset($_GET['action']) && !empty($_GET['action'])) {
