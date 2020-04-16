@@ -36,6 +36,10 @@ try {
                 minichat_post();
                 break;
 
+            case 'post':
+                post();
+                break;
+
             case 'profile':
                 profile();
                 break;
