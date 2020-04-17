@@ -131,17 +131,39 @@ function unset_session(){
 function post_post(){
     if ($_SESSION['user_role_lvl'] < 50) header('Location: index.php?action=forbidden');
 
-    $cleaned_title = htmlspecialchars($_POST['title']);
-    $cleaned_content = htmlspecialchars($_POST['content']);
-    $cleaned_is_published = htmlspecialchars($_POST['is_published']);
-    $boolean_is_published = $cleaned_is_published != 1 ? 0 : 1;
+    if (isset($_POST['title']) && !empty($_POST['title'])
+        && isset($_POST['content']) && !empty($_POST['content'])) {
 
-    $postManager = new PostManager();
-    $creation_succeeded = $postManager->createPost($cleaned_title, $cleaned_content, $boolean_is_published);
+        $cleaned_title = htmlspecialchars($_POST['title']);
+        $cleaned_content = htmlspecialchars($_POST['content']);
+        $cleaned_is_published = htmlspecialchars($_POST['is_published']);
+        $boolean_is_published = $cleaned_is_published != 1 ? 0 : 1;
 
-    $signal_post_postCreation = $creation_succeeded ? 'created' : 'failed';
+        $postManager = new PostManager();
+        $creation_succeeded = $postManager->createPost($cleaned_title, $cleaned_content, $boolean_is_published);
 
-    header('Location: index.php?action=posts&signal_post_postCreation=' . $signal_post_postCreation);
+        $signal_post_postCreation = $creation_succeeded ? 'created' : 'failed';
+    } else {
+        $signal_post_postCreation = 'invalid';
+    }
+    
+    if ($signal_post_postCreation === 'created') {
+        header('Location: index.php?action=posts&signal_post_postCreation=' . $signal_post_postCreation);
+    } else {
+        header('Location: index.php?action=post_create&signal_post_postCreation=' . $signal_post_postCreation);
+    }
+}
+
+function post_publication($postID, $is_published){
+    # Manager -> EditEntry
+}
+
+function post_publish($postID){
+    post_publication($postID, false);
+}
+
+function post_unpublish($postID){
+    post_publication($postID, true);
 }
 
 

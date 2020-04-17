@@ -11,21 +11,17 @@ ob_start();
 
     <form method="post" action="index.php?action=post_post">
 
+        <?php require('views/signals/signal_post_postCreation.php'); ?>
+
         <div>
             <label for='title'>Titre : </label>
             <input type='text' id='title' name='title' required/>
-            <!-- <?php // if ($_GET['post_register_signal'] == 'already_exist'){ ?>
-                <strong>Pseudonyme déjà existant ! Veuillez en choisir un autre !</strong>
-            <?php // } ?> -->
         </div>
 
         <div>
             <label for='title'>Contenu du billet : </label>
             <br/>
             <textarea name="content" rows="8" cols="45" required></textarea>
-            <!-- <?php // if ($_GET['post_register_signal'] == 'already_exist'){ ?>
-                <strong>Pseudonyme déjà existant ! Veuillez en choisir un autre !</strong>
-            <?php // } ?> -->
         </div>
 
         <div>
@@ -34,7 +30,7 @@ ob_start();
         </div>
 
         <div>
-            <input type=submit value="Poster le billet" />
+            <input type=submit value="Poster le billet" /> <a href="index.php?action=posts">Annuler</a>
         </div>
 
     </form>

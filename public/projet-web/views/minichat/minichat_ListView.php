@@ -6,9 +6,11 @@ $title = "Mini-Chat | Page " . $actual_page;
 ob_start();
 ?>
 
-<section id="minichat_message_create">
-    <?php require('views/minichat/minichat_CreateView.php'); ?>
-    <?php require('views/signals/signal_post_messageCreation.php'); ?>
+<section id="before_minichat">
+    <?php 
+    require('views/signals/signal_post_messageCreation.php');
+    require('views/minichat/minichat_CreateView.php');
+    ?>
 </section>
 
 <section id="minichat">
@@ -18,7 +20,7 @@ ob_start();
         $displayed_name = displayed_name($message['username'], $message['first_name'], $message['last_name']);
     ?>
 
-        <div class="minichat-message">
+        <div class="minichat_message">
             <strong><?= htmlspecialchars($displayed_name); ?></strong> a envoyé le <em><?= ($message['date_creation']); ?></em>:
             <br/>
             <p><?= nl2br(htmlspecialchars($message['message'])) ?></p>

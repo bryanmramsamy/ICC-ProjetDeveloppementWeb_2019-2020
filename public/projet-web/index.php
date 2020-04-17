@@ -46,6 +46,16 @@ try {
                 post_post();
                 break;
 
+            case 'post_publish':
+                if (isset($_GET['postID']) && !empty($_GET['postID'])) post_publish($_GET['postID']);
+                else posts($page, POSTS_NB_POST_PER_PAGE);
+                break;
+
+            case 'post_unpublish':
+                if (isset($_GET['postID']) && !empty($_GET['postID'])) post_unpublish($_GET['postID']);
+                else posts($page, POSTS_NB_POST_PER_PAGE);
+                break;
+
             case 'posts':
                 posts($page, POSTS_NB_POST_PER_PAGE);
                 break;
