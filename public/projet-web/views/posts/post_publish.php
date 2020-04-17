@@ -1,5 +1,5 @@
 <?php
-if ($_SESSION['user_role_lvl'] >= 50){
+if ($_SESSION['user_role_lvl'] >= PERMISSION['admin']){
     if (isset($post['postID']) && !empty($post['postID'])) $postID = $post['postID'];
     
     $publish_link = "index.php?action=post_publish&postID=" . $postID;

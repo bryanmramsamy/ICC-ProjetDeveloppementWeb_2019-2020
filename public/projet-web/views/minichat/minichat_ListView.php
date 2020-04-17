@@ -1,5 +1,5 @@
 <?php
-if ($_SESSION['user_role_lvl'] < 10) header('Location: index.php?action=forbidden');
+if ($_SESSION['user_role_lvl'] < PERMISSION['user']) header('Location: index.php?action=forbidden');
 
 $title = "Mini-Chat | Page " . $actual_page;
 

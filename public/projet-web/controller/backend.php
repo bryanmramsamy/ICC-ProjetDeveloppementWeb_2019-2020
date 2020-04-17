@@ -129,7 +129,7 @@ function unset_session(){
 # Posts
 
 function post_post(){
-    if ($_SESSION['user_role_lvl'] < 50) header('Location: index.php?action=forbidden');
+    if ($_SESSION['user_role_lvl'] < PERMISSION['admin']) header('Location: index.php?action=forbidden');
 
     if (isset($_POST['title']) && !empty($_POST['title'])
         && isset($_POST['content']) && !empty($_POST['content'])) {
@@ -155,7 +155,7 @@ function post_post(){
 }
 
 function post_publish($postID){
-    if ($_SESSION['user_role_lvl'] >= 50) {
+    if ($_SESSION['user_role_lvl'] >= PERMISSION['admin']) {
         $cleaned_postID = htmlspecialchars($postID);
 
         $postManager = new PostManager();
@@ -172,7 +172,7 @@ function post_publish($postID){
 # MiniChat
 
 function minichat_post(){
-    if ($_SESSION['user_role_lvl'] < 10) header('Location: index.php?action=forbidden');
+    if ($_SESSION['user_role_lvl'] < PERMISSION['user']) header('Location: index.php?action=forbidden');
     
     $cleaned_message = htmlspecialchars($_POST['message']);
 
