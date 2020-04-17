@@ -4,6 +4,11 @@ $title = $post['title'];
 ob_start();
 ?>
 
+<section class="before_post">
+    <?php require('views/signals/signal_post_postPublication.php'); ?>
+</section>
+
+
 <section id="post">
 
     <?php
@@ -13,6 +18,8 @@ ob_start();
     <div class="post">
 
         <strong><?= htmlspecialchars($displayed_name); ?></strong> a envoyé le <em><?= ($post['date_edited']); ?></em>
+        <br/>
+        <?php require('views/posts/post_publish.php') ?>
 
         <h1><?= htmlspecialchars($post['title']) ?></h1>
 

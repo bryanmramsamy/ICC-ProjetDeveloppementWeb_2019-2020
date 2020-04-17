@@ -82,4 +82,14 @@ class Manager {
 
         return $creation_succeeded;
     }
+
+    protected function editEntry($query, $data_array){
+        $db = $this->dbConnect();
+
+        $request = $db->prepare($query);
+        $modification_succeeded = $request->execute($data_array);
+        $request->closeCursor();
+
+        return $modification_succeeded;
+    }
 }

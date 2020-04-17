@@ -154,16 +154,18 @@ function post_post(){
     }
 }
 
-function post_publication($postID, $is_published){
-    # Manager -> EditEntry
-}
-
 function post_publish($postID){
-    post_publication($postID, false);
-}
+    if ($_SESSION['user_role_lvl'] >= 50) {
+        $cleaned_postID = htmlspecialchars($postID);
 
-function post_unpublish($postID){
-    post_publication($postID, true);
+        $postManager = new PostManager();
+
+        $publication_modification_succeed = $postManager->publishPost($cleaned_postID);
+    }
+
+    $signal_post_postPublication = $publication_modification_succeed ? 'succeed' : 'failed';
+
+    header('Location: index.php?action=post&postID=' . $postID . '&signal_post_postPublication=' . $signal_post_postPublication);
 }
 
 

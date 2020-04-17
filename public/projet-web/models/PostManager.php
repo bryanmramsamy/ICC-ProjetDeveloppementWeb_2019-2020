@@ -43,4 +43,17 @@ class PostManager extends Manager {
         return $this->createEntry($query, $data_array);
     }
 
+    public function publishPost($postID){
+        $is_published = $this->getPost_byID($postID)['is_published'];
+        $set_published = $is_published ? 0 : 1;
+
+        $query = 'UPDATE posts SET is_published = :set_published WHERE id = :postID';
+        $data_array = array(
+            'postID' => $postID,
+            'set_published' => $set_published
+        );
+
+        return $this->editEntry($query, $data_array);
+    }
+
 }

@@ -26,21 +26,16 @@ if ($_SESSION['user_role_lvl'] >= 50){ ?>
             <div class="post">
 
                 <strong><?= htmlspecialchars($displayed_name); ?></strong> a envoyé le <em><?= ($post['date_edited']); ?></em>
+                <br/>
+                <?php require('views/posts/post_publish.php') ?>
                 
                 <h2><?= htmlspecialchars($post['title']) ?></h2>
-                <?php
-                    if ($_SESSION['user_role_lvl'] >= 50){
-                        if ($post['is_published']) {
-                            $published_status = "Ce billet est publié (<a href='index.php?action=post_unpublish&postID=" . $post['id'] . "'>Cacher le billet</a>)";
-                        } else {
-                            $published_status = "Ce billet n'est publié et n'est visible que par les administrateurs ! (<a href='index.php?action=post_publish&postID=" . $post['id'] . "'>Publier le billet</a>)";
-                        }
-                        
-                ?>
 
                 <p>
                     <?= nl2br(htmlspecialchars(truncate($post['content']))) ?>
-                    <br/>(<a href="index.php?action=post&postID=<?= $post['postID'] ?>">Voir plus...</a>)
+                    <br/>
+                    (<a href="index.php?action=post&postID=<?= $post['postID'] ?>">Voir plus...</a>)
+
                 </p>
 
             </div>
