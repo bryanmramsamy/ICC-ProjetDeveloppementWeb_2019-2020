@@ -6,6 +6,9 @@ require_once('models/UserManager.php');
 use \ProjetWeb\Model\MiniChatManager;
 use \ProjetWeb\Model\UserManager;
 
+function checkPage($page){
+    
+}
 
 function set_session($user){
     $_SESSION['userID'] = $user['id'];

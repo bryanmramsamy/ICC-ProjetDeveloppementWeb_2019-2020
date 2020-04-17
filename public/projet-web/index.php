@@ -6,8 +6,11 @@ require('controller/frontend.php');
 
 
 const MINICHAT_NB_MESSAGE_PER_PAGE = 10;
+const POSTS_NB_POST_PER_PAGE = 10;
 
 try {
+    if (isset($_GET['page']) && !empty($_GET['page'])) $page = $_GET['page'];
+
     if (isset($_GET['action']) && !empty($_GET['action'])) {
         switch ($_GET['action']) {
             case 'admin':
@@ -23,12 +26,6 @@ try {
                 break;
 
             case 'minichat':
-                if (isset($_GET['page']) && !empty($_GET['page'])){
-                    $page = $_GET['page'];
-                } else {
-                    $page = 1;
-                };
-
                 minichat($page, MINICHAT_NB_MESSAGE_PER_PAGE);
                 break;
 
@@ -36,8 +33,8 @@ try {
                 minichat_post();
                 break;
 
-            case 'post':
-                post();
+            case 'posts':
+                posts($page, POSTS_NB_POST_PER_PAGE);
                 break;
 
             case 'profile':
@@ -75,5 +72,4 @@ try {
 } catch (Exception $e) {
     echo ('Erreur: ' . $e->getMessage());
     echo ("<br/><a href='index.php'>Revenir à l'accueil</a>");
-
 }

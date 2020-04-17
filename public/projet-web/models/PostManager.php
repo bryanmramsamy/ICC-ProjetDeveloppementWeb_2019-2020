@@ -27,16 +27,13 @@ class PostManager extends Manager {
         return $this->getEntry($db_table, $key, $value);
     }
 
-    public function newMessage($message) {
-        $db = $this->dbConnect();
-
-        $req = $db->prepare('INSERT INTO minichat (userID, message, date_creation, date_edition) VALUES (:userID, :message, NOW(), NOW())');
-        $creation_succeeded = $req->execute(array(
+    public function createPost($message) {
+        $query = 'INSERT INTO minichat (userID, message, date_creation, date_edition) VALUES (:userID, :message, NOW(), NOW())';  # To modify
+        $data_array = array(  # To modify
             'userID' => $_SESSION['userID'],
             'message' => $message
-        ));
+        );
 
-        return $creation_succeeded;
+        return $this->createEntry($query, $data_array);
     }
-}
 }
