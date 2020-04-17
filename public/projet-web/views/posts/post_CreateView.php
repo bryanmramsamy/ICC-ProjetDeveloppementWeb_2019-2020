@@ -42,6 +42,6 @@ ob_start();
 <?php
 $main_section = ob_get_clean();
 
-require('base.php');
+require('views/static/base.php');
 ?>
 

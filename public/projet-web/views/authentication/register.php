@@ -1,28 +1,22 @@
-<?php $title = "Inscription"; ?>
-
 <?php
+if (isset($_SESSION['userID']) && isset($_SESSION['userID'])) header('Location: index.php');
 
-if (isset($_SESSION['userID']) && isset($_SESSION['userID'])) {
-    // header('Location: index.php'); // Not 
-    echo("Vous êtes déjà connecté en tant que " . $_SESSION['username'] . " ! <a href='index.php'>Cliquez ici pour retourner à l'accueil.</a>)");
+$title = "Inscription";
 
-    // TODO: Redirect to index.php
-
-} else {
-    ob_start();
-
+ob_start();
 ?>
 
     <section id="home_section">
+
         <form action="index.php?action=register_post" method="post">
 
             <h1>Veuillez compléter le formulaire de vos informations afin de vous inscrire sur ICC-2020 Web Project</h1>
 
-            <?php if ($_GET['post_register_signal'] == 'invalid_inputs'){ ?>
+            <?php if ($_GET['signal_post_userRegister'] == 'invalid_inputs'){ ?>
                     <strong>Un pseudonyme est un mot de passe sont nécéssaires !</strong>
             <?php }
 
-            if ($_GET['post_register_signal'] == 'failed'){ ?>
+            if ($_GET['signal_post_userRegister'] == 'failed'){ ?>
                     <strong>Une erreur s'est produite ! Veuillez réessayer !</strong>
             <?php } ?>
 
@@ -30,7 +24,7 @@ if (isset($_SESSION['userID']) && isset($_SESSION['userID'])) {
                 <label for='username'>Pseudonyme : </label>
                 <input type='text' id='username' name='username' required/>
 
-                <?php if ($_GET['post_register_signal'] == 'already_exist'){ ?>
+                <?php if ($_GET['signal_post_userRegister'] == 'already_exist'){ ?>
                     <strong>Pseudonyme déjà existant ! Veuillez en choisir un autre !</strong>
                 <?php } ?>
             </div>
@@ -44,7 +38,7 @@ if (isset($_SESSION['userID']) && isset($_SESSION['userID'])) {
                 <label for='password_confirmation'>Confirmation du mot de passe : </label>
                 <input type='password' id='password_confirmation' name='password_confirmation' required/>
 
-                <?php if ($_GET['post_register_signal'] == 'passwords_mismatch'){ ?>
+                <?php if ($_GET['signal_post_userRegister'] == 'passwords_mismatch'){ ?>
                     <strong>Les mots de passe ne correspondent pas ! Veuillez réesayer !</strong>
                 <?php } ?>
             </div>
@@ -69,11 +63,11 @@ if (isset($_SESSION['userID']) && isset($_SESSION['userID'])) {
             </div>
 
         </form>
+
     </section>
 
-<?php }
-
+<?php
 $main_section = ob_get_clean();
-require('base.php');
 
+require('views/static/base.php');
 ?>

@@ -12,22 +12,22 @@ use \ProjetWeb\Model\UserManager;
 # Static pages
 
 function home(){
-    require('views/frontend/home.php');
+    require('views/static/home.php');
 }
 
 function forbidden(){
-    require('views/frontend/forbidden.php');
+    require('views/static/forbidden.php');
 }
 
 
 # Authentication
 
 function signin(){
-    require('views/frontend/signin.php');
+    require('views/authentication/signin.php');
 }
 
 function register(){
-    require('views/frontend/register.php');
+    require('views/authentication/register.php');
 }
 
 function profile(){
@@ -35,7 +35,7 @@ function profile(){
 
     $profile = $userManager->getUser_byID($_SESSION['userID']);
 
-    require('views/frontend/profile.php');
+    require('views/authentication/profile.php');
 }
 
 
@@ -51,7 +51,7 @@ function posts($page=1, $nb_post_per_page){
     $previous_page = $actual_page - 1;
     $next_page = $actual_page + 1;
 
-    require('views/frontend/posts.php');
+    require('views/posts/posts_ListView.php');
 }
 
 function post($postID){
@@ -61,11 +61,11 @@ function post($postID){
     $post = $postManager->getPost_byID($postID);
     $created_by = $userManager->getUser_byID($post['created_by']);
 
-    require('views/frontend/post_detailview.php');
+    require('views/posts/post_DetailView.php');
 }
 
 function post_create(){
-    require('views/frontend/post_CreateView.php');
+    require('views/posts/post_CreateView.php');
 }
 
 
@@ -81,7 +81,7 @@ function minichat($page=1, $nb_message_per_page){
     $previous_page = $actual_page - 1;
     $next_page = $actual_page + 1;
 
-    require('views/frontend/minichat.php');
+    require('views/minichat/minichat_ListView.php');
 }
 
 

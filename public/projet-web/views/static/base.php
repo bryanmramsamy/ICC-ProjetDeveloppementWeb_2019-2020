@@ -20,7 +20,7 @@
                 <h2>Bienvenue sur le site de vente de matériel et de documentation informatique !</h2>
 
                 <div id="login_area">
-                    <?php require("signin.php") ?>
+                    <?php require("views/authentication/signin.php") ?>
                 </div>
 
             </header>
@@ -28,7 +28,7 @@
             <div id="main_body">
 
                 <nav id="navigation_section">
-                    <?php require("navigation.php") ?>
+                    <?php require("views/static/navigation.php") ?>
                 </nav>
 
                 <div id="main_section">

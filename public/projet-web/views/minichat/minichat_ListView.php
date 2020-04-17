@@ -7,8 +7,8 @@ ob_start();
 ?>
 
 <section id="minichat_message_create">
-    <?php require('minichat_new_message.php'); ?>
-    <?php require('signal_post_messageCreation.php'); ?>
+    <?php require('views/minichat/minichat_CreateView.php'); ?>
+    <?php require('views/signals/signal_post_messageCreation.php'); ?>
 </section>
 
 <section id="minichat">
@@ -26,10 +26,10 @@ ob_start();
 
     <?php } ?>
 
-    <?php require('pagination.php'); ?>
+    <?php require('views/static/pagination.php'); ?>
 
 </section>
 
 <?php $main_section = ob_get_clean();
 
-require('base.php'); ?>
+require('views/static/base.php'); ?>

@@ -22,5 +22,8 @@
     </p>
 </section>
 
-<?php $main_section = ob_get_clean(); ?>
-<?php require('base.php'); ?>
+<?php
+$main_section = ob_get_clean();
+
+require('base.php');
+?>
