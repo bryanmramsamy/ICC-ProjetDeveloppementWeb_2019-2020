@@ -26,25 +26,25 @@ function signin_post(){
             if ($user_found['active'] == true) {
                 set_session($user_found);
 
-                $post_signin_signal = 'connected';
+                $signal_post_userSignin = 'connected';
             } else {
-                $post_signin_signal = 'inactive';
+                $signal_post_userSignin = 'inactive';
             }
         } else {
-            $post_signin_signal = 'incorrect_credentials';
+            $signal_post_userSignin = 'incorrect_credentials';
         }
         
     } else {
-        $post_signin_signal = 'invalid_input';
+        $signal_post_userSignin = 'invalid_input';
     }
-    header('Location: index.php?post_signin_signal=' . $post_signin_signal);
+    header('Location: index.php?signal_post_userSignin=' . $signal_post_userSignin);
 }
 
 function signout(){
     unset_session();
 
-    $post_signin_signal = 'disconnected';
-    header('Location: index.php?post_signin_signal=' . $post_signin_signal);
+    $signal_post_userSignin = 'disconnected';
+    header('Location: index.php?signal_post_userSignin=' . $signal_post_userSignin);
 }
 
 function register_post(){
@@ -78,28 +78,28 @@ function register_post(){
                 if ($creation_succeeded) {
                     set_session($userManager->getUser_byUsername($cleaned_username));
 
-                    $post_register_signal = 'created';
+                    $signal_post_userRegister = 'created';
                 } else {
-                    $post_register_signal = 'failed';
+                    $signal_post_userRegister = 'failed';
                 }
 
             } else {
-                $post_register_signal = 'passwords_mismatch';
+                $signal_post_userRegister = 'passwords_mismatch';
             }
 
         } else {
-            $post_register_signal = 'already_exist';
+            $signal_post_userRegister = 'already_exist';
         }
         
 
     } else {
-        $post_register_signal = 'invalid_inputs';
+        $signal_post_userRegister = 'invalid_inputs';
     }
 
-    if ($post_register_signal == 'created') {
-        header('Location: index.php?post_register_signal=' . $post_register_signal);
+    if ($signal_post_userRegister == 'created') {
+        header('Location: index.php?signal_post_userRegister=' . $signal_post_userRegister);
     } else {
-        header('Location: index.php?action=register&post_register_signal=' . $post_register_signal);
+        header('Location: index.php?action=register&signal_post_userRegister=' . $signal_post_userRegister);
     }
     
 }
@@ -155,11 +155,7 @@ function minichat_post(){
     $minichatManager = new MiniChatManager();
     $creation_succeeded = $minichatManager->createMessage($cleaned_message);
 
-    if ($creation_succeeded) {
-        $post_message_signal = 'created';
-    } else {
-        $post_message_signal = 'creation_failed';
-    }
+    $signal_post_messageCreation = $creation_succeeded ? 'created' : 'failed';
     
-    header('Location: index.php?action=minichat&post_new_message_signal=' . $post_new_message_signal);
+    header('Location: index.php?action=minichat&signal_post_messageCreation=' . $signal_post_messageCreation);
 }

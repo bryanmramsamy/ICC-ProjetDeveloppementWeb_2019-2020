@@ -31,7 +31,7 @@
 
 <?php
 }
-require('post_register_signal.php');
-require('post_signin_signal.php');
+require('signal_post_userRegister.php');
+require('signal_post_userSignin.php');
 ?>
 
