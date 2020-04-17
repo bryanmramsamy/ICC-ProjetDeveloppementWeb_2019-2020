@@ -5,8 +5,9 @@
 <?php if ($_SESSION['user_role_lvl'] >= 50){ ?>
 
     <section id="posts_create_post">
-        <a href="posts_create_post">Créer un nouveau billet</a> 
-        <?php # require('post_post_signal.php'); ?>
+        <a href="index.php?action=post_create">Créer un nouveau billet</a>
+        <br/>
+        <?php require('signal_post_postCreation.php'); ?>
     </section>
 
 <?php } ?>

@@ -38,6 +38,14 @@ try {
                 else posts($page, POSTS_NB_POST_PER_PAGE);
                 break;
 
+            case 'post_create':
+                post_create();
+                break;
+
+            case 'post_post':
+                post_post();
+                break;
+
             case 'posts':
                 posts($page, POSTS_NB_POST_PER_PAGE);
                 break;

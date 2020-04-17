@@ -31,13 +31,16 @@ class PostManager extends Manager {
         return $this->getPost('id', $postID);
     }
 
-    public function createPost($message) {
-        $query = 'INSERT INTO minichat (userID, message, date_creation, date_edition) VALUES (:userID, :message, NOW(), NOW())';  # To modify
-        $data_array = array(  # To modify
+    public function createPost($title, $content, $is_published=1) {
+        $query = 'INSERT INTO posts (created_by, title, content, date_created, date_edited, is_published) VALUES (:userID, :title, :content, NOW(), NOW(), :is_published)';
+        $data_array = array(
             'userID' => $_SESSION['userID'],
-            'message' => $message
+            'title' => $title,
+            'content' => $content,
+            'is_published' => $is_published
         );
 
         return $this->createEntry($query, $data_array);
     }
+
 }

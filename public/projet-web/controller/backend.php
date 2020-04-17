@@ -1,71 +1,15 @@
 <?php
 
 require_once('models/MiniChatManager.php');
+require_once('models/PostManager.php');
 require_once('models/UserManager.php');
 
 use \ProjetWeb\Model\MiniChatManager;
+use \ProjetWeb\Model\PostManager;
 use \ProjetWeb\Model\UserManager;
 
-function checkPage($page){
-    
-}
 
-function set_session($user){
-    $_SESSION['userID'] = $user['id'];
-    $_SESSION['username'] = $user['username'];
-    $_SESSION['user_email'] = $user['email'];
-    $_SESSION['user_role_lvl'] = $user['role_lvl'];
-    $_SESSION['user_last_name'] = $user['last_name'];
-    $_SESSION['user_first_name'] = $user['first_name'];
-    $_SESSION['user_image'] = $user['image'];
-    // $_SESSION['user_displayed_name'] = get_user_displayed_name($user['id']);
-}
-
-// function get_user_displayed_name($userID){
-
-//     $userManager = new UserManager;
-//     $user = $userManager->getUser_byID($userID);
-
-//     if (empty($user['first_name']) && empty($user['last_name'])) {
-//         $displayed_name = $user['username'];
-//     } else if (empty($user['first_name'])) {
-//         $displayed_name = "M./Mme." . $user['last_name'];
-//     } else if (empty($user['last_name'])) {
-//         $displayed_name = $user['first_name'];
-//     } else {
-//         $displayed_name = $user['first_name'] . " " . $user['last_name'];
-//     }
-
-//     return $displayed_name;
-// }
-
-function unset_session(){
-    unset($_SESSION['userID']);
-    unset($_SESSION['username']);
-    unset($_SESSION['user_email']);
-    unset($_SESSION['user_role_lvl']);
-    unset($_SESSION['user_last_name']);
-    unset($_SESSION['user_first_name']);
-    unset($_SESSION['user_image']);
-    unset($_SESSION['user_displayed_name']);
-}
-
-function minichat_post(){
-    if ($_SESSION['user_role_lvl'] < 10) header('Location: index.php?action=forbidden');
-    
-    $cleaned_message = htmlspecialchars($_POST['message']);
-
-    $minichatManager = new MiniChatManager();
-    $creation_succeeded = $minichatManager->createMessage($cleaned_message);
-
-    if ($creation_succeeded) {
-        $post_message_signal = 'created';
-    } else {
-        $post_message_signal = 'creation_failed';
-    }
-    
-    header('Location: index.php?action=minichat&post_new_message_signal=' . $post_new_message_signal);
-}
+# Authentication
 
 function signin_post(){
     if (isset($_POST['username']) && !empty($_POST['username'])
@@ -158,4 +102,64 @@ function register_post(){
         header('Location: index.php?action=register&post_register_signal=' . $post_register_signal);
     }
     
+}
+
+function set_session($user){
+    $_SESSION['userID'] = $user['id'];
+    $_SESSION['username'] = $user['username'];
+    $_SESSION['user_email'] = $user['email'];
+    $_SESSION['user_role_lvl'] = $user['role_lvl'];
+    $_SESSION['user_last_name'] = $user['last_name'];
+    $_SESSION['user_first_name'] = $user['first_name'];
+    $_SESSION['user_image'] = $user['image'];
+}
+
+function unset_session(){
+    unset($_SESSION['userID']);
+    unset($_SESSION['username']);
+    unset($_SESSION['user_email']);
+    unset($_SESSION['user_role_lvl']);
+    unset($_SESSION['user_last_name']);
+    unset($_SESSION['user_first_name']);
+    unset($_SESSION['user_image']);
+    unset($_SESSION['user_displayed_name']);
+}
+
+
+# Posts
+
+function post_post(){
+    if ($_SESSION['user_role_lvl'] < 50) header('Location: index.php?action=forbidden');
+
+    $cleaned_title = htmlspecialchars($_POST['title']);
+    $cleaned_content = htmlspecialchars($_POST['content']);
+    $cleaned_is_published = htmlspecialchars($_POST['is_published']);
+    $boolean_is_published = $cleaned_is_published != 1 ? 0 : 1;
+
+    $postManager = new PostManager();
+    $creation_succeeded = $postManager->createPost($cleaned_title, $cleaned_content, $boolean_is_published);
+
+    $signal_post_postCreation = $creation_succeeded ? 'created' : 'failed';
+
+    header('Location: index.php?action=posts&signal_post_postCreation=' . $signal_post_postCreation);
+}
+
+
+# MiniChat
+
+function minichat_post(){
+    if ($_SESSION['user_role_lvl'] < 10) header('Location: index.php?action=forbidden');
+    
+    $cleaned_message = htmlspecialchars($_POST['message']);
+
+    $minichatManager = new MiniChatManager();
+    $creation_succeeded = $minichatManager->createMessage($cleaned_message);
+
+    if ($creation_succeeded) {
+        $post_message_signal = 'created';
+    } else {
+        $post_message_signal = 'creation_failed';
+    }
+    
+    header('Location: index.php?action=minichat&post_new_message_signal=' . $post_new_message_signal);
 }

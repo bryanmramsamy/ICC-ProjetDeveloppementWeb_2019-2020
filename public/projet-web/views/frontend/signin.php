@@ -1,7 +1,7 @@
 <?php if (isset($_SESSION['userID']) && !empty($_SESSION['userID'])) { ?>
     
     <p>
-        Bonjour <?= $_SESSION['username'] ?>
+        Bonjour <?= displayed_name($_SESSION['username'], $_SESSION['user_first_name'], $_SESSION['user_last_name']); ?>
         <br />
         <a href="index.php?action=profile">Voir votre profile</a>
         <br />
