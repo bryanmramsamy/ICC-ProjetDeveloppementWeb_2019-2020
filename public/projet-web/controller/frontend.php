@@ -30,6 +30,16 @@ function minichat($page=1, $nb_message_per_page){
     require('views/frontend/minichat.php');
 }
 
+function post($postID){
+    $postManager = new PostManager();
+    $userManager = new UserManager();
+
+    $post = $postManager->getPost_byID($postID);
+    $created_by = $userManager->getUser_byID($post['created_by']);
+
+    require('views/frontend/post_detailview.php');
+}
+
 function posts($page=1, $nb_post_per_page){
     $postManager = new PostManager();
 

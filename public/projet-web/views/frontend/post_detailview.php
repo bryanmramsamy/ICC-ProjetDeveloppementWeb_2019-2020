@@ -1,4 +1,4 @@
-<?php $title = "Billets | Page " . $actual_page; ?>
+<?php $title = $post['title']; ?>
 
 <?php ob_start(); ?>
 
@@ -11,23 +11,20 @@
 
 <?php } ?>
 
-<section id="posts">
+<section id="post">
 
-    <?php while ($post = $posts->fetch()){ 
-        if ($post['last_name'] != null && $post['first_name'] != null){
-            $displayed_name = $post['first_name'] . " " . $post['last_name'];
+    <?php if ($created_by['last_name'] != null && $created_by['first_name'] != null){
+            $displayed_name = $created_by['first_name'] . " " . $created_by['last_name'];
         } else {
-            $displayed_name = $post['username'];
+            $displayed_name = $created_by['username'];
         } // TODO: Put in separate file
     ?>
         <div class="post">
             <strong><?= htmlspecialchars($displayed_name); ?></strong> a envoyé le <em><?= ($post['date_edited']); ?></em>:
             <h1><?= htmlspecialchars($post['title']) ?></h1>
-            <p><?= nl2br(htmlspecialchars(truncate($post['content']))) ?> (<a href="index.php?action=post&postID=<?= $post['postID'] ?>">Voir plus...</a>)</p>
+            <p><?= nl2br(htmlspecialchars($post['content'])) ?></p>
         </div>
-    <?php } ?>
 
-    <?php require('pagination.php'); ?>
 </section>
 
 <?php $main_section = ob_get_clean(); ?>

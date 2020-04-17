@@ -33,6 +33,11 @@ try {
                 minichat_post();
                 break;
 
+            case 'post':
+                if (isset($_GET['postID']) && !empty($_GET['postID'])) post($_GET['postID']);
+                else posts($page, POSTS_NB_POST_PER_PAGE);
+                break;
+
             case 'posts':
                 posts($page, POSTS_NB_POST_PER_PAGE);
                 break;
