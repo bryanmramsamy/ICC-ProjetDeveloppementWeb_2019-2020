@@ -68,6 +68,14 @@ function post_create(){
     require('views/posts/post_CreateView.php');
 }
 
+function post_update($postID){
+    $cleaned_postID = htmlspecialchars($postID);
+
+    $postManager = new PostManager();
+    $post = $postManager->getPost_byID($cleaned_postID);
+
+    require('views/posts/post_UpdateView.php');
+}
 
 # MiniChat
 

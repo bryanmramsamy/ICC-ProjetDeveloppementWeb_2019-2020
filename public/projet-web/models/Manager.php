@@ -73,23 +73,14 @@ class Manager {
         return $request;
     }
 
-    protected function createEntry($query, $data_array){
+    protected function createUpdateDeleteEntry($query, $data_array){
         $db = $this->dbConnect();
 
         $request = $db->prepare($query);
-        $creation_succeeded = $request->execute($data_array);
+        $creationUpdateDelete_succeeded = $request->execute($data_array);
         $request->closeCursor();
 
-        return $creation_succeeded;
+        return $creationUpdateDelete_succeeded;
     }
 
-    protected function editEntry($query, $data_array){
-        $db = $this->dbConnect();
-
-        $request = $db->prepare($query);
-        $modification_succeeded = $request->execute($data_array);
-        $request->closeCursor();
-
-        return $modification_succeeded;
-    }
 }

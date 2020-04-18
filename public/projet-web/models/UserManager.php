@@ -34,7 +34,7 @@ class UserManager extends Manager {
             'first_name' => $first_name
         );
 
-        return $this->createEntry($query, $data_array);
+        return $this->createUpdateDeleteEntry($query, $data_array);
     }
 
 }

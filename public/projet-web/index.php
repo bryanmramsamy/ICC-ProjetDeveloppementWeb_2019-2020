@@ -50,17 +50,22 @@ try {
                 post_create();
                 break;
 
-            case 'post_post':
-                post_post();
+            case 'post_create_post':
+                post_create_post();
+                break;
+
+            case 'post_update':
+                if (isset($_GET['postID']) && !empty($_GET['postID'])) post_update($_GET['postID']);
+                else posts($page, POSTS_NB_POST_PER_PAGE);
+                break;
+            
+            case 'post_update_post':
+                if (isset($_GET['postID']) && !empty($_GET['postID'])) post_update_post($_GET['postID']);
+                else posts($page, POSTS_NB_POST_PER_PAGE);
                 break;
 
             case 'post_publish':
                 if (isset($_GET['postID']) && !empty($_GET['postID'])) post_publish($_GET['postID']);
-                else posts($page, POSTS_NB_POST_PER_PAGE);
-                break;
-
-            case 'post_unpublish':
-                if (isset($_GET['postID']) && !empty($_GET['postID'])) post_unpublish($_GET['postID']);
                 else posts($page, POSTS_NB_POST_PER_PAGE);
                 break;
 

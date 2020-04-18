@@ -128,7 +128,7 @@ function unset_session(){
 
 # Posts
 
-function post_post(){
+function post_create_post(){
     if ($_SESSION['user_role_lvl'] < PERMISSION['admin']) header('Location: index.php?action=forbidden');
 
     if (isset($_POST['title']) && !empty($_POST['title'])
@@ -151,6 +151,30 @@ function post_post(){
         header('Location: index.php?action=posts&signal_post_postCreation=' . $signal_post_postCreation);
     } else {
         header('Location: index.php?action=post_create&signal_post_postCreation=' . $signal_post_postCreation);
+    }
+}
+
+function post_update_post($postID) {
+    if ($_SESSION['user_role_lvl'] < PERMISSION['admin']) header('Location: index.php?action=forbidden');
+
+        $cleaned_postID = htmlspecialchars($postID);
+
+        $postManager = new PostManager();
+        $post = $postManager->getPost_byID($cleaned_postID);
+
+        $cleaned_title = (isset($_POST['title']) & !empty($_POST['title'])) ? htmlspecialchars($_POST['title']) : null;
+        $cleaned_content = (isset($_POST['content']) & !empty($_POST['content'])) ? htmlspecialchars($_POST['content']) : null;
+        $cleaned_is_published = htmlspecialchars($_POST['is_published']);
+        $boolean_is_published = $cleaned_is_published != 1 ? 0 : 1;
+
+        $update_succeeded = $postManager->updatePost($cleaned_postID, $cleaned_title, $cleaned_content, $boolean_is_published);
+
+        $signal_post_postUpdate = $update_succeeded ? 'updated' : 'failed';
+    
+    if ($signal_post_postUpdate === 'updated') {
+        header('Location: index.php?action=posts&signal_post_postUpdate=' . $signal_post_postUpdate);
+    } else {
+        header('Location: index.php?action=post_create&signal_post_postUpdate=' . $signal_post_postUpdate);
     }
 }
 

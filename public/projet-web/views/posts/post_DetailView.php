@@ -19,7 +19,7 @@ ob_start();
 
         <strong><?= htmlspecialchars($displayed_name); ?></strong> a envoyé le <em><?= ($post['date_edited']); ?></em>
         <br/>
-        <?php require('views/posts/post_publish.php') ?>
+        <?php require('views/posts/post_admin_options.php') ?>
 
         <h1><?= htmlspecialchars($post['title']) ?></h1>
 

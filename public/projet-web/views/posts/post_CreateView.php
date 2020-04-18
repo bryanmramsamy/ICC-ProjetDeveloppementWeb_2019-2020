@@ -1,7 +1,7 @@
 <?php
 if ($_SESSION['user_role_lvl'] < 50) header('Location: index.php?action=forbidden');
 
-$title = $post['title'];
+$title = "Création d'un nouveau billet";
 ob_start();
 ?>
 
@@ -9,7 +9,7 @@ ob_start();
 
 <section id="post_CreateForm">
 
-    <form method="post" action="index.php?action=post_post">
+    <form method="post" action="index.php?action=post_create_post">
 
         <?php require('views/signals/signal_post_postCreation.php'); ?>
 
@@ -19,7 +19,7 @@ ob_start();
         </div>
 
         <div>
-            <label for='title'>Contenu du billet : </label>
+            <label for='content'>Contenu du billet : </label>
             <br/>
             <textarea name="content" rows="8" cols="45" required></textarea>
         </div>
@@ -40,4 +40,3 @@ $main_section = ob_get_clean();
 
 require('views/static/base.php');
 ?>
-

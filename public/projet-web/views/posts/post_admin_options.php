@@ -1,7 +1,9 @@
 <?php
 if ($_SESSION['user_role_lvl'] >= PERMISSION['admin']){
     if (isset($post['postID']) && !empty($post['postID'])) $postID = $post['postID'];
+    else if (isset($post['id']) && !empty($post['id'])) $postID = $post['id'];
     
+    # Publication option
     $publish_link = "index.php?action=post_publish&postID=" . $postID;
 
     if ($post['is_published']) {
@@ -11,5 +13,10 @@ if ($_SESSION['user_role_lvl'] >= PERMISSION['admin']){
     }
 
     echo($published_status);
+
+    echo(' ');
+
+    # Update option
+    echo ("(<a href=\"index.php?action=post_update&postID=" . $postID . "\">Modifier</a>)");
 }
 ?>

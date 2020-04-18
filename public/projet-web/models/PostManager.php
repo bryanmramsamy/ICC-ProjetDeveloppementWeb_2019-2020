@@ -40,7 +40,19 @@ class PostManager extends Manager {
             'is_published' => $is_published
         );
 
-        return $this->createEntry($query, $data_array);
+        return $this->createUpdateDeleteEntry($query, $data_array);
+    }
+
+    public function updatePost($postID, $title, $content, $is_published) {
+        $query = 'UPDATE posts SET title = :title, content = :content, date_edited = NOW(), is_published = :is_published WHERE id = :postID';
+        $data_array = array(
+            'postID' => $postID,
+            'title' => $title,
+            'content' => $content,
+            'is_published' => $is_published
+        );
+
+        return $this->createUpdateDeleteEntry($query, $data_array);
     }
 
     public function publishPost($postID){
@@ -53,7 +65,7 @@ class PostManager extends Manager {
             'set_published' => $set_published
         );
 
-        return $this->editEntry($query, $data_array);
+        return $this->createUpdateDeleteEntry($query, $data_array);
     }
 
 }

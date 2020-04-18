@@ -9,7 +9,10 @@ if ($_SESSION['user_role_lvl'] >= PERMISSION['admin']){ ?>
 
         <a href="index.php?action=post_create">Créer un nouveau billet</a>
         <br/>
-        <?php require('views/signals/signal_post_postCreation.php'); ?>
+        <?php
+        require('views/signals/signal_post_postCreation.php');
+        require('views/signals/signal_post_postUpdate.php');
+        ?>
 
     </section>
 
@@ -25,16 +28,16 @@ if ($_SESSION['user_role_lvl'] >= PERMISSION['admin']){ ?>
 
             <div class="post">
 
-                <strong><?= htmlspecialchars($displayed_name); ?></strong> a envoyé le <em><?= ($post['date_edited']); ?></em>
-                <br/>
-                <?php require('views/posts/post_publish.php') ?>
-                
+                <strong><?= htmlspecialchars($displayed_name); ?></strong> a envoyé le <em><?= ($post['date_edited']); ?></em>                
                 <h2><?= htmlspecialchars($post['title']) ?></h2>
 
                 <p>
                     <?= nl2br(htmlspecialchars(truncate($post['content']))) ?>
                     <br/>
-                    (<a href="index.php?action=post&postID=<?= $post['postID'] ?>">Voir plus...</a>)
+                    (<a href="index.php?action=post&postID=<?= $post['postID'] ?>">Voir plus...</a>) 
+
+                    <?php require('views/posts/post_admin_options.php') ?>
+
                 </p>
 
                 <p>-----------------------------------------------------------------------------------------------------------</p>

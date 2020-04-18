@@ -29,6 +29,6 @@ class MiniChatManager extends Manager {
             'message' => $message
         );
 
-        return $this->createEntry($query, $data_array);
+        return $this->createUpdateDeleteEntry($query, $data_array);
     }
 }
