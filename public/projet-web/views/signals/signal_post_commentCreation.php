@@ -12,10 +12,6 @@ switch ($_GET['signal_post_commentCreation']) {
     case 'invalid':
         $signal_post_commentCreation = "Veuillez entrer un commentaire !";
         break;
-
-    case 'unknownID':
-        $signal_post_commentCreation = "Le commentaire n'a pas pu être ajouté car le billet concerné est inconnu !";
-        break;
 }
 
 echo ("<div class='signal'>" . $signal_post_commentCreation . "</div>");

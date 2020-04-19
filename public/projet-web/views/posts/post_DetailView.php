@@ -7,7 +7,10 @@ ob_start();
 ?>
 
 <section class="before_post">
-    <?php require('views/signals/signal_post_postPublication.php'); ?>
+    <?php
+    require('views/signals/signal_post_postPublication.php');
+    require('views/signals/signal_post_postUpdate.php');
+    ?>
 </section>
 
 
@@ -33,21 +36,30 @@ ob_start();
 
 <section id="comments">
 
-    <?php require('views/signals/signal_post_commentCreation.php'); ?>
+    
+<?php if (checkPermissions('user', false)) { ?>
 
-    <form method="post" action="index.php?action=post_comment_create_post&postID=<?= $postID; ?>">
+    <section id="comment-form">
 
-        <div>
-            <label for='comment'>Commentaire : </label>
-            <br/>
-            <textarea name="comment" rows="8" cols="45" required></textarea>
-        </div>
+        <?php require('views/signals/signal_post_commentCreation.php'); ?>
 
-        <div>
-            <input type=submit value="Poster le commentaire" /> <a href="index.php?action=post&postID=<?= $postID; ?>">Annuler</a>
-        </div>
+        <form method="post" action="index.php?action=post_comment_create_post&postID=<?= $postID; ?>">
 
-    </form>
+            <div>
+                <label for='comment'>Commentaire : </label>
+                <br/>
+                <textarea name="comment" rows="8" cols="45" required></textarea>
+            </div>
+
+            <div>
+                <input type=submit value="Poster le commentaire" /> <a href="index.php?action=post&postID=<?= $postID; ?>">Annuler</a>
+            </div>
+
+        </form>
+
+    </section>
+
+<?php } ?>
 
     <?php
     while ($comment = $comments->fetch()) { 

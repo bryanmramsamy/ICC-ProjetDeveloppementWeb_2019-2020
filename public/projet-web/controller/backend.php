@@ -10,7 +10,6 @@ use \ProjetWeb\Model\MiniChatManager;
 use \ProjetWeb\Model\PostManager;
 use \ProjetWeb\Model\UserManager;
 
-
 # Authentication
 
 function signin_post(){
@@ -131,7 +130,7 @@ function unset_session(){
 # Posts
 
 function post_create_post(){
-    checkPremissions('admin');
+    checkPremissions('admin', true);
 
     if (isset($_POST['title']) && !empty($_POST['title'])
         && isset($_POST['content']) && !empty($_POST['content'])) {
@@ -157,93 +156,70 @@ function post_create_post(){
 }
 
 function post_update_post() {
-    checkPremissions('admin');
+    checkPremissions('admin', true);
 
-    if (isset($_GET['postID']) && !empty($_GET['postID'])) {
-        $postID = htmlspecialchars($_GET['postID']);
-        if ($_SESSION['user_role_lvl'] < PERMISSION['admin']) header('Location: index.php?action=forbidden');
+    $postID = clean_postID();
+    check_postExist($postID);
 
-            $cleaned_postID = htmlspecialchars($postID);
+    $postManager = new PostManager();
+    $post = $postManager->getPost_byID($postID);
 
-            $postManager = new PostManager();
-            $post = $postManager->getPost_byID($cleaned_postID);
+    $cleaned_title = (isset($_POST['title']) & !empty($_POST['title'])) ? htmlspecialchars($_POST['title']) : null;
+    $cleaned_content = (isset($_POST['content']) & !empty($_POST['content'])) ? htmlspecialchars($_POST['content']) : null;
+    $cleaned_is_published = htmlspecialchars($_POST['is_published']);
+    $boolean_is_published = $cleaned_is_published != 1 ? 0 : 1;
 
-            $cleaned_title = (isset($_POST['title']) & !empty($_POST['title'])) ? htmlspecialchars($_POST['title']) : null;
-            $cleaned_content = (isset($_POST['content']) & !empty($_POST['content'])) ? htmlspecialchars($_POST['content']) : null;
-            $cleaned_is_published = htmlspecialchars($_POST['is_published']);
-            $boolean_is_published = $cleaned_is_published != 1 ? 0 : 1;
+    $update_succeeded = $postManager->updatePost($postID, $cleaned_title, $cleaned_content, $boolean_is_published);
 
-            $update_succeeded = $postManager->updatePost($cleaned_postID, $cleaned_title, $cleaned_content, $boolean_is_published);
-
-            $signal_post_postUpdate = $update_succeeded ? 'updated' : 'failed';
-        
-        if ($signal_post_postUpdate === 'updated') {
-            header('Location: index.php?action=posts&signal_post_postUpdate=' . $signal_post_postUpdate);
-        } else {
-            header('Location: index.php?action=post_create&signal_post_postUpdate=' . $signal_post_postUpdate);
-        }
-
+    $signal_post_postUpdate = $update_succeeded ? 'updated' : 'failed';
+    
+    if ($signal_post_postUpdate === 'updated') {
+        header('Location: index.php?action=post&postID=' . $postID . '&signal_post_postUpdate=' . $signal_post_postUpdate);
     } else {
-        header('Location: index.php?action=404');
+        header('Location: index.php?action=post_create&signal_post_postUpdate=' . $signal_post_postUpdate);
     }
 }
 
 function post_publish(){
-    checkPremissions('admin');
+    checkPremissions('admin', true);
 
-    if (isset($_GET['postID']) && !empty($_GET['postID'])) {
-        $postID = htmlspecialchars($_GET['postID']);
+    $postID = clean_postID();
+    check_postExist($postID);
 
-        if ($_SESSION['user_role_lvl'] >= PERMISSION['admin']) {
-            $cleaned_postID = htmlspecialchars($postID);
+    $postManager = new PostManager();
 
-            $postManager = new PostManager();
+    $publication_modification_succeed = $postManager->publishPost($postID);
 
-            $publication_modification_succeed = $postManager->publishPost($cleaned_postID);
+    $signal_post_postPublication = $publication_modification_succeed ? 'succeed' : 'failed';
 
-            $signal_post_postPublication = $publication_modification_succeed ? 'succeed' : 'failed';
-
-            header('Location: index.php?action=post&postID=' . $postID . '&signal_post_postPublication=' . $signal_post_postPublication);
-        } else {
-            header('Location: index.php?action=forbidden');
-        }
-
-    } else {
-        header('Location: index.php?action=404');
-    }
+    header('Location: index.php?action=post&postID=' . $postID . '&signal_post_postPublication=' . $signal_post_postPublication);
 }
 
 function post_comment_create_post() {
-    checkPremissions('user');
+    checkPremissions('user', true);
 
-    if (isset($_GET['postID']) && !empty($_GET['postID'])) {
-        $postID = htmlspecialchars($_GET['postID']);
+    $postID = clean_postID();
+    check_postExist($postID);
 
-        if (isset($_POST['comment']) && !empty($_POST['comment'])) {
-            $cleaned_comment = htmlspecialchars($_POST['comment']);
+    if (isset($_POST['comment']) && !empty($_POST['comment'])) {
+        $cleaned_comment = htmlspecialchars($_POST['comment']);
 
-            $commentManager = new CommentManager();
-            $creation_succeeded = $commentManager->createComment($postID, $cleaned_comment);
+        $commentManager = new CommentManager();
+        $creation_succeeded = $commentManager->createComment($postID, $cleaned_comment);
 
-            $signal_post_commentCreation = $creation_succeeded ? 'created' : 'failed';
-        } else {
-            $signal_post_commentCreation = 'invalid';
-        }
-
-        header('Location: index.php?action=post&postID=' . $postID . '&signal_post_commentCreation=' . $signal_post_commentCreation);
-
+        $signal_post_commentCreation = $creation_succeeded ? 'created' : 'failed';
     } else {
-        $signal_post_commentCreation = 'unknownID';
-
-        header('Location: index.php?action=posts&signal_post_commentCreation=' . $signal_post_commentCreation);
+        $signal_post_commentCreation = 'invalid';
     }
+
+    header('Location: index.php?action=post&postID=' . $postID . '&signal_post_commentCreation=' . $signal_post_commentCreation);
 }
 
 
 # MiniChat
 
 function minichat_post(){
-    checkPremissions('user');
+    checkPremissions('user', true);
 
     $cleaned_message = htmlspecialchars($_POST['message']);
 

@@ -3,7 +3,7 @@ $title = "Billets | Page " . $actual_page;
 
 ob_start();
 
-if ($_SESSION['user_role_lvl'] >= PERMISSION['admin']){ ?>
+if (checkPermissions('admin', false)){ ?>
 
     <section id="before_posts">
 
@@ -23,7 +23,7 @@ if ($_SESSION['user_role_lvl'] >= PERMISSION['admin']){ ?>
 
     <?php
     while ($post = $posts->fetch()){
-        if ($post['is_published'] || $_SESSION['user_role_lvl'] >= PERMISSION['admin']) {
+        if ($post['is_published'] || checkPermissions('admin', false)) {
             $displayed_name = displayed_name($post['username'], $post['first_name'], $post['last_name']);
     ?>
 

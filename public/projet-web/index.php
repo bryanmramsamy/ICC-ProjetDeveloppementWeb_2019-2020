@@ -1,16 +1,16 @@
 <?php
 session_start();
 
+require('controller/meta.php');
 require('controller/backend.php');
 require('controller/frontend.php');
-require('controller/permissions.php');
 
 const MINICHAT_NB_MESSAGE_PER_PAGE = 10;
 const POSTS_NB_COMMENT_PER_PAGE = 10;
 const POSTS_NB_POST_PER_PAGE = 10;
 
 try {
-    if (isset($_GET['page']) && !empty($_GET['page']) && $page > 0) $page = $_GET['page'];
+    if (isset($_GET['page']) && !empty($_GET['page']) && $_GET['page'] > 0) $page = $_GET['page'];
 
     if (isset($_GET['action']) && !empty($_GET['action'])) {
         switch ($_GET['action']) {

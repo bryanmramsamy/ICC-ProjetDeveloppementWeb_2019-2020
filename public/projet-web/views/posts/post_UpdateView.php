@@ -1,5 +1,5 @@
 <?php
-if ($_SESSION['user_role_lvl'] < 50) header('Location: index.php?action=forbidden');
+checkPermissions('admin', true);
 
 $title = "Modification du billet \"" . $post['title'] . "\"";
 ob_start();

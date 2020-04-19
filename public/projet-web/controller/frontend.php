@@ -10,7 +10,6 @@ use \ProjetWeb\Model\MiniChatManager;
 use \ProjetWeb\Model\PostManager;
 use \ProjetWeb\Model\UserManager;
 
-
 # Static pages
 
 function home(){
@@ -58,48 +57,39 @@ function posts($page=1, $nb_post_per_page){
 }
 
 function post($page=1, $nb_comment_per_page){
-    if (isset($_GET['postID']) && !empty($_GET['postID'])) {
-        $postID = htmlspecialchars($_GET['postID']);
+    $postID = clean_postID();
 
-        $commentManager = new CommentManager();
-        $postManager = new PostManager();
-        $userManager = new UserManager();
-    
-        $post = $postManager->getPost_byID($postID);
-        $post_created_by = $userManager->getUser_byID($post['created_by']);
-    
-        $comments = $commentManager->getComments_byPage($page, $nb_comment_per_page);
-        $actual_page = $commentManager->getActualPageComment($page, $nb_comment_per_page);
-        $total_pages = $commentManager->getTotalPagesComment($nb_comment_per_page);
-    
-        require('views/posts/post_DetailView.php');
+    $commentManager = new CommentManager();
+    $postManager = new PostManager();
+    $userManager = new UserManager();
 
-    } else {
-        header('Location: index.php?action=404');
-    }
+    $post = $postManager->getPost_byID($postID);
+    $post_created_by = $userManager->getUser_byID($post['created_by']);
+
+    $comments = $commentManager->getComments_byPage($page, $nb_comment_per_page);
+    $actual_page = $commentManager->getActualPageComment($page, $nb_comment_per_page);
+    $total_pages = $commentManager->getTotalPagesComment($nb_comment_per_page);
+
+    require('views/posts/post_DetailView.php');
 }
 
 function post_create(){
-    checkPremissions('admin');
+    checkPremissions('admin', true);
     require('views/posts/post_CreateView.php');
 }
 
 function post_update(){
-    checkPremissions('admin');
+    checkPremissions('admin', true);
 
-    if (isset($_GET['postID']) && !empty($_GET['postID'])) {
-        $postID = htmlspecialchars($_GET['postID']);
+    $postID = clean_postID();
+    check_postExist($postID);
 
-        $cleaned_postID = htmlspecialchars($postID);
+    $cleaned_postID = htmlspecialchars($postID);
 
-        $postManager = new PostManager();
-        $post = $postManager->getPost_byID($cleaned_postID);
+    $postManager = new PostManager();
+    $post = $postManager->getPost_byID($cleaned_postID);
 
-        require('views/posts/post_UpdateView.php');
-
-    } else {
-        header('Location: index.php?action=404');
-    }
+    require('views/posts/post_UpdateView.php');
 }
 
 # MiniChat

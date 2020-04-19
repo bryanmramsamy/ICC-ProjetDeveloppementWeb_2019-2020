@@ -1,5 +1,5 @@
 <?php
-if ($_SESSION['user_role_lvl'] >= PERMISSION['admin']){
+if (checkPermissions('admin', false)){
     if (isset($post['postID']) && !empty($post['postID'])) $postID = $post['postID'];
     else if (isset($post['id']) && !empty($post['id'])) $postID = $post['id'];
     
