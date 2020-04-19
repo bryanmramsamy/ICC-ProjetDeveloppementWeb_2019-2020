@@ -1,9 +1,26 @@
-<div id="pagination">
-    <?php
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+
+        <?php
         $pre_pagination_action = $_GET['action'];
 
-        if ($actual_page > 1) echo("<a href='index.php?action=" . $pre_pagination_action . "&page=1'>&lt;&lt;&lt; PREMIÈRE PAGE</a> | <a href='index.php?action=" . $pre_pagination_action . "&page=" . $previous_page . "'>&lt; PAGE PRÉCÉDENTE</a> | ");
-        echo ("PAGE " . $actual_page . " SUR " . $total_pages);
-        if ($actual_page < $total_pages) echo(" | <a href='index.php?action=" . $pre_pagination_action . "&page=" . $next_page . "'>PAGE SUIVANTE &gt;</a> | <a href='index.php?action=" . $pre_pagination_action . "&page=" . $total_pages . "'>DERNIÈRE PAGE &gt;&gt;&gt; </a>");
-    ?>
-</div>
+        if ($actual_page > 1) {
+        ?>
+            <li class='page-item'><a class='page-link' href='index.php?action=<?= $pre_pagination_action; ?>&page=1'>Première page</a></li>
+
+            <li class='page-item'><a class='page-link' href='index.php?action=<?= $pre_pagination_action; ?>&page=<?= $previous_page; ?>'>Page précédente</a></li>
+        <?php } ?>
+
+        <li class="page-item active" aria-current="page">
+            <span class="page-link">Page <?= $actual_page; ?> sur <?= $total_pages; ?><span class="sr-only">(current)</span>
+            </span>
+        </li>
+
+        <?php if ($actual_page < $total_pages) { ?>
+            <li class='page-item'><a class='page-link' href='index.php?action=<?= $pre_pagination_action; ?>&page=<?= $next_page; ?>'>Page suivante</a></li>
+
+            <li class='page-item'><a class='page-link' href='index.php?action=<?= $pre_pagination_action; ?>&page=<?= $total_pages; ?>'>Dernière page</a></li>
+        <?php } ?>
+
+    </ul>
+</nav>
