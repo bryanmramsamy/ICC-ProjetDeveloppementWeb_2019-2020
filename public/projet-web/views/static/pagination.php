@@ -1,3 +1,8 @@
+<?php
+$previous_page = $actual_page - 1;
+$next_page = $actual_page + 1;
+?>
+
 <nav aria-label="Page navigation example">
     <ul class="pagination">
 

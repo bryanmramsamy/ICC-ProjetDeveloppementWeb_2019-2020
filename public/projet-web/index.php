@@ -3,15 +3,7 @@ session_start();
 
 require('controller/backend.php');
 require('controller/frontend.php');
-
-
-const PERMISSION = array(
-    'guest' => 0,
-    'user' => 10,
-    # 'spec' => 30,
-    'moderator' => 40,
-    'admin' => 50,
- );
+require('controller/permissions.php');
 
 const MINICHAT_NB_MESSAGE_PER_PAGE = 10;
 const POSTS_NB_COMMENT_PER_PAGE = 10;

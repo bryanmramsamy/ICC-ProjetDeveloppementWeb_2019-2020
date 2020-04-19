@@ -54,9 +54,6 @@ function posts($page=1, $nb_post_per_page){
     $actual_page = $postManager->getActualPagePost($page, $nb_post_per_page);
     $total_pages = $postManager->getTotalPagesPost($nb_post_per_page);
 
-    $previous_page = $actual_page - 1;
-    $next_page = $actual_page + 1;
-
     require('views/posts/posts_ListView.php');
 }
 
@@ -72,6 +69,8 @@ function post($page=1, $nb_comment_per_page){
         $post_created_by = $userManager->getUser_byID($post['created_by']);
     
         $comments = $commentManager->getComments_byPage($page, $nb_comment_per_page);
+        $actual_page = $commentManager->getActualPageComment($page, $nb_comment_per_page);
+        $total_pages = $commentManager->getTotalPagesComment($nb_comment_per_page);
     
         require('views/posts/post_DetailView.php');
 
@@ -81,10 +80,13 @@ function post($page=1, $nb_comment_per_page){
 }
 
 function post_create(){
+    checkPremissions('admin');
     require('views/posts/post_CreateView.php');
 }
 
 function post_update(){
+    checkPremissions('admin');
+
     if (isset($_GET['postID']) && !empty($_GET['postID'])) {
         $postID = htmlspecialchars($_GET['postID']);
 
@@ -108,9 +110,6 @@ function minichat($page=1, $nb_message_per_page){
     $messages = $minichatManager->getMessages_byPage($page, $nb_message_per_page);
     $actual_page = $minichatManager->getActualPageMessage($page, $nb_message_per_page);
     $total_pages = $minichatManager->getTotalPagesMessage($nb_message_per_page);
-
-    $previous_page = $actual_page - 1;
-    $next_page = $actual_page + 1;
 
     require('views/minichat/minichat_ListView.php');
 }

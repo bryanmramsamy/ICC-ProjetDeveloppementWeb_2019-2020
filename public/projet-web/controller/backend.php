@@ -131,7 +131,7 @@ function unset_session(){
 # Posts
 
 function post_create_post(){
-    if ($_SESSION['user_role_lvl'] < PERMISSION['admin']) header('Location: index.php?action=forbidden');
+    checkPremissions('admin');
 
     if (isset($_POST['title']) && !empty($_POST['title'])
         && isset($_POST['content']) && !empty($_POST['content'])) {
@@ -157,6 +157,8 @@ function post_create_post(){
 }
 
 function post_update_post() {
+    checkPremissions('admin');
+
     if (isset($_GET['postID']) && !empty($_GET['postID'])) {
         $postID = htmlspecialchars($_GET['postID']);
         if ($_SESSION['user_role_lvl'] < PERMISSION['admin']) header('Location: index.php?action=forbidden');
@@ -187,6 +189,8 @@ function post_update_post() {
 }
 
 function post_publish(){
+    checkPremissions('admin');
+
     if (isset($_GET['postID']) && !empty($_GET['postID'])) {
         $postID = htmlspecialchars($_GET['postID']);
 
@@ -210,7 +214,8 @@ function post_publish(){
 }
 
 function post_comment_create_post() {
-    // user or admin only
+    checkPremissions('user');
+
     if (isset($_GET['postID']) && !empty($_GET['postID'])) {
         $postID = htmlspecialchars($_GET['postID']);
 
@@ -238,8 +243,8 @@ function post_comment_create_post() {
 # MiniChat
 
 function minichat_post(){
-    if ($_SESSION['user_role_lvl'] < PERMISSION['user']) header('Location: index.php?action=forbidden');
-    
+    checkPremissions('user');
+
     $cleaned_message = htmlspecialchars($_POST['message']);
 
     $minichatManager = new MiniChatManager();
