@@ -15,13 +15,13 @@ ob_start();
 
         <div>
             <label for='title'>Titre : </label>
-            <input type='text' id='title' name='title' value='<?= $post['title']; ?>'/>
+            <input type='text' id='title' name='title' value='<?= $post['title']; ?>' required/>
         </div>
 
         <div>
             <label for='content'>Contenu du billet : </label>
             <br/>
-            <textarea name="content" rows="8" cols="45"><?= $post['content']; ?></textarea>
+            <textarea name="content" rows="8" cols="45" required><?= $post['content']; ?></textarea>
         </div>
 
         <div>

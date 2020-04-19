@@ -63,7 +63,7 @@ ob_start();
 
     <?php
     while ($comment = $comments->fetch()) { 
-        if ($comment['post_id'] == $postID) {
+        if ($comment['post_id'] == $postID && ($comment['is_visible'] == true || checkPermissions('admin', false))) {
     ?>
         <div class="comment">
 
@@ -71,7 +71,7 @@ ob_start();
 
             <strong><?= htmlspecialchars($comment_displayed_name); ?></strong> a envoyé le <em><?= ($comment['date_edited']); ?></em>
             <br/>
-            <?php # require('views/posts/comment_admin_options.php') ?>
+            <?php require('views/posts/comment_admin_options.php') ?>
 
             <p><?= nl2br(htmlspecialchars($comment['comment'])) ?></p>
 

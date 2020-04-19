@@ -10,6 +10,7 @@ use \ProjetWeb\Model\MiniChatManager;
 use \ProjetWeb\Model\PostManager;
 use \ProjetWeb\Model\UserManager;
 
+
 # Authentication
 
 function signin_post(){
@@ -130,7 +131,7 @@ function unset_session(){
 # Posts
 
 function post_create_post(){
-    checkPremissions('admin', true);
+    checkPermissions('admin', true);
 
     if (isset($_POST['title']) && !empty($_POST['title'])
         && isset($_POST['content']) && !empty($_POST['content'])) {
@@ -156,7 +157,7 @@ function post_create_post(){
 }
 
 function post_update_post() {
-    checkPremissions('admin', true);
+    checkPermissions('admin', true);
 
     $postID = clean_postID();
     check_postExist($postID);
@@ -181,7 +182,7 @@ function post_update_post() {
 }
 
 function post_publish(){
-    checkPremissions('admin', true);
+    checkPermissions('admin', true);
 
     $postID = clean_postID();
     check_postExist($postID);
@@ -196,7 +197,7 @@ function post_publish(){
 }
 
 function post_comment_create_post() {
-    checkPremissions('user', true);
+    checkPermissions('user', true);
 
     $postID = clean_postID();
     check_postExist($postID);
@@ -215,11 +216,53 @@ function post_comment_create_post() {
     header('Location: index.php?action=post&postID=' . $postID . '&signal_post_commentCreation=' . $signal_post_commentCreation);
 }
 
+function post_comment_update_post() {
+    checkPermissions('user', true);
+
+    $commentID = clean_commentID();
+    check_commentExist($commentID);
+
+    $commentManager = new CommentManager();
+    $comment = $commentManager->getComment($commentID);
+
+    if (!checkPermissions('admin', false) || $comment['created_by'] != $_SESSION['userID']) header ('Location: index.php?action=forbidden');
+
+    $cleaned_comment = (isset($_POST['comment']) & !empty($_POST['comment'])) ? htmlspecialchars($_POST['comment']) : null;
+    $cleaned_is_visible = htmlspecialchars($_POST['is_visible']);
+    $boolean_is_visible = $cleaned_is_visible != 1 ? 0 : 1;
+
+    $update_succeeded = $commentManager->updateComment($commentID, $cleaned_comment, $boolean_is_visible);
+
+    $signal_post_commentUpdate = $update_succeeded ? 'updated' : 'failed';
+    
+    if ($signal_post_commentUpdate === 'updated') {
+        header('Location: index.php?action=post&postID=' . $comment['post_id'] . '&signal_post_commentUpdate=' . $signal_post_commentUpdate);
+    } else {
+        header('Location: index.php?action=post_comment_update&commentID=' . $commentID . '&signal_post_commentUpdate=' . $signal_post_commentUpdate);
+    }
+}
+
+function post_comment_publish(){
+    checkPermissions('admin', true);
+
+    $commentID = clean_commentID();
+    check_commentExist($commentID);
+
+    $commentManager = new CommentManager();
+
+    $visibility_modification_succeed = $commentManager->makeCommentVisible($commentID);
+
+    $signal_post_commentVisibility = $visibility_modification_succeed ? 'succeed' : 'failed';
+
+    $postID = $commentManager->getComment($commentID)['post_id'];
+    
+    header('Location: index.php?action=post&postID=' . $postID . '&signal_post_comcommentVisibility=' . $signal_post_comcommentVisibility);
+}
 
 # MiniChat
 
 function minichat_post(){
-    checkPremissions('user', true);
+    checkPermissions('user', true);
 
     $cleaned_message = htmlspecialchars($_POST['message']);
 

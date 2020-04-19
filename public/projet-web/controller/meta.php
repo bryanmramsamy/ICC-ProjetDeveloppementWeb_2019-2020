@@ -41,3 +41,15 @@ function check_postExist($postID){
 
     if (empty($post['id'])) header('Location: index.php?action=404');
 }
+
+function clean_commentID() {
+    if (isset($_GET['commentID']) && !empty($_GET['commentID'])) return htmlspecialchars($_GET['commentID']);
+    else header ('Location: index.php?action=404');
+}
+
+function check_commentExist($commentID){
+    $commentManager = new CommentManager();
+    $comment = $commentManager->getComment($commentID);
+
+    if (empty($comment['id'])) header('Location: index.php?action=404');
+}

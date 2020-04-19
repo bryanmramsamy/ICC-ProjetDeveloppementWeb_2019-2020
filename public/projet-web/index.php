@@ -42,8 +42,16 @@ try {
                 post_comment_create_post();
                 break;
 
+            case 'post_comment_update':
+                post_comment_update();
+                break;
+
             case 'post_comment_update_post':
                 post_comment_update_post();
+                break;
+
+            case 'post_comment_publish':
+                post_comment_publish();
                 break;
 
             case 'post_create':

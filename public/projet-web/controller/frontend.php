@@ -74,12 +74,12 @@ function post($page=1, $nb_comment_per_page){
 }
 
 function post_create(){
-    checkPremissions('admin', true);
+    checkPermissions('admin', true);
     require('views/posts/post_CreateView.php');
 }
 
 function post_update(){
-    checkPremissions('admin', true);
+    checkPermissions('admin', true);
 
     $postID = clean_postID();
     check_postExist($postID);
@@ -90,6 +90,18 @@ function post_update(){
     $post = $postManager->getPost_byID($cleaned_postID);
 
     require('views/posts/post_UpdateView.php');
+}
+
+function post_comment_update(){
+    $is_admin = checkPermissions('user', true);
+
+    $commentID = clean_commentID();
+    check_commentExist($commentID);
+
+    $commentManager = new CommentManager();
+    $comment = $commentManager->getComment($commentID);
+
+    require('views/posts/comment_UpdateView.php');
 }
 
 # MiniChat

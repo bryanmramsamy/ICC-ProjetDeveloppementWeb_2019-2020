@@ -23,8 +23,8 @@ class CommentManager extends Manager {
         return $this->getTotalPages($this->db_table, $nb_comment_per_page);
     }
 
-    public function getComment($key, $value){
-        return $this->getEntry($db_table, $key, $value);
+    public function getComment($value){
+        return $this->getEntry($this->db_table, 'id', $value);
     }
 
     public function createComment($postID, $comment) {
@@ -33,6 +33,30 @@ class CommentManager extends Manager {
             'postID' => $postID,
             'userID' => $_SESSION['userID'],
             'comment' => $comment
+        );
+
+        return $this->createUpdateDeleteEntry($query, $data_array);
+    }
+
+    public function updateComment($commentID, $comment, $is_visible) {
+        $query = 'UPDATE comments SET comment = :comment, date_edited = NOW(), is_visible = :is_visible WHERE id = :commentID';
+        $data_array = array(
+            'commentID' => $commentID,
+            'comment' => $comment,
+            'is_visible' => $is_visible
+        );
+
+        return $this->createUpdateDeleteEntry($query, $data_array);
+    }
+
+    public function makeCommentVisible($commentID){
+        $is_visible = $this->getComment($commentID)['is_visible'];
+        $set_visible = $is_visible ? 0 : 1;
+
+        $query = 'UPDATE comments SET is_visible = :set_visible WHERE id = :commentID';
+        $data_array = array(
+            'commentID' => $commentID,
+            'set_visible' => $set_visible
         );
 
         return $this->createUpdateDeleteEntry($query, $data_array);
