@@ -12,6 +12,7 @@ if ($_SESSION['user_role_lvl'] >= PERMISSION['admin']){ ?>
         <?php
         require('views/signals/signal_post_postCreation.php');
         require('views/signals/signal_post_postUpdate.php');
+        require('views/signals/signal_post_commentCreation.php')
         ?>
 
     </section>

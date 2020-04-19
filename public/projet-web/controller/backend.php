@@ -1,9 +1,11 @@
 <?php
 
+require_once('models/CommentManager.php');
 require_once('models/MiniChatManager.php');
 require_once('models/PostManager.php');
 require_once('models/UserManager.php');
 
+use \ProjetWeb\Model\CommentManager;
 use \ProjetWeb\Model\MiniChatManager;
 use \ProjetWeb\Model\PostManager;
 use \ProjetWeb\Model\UserManager;
@@ -190,6 +192,31 @@ function post_publish($postID){
     $signal_post_postPublication = $publication_modification_succeed ? 'succeed' : 'failed';
 
     header('Location: index.php?action=post&postID=' . $postID . '&signal_post_postPublication=' . $signal_post_postPublication);
+}
+
+function post_comment_create_post() {
+
+    if (isset($_GET['postID']) && !empty($_GET['postID'])) {
+        $cleaned_postID = htmlspecialchars($_GET['postID']);
+
+        if (isset($_POST['comment']) && !empty($_POST['comment'])) {
+            $cleaned_comment = htmlspecialchars($_POST['comment']);
+
+            $commentManager = new CommentManager();
+            $creation_succeeded = $commentManager->createComment($cleaned_postID, $cleaned_comment);
+
+            $signal_post_commentCreation = $creation_succeeded ? 'created' : 'failed';
+        } else {
+            $signal_post_commentCreation = 'invalid';
+        }
+
+        header('Location: index.php?action=post&postID=' . $cleaned_postID . '&signal_post_commentCreation=' . $signal_post_commentCreation);
+
+    } else {
+        $signal_post_commentCreation = 'unknownID';
+
+        header('Location: index.php?action=posts&signal_post_commentCreation=' . $signal_post_commentCreation);
+    }
 }
 
 

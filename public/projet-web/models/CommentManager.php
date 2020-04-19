@@ -10,7 +10,7 @@ class CommentManager extends Manager {
     private $db_table = 'comments';
 
     public function getComments_byPage($page, $nb_comment_per_page){
-        $query = 'SELECT comments.*, users.id, users.username, users.last_name, users.first_name FROM comments INNER JOIN users ON comments.created_by = users.id ORDER BY date_edited DESC';
+        $query = 'SELECT comments.id AS commentID, comments.*, users.id, users.username, users.last_name, users.first_name FROM comments INNER JOIN users ON comments.created_by = users.id ORDER BY date_edited DESC';
 
         return $this->getEntries_byPage($this->db_table, $query, $page, $nb_comment_per_page);
     }
@@ -27,11 +27,12 @@ class CommentManager extends Manager {
         return $this->getEntry($db_table, $key, $value);
     }
 
-    public function createComment($message) {
-        $query = 'INSERT INTO comments (userID, message, date_creation, date_edition) VALUES (:userID, :message, NOW(), NOW())';  # To modify
-        $data_array = array(  # To modify
+    public function createComment($postID, $comment) {
+        $query = 'INSERT INTO comments (post_id, created_by, comment, date_created, date_edited) VALUES (:postID, :userID, :comment, NOW(), NOW())';
+        $data_array = array(
+            'postID' => $postID,
             'userID' => $_SESSION['userID'],
-            'message' => $message
+            'comment' => $comment
         );
 
         return $this->createUpdateDeleteEntry($query, $data_array);

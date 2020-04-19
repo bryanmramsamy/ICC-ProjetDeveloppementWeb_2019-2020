@@ -14,6 +14,7 @@ const PERMISSION = array(
  );
 
 const MINICHAT_NB_MESSAGE_PER_PAGE = 10;
+const POSTS_NB_COMMENT_PER_PAGE = 10;
 const POSTS_NB_POST_PER_PAGE = 10;
 
 try {
@@ -42,8 +43,16 @@ try {
                 break;
 
             case 'post':
-                if (isset($_GET['postID']) && !empty($_GET['postID'])) post($_GET['postID']);
+                if (isset($_GET['postID']) && !empty($_GET['postID'])) post($_GET['postID'], $page, POSTS_NB_COMMENT_PER_PAGE);
                 else posts($page, POSTS_NB_POST_PER_PAGE);
+                break;
+
+            case 'post_comment_create_post':
+                post_comment_create_post();
+                break;
+
+            case 'post_comment_update_post':
+                post_comment_update_post();
                 break;
 
             case 'post_create':

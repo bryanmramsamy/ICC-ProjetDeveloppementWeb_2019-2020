@@ -1,9 +1,11 @@
 <?php
 
+require_once('models/CommentManager.php');
 require_once('models/MiniChatManager.php');
 require_once('models/PostManager.php');
 require_once('models/UserManager.php');
 
+use \ProjetWeb\Model\CommentManager;
 use \ProjetWeb\Model\MiniChatManager;
 use \ProjetWeb\Model\PostManager;
 use \ProjetWeb\Model\UserManager;
@@ -54,12 +56,15 @@ function posts($page=1, $nb_post_per_page){
     require('views/posts/posts_ListView.php');
 }
 
-function post($postID){
+function post($postID, $page=1, $nb_comment_per_page){
+    $commentManager = new CommentManager();
     $postManager = new PostManager();
     $userManager = new UserManager();
 
     $post = $postManager->getPost_byID($postID);
-    $created_by = $userManager->getUser_byID($post['created_by']);
+    $post_created_by = $userManager->getUser_byID($post['created_by']);
+
+    $comments = $commentManager->getComments_byPage($page, $nb_comment_per_page);
 
     require('views/posts/post_DetailView.php');
 }
