@@ -21,6 +21,10 @@ function forbidden(){
     require('views/static/forbidden.php');
 }
 
+function not_found(){
+    require('views/static/not_found.php');
+}
+
 
 # Authentication
 
@@ -56,30 +60,44 @@ function posts($page=1, $nb_post_per_page){
     require('views/posts/posts_ListView.php');
 }
 
-function post($postID, $page=1, $nb_comment_per_page){
-    $commentManager = new CommentManager();
-    $postManager = new PostManager();
-    $userManager = new UserManager();
+function post($page=1, $nb_comment_per_page){
+    if (isset($_GET['postID']) && !empty($_GET['postID'])) {
+        $postID = htmlspecialchars($_GET['postID']);
 
-    $post = $postManager->getPost_byID($postID);
-    $post_created_by = $userManager->getUser_byID($post['created_by']);
+        $commentManager = new CommentManager();
+        $postManager = new PostManager();
+        $userManager = new UserManager();
+    
+        $post = $postManager->getPost_byID($postID);
+        $post_created_by = $userManager->getUser_byID($post['created_by']);
+    
+        $comments = $commentManager->getComments_byPage($page, $nb_comment_per_page);
+    
+        require('views/posts/post_DetailView.php');
 
-    $comments = $commentManager->getComments_byPage($page, $nb_comment_per_page);
-
-    require('views/posts/post_DetailView.php');
+    } else {
+        header('Location: index.php?action=404');
+    }
 }
 
 function post_create(){
     require('views/posts/post_CreateView.php');
 }
 
-function post_update($postID){
-    $cleaned_postID = htmlspecialchars($postID);
+function post_update(){
+    if (isset($_GET['postID']) && !empty($_GET['postID'])) {
+        $postID = htmlspecialchars($_GET['postID']);
 
-    $postManager = new PostManager();
-    $post = $postManager->getPost_byID($cleaned_postID);
+        $cleaned_postID = htmlspecialchars($postID);
 
-    require('views/posts/post_UpdateView.php');
+        $postManager = new PostManager();
+        $post = $postManager->getPost_byID($cleaned_postID);
+
+        require('views/posts/post_UpdateView.php');
+
+    } else {
+        header('Location: index.php?action=404');
+    }
 }
 
 # MiniChat

@@ -156,61 +156,76 @@ function post_create_post(){
     }
 }
 
-function post_update_post($postID) {
-    if ($_SESSION['user_role_lvl'] < PERMISSION['admin']) header('Location: index.php?action=forbidden');
+function post_update_post() {
+    if (isset($_GET['postID']) && !empty($_GET['postID'])) {
+        $postID = htmlspecialchars($_GET['postID']);
+        if ($_SESSION['user_role_lvl'] < PERMISSION['admin']) header('Location: index.php?action=forbidden');
 
-        $cleaned_postID = htmlspecialchars($postID);
+            $cleaned_postID = htmlspecialchars($postID);
 
-        $postManager = new PostManager();
-        $post = $postManager->getPost_byID($cleaned_postID);
+            $postManager = new PostManager();
+            $post = $postManager->getPost_byID($cleaned_postID);
 
-        $cleaned_title = (isset($_POST['title']) & !empty($_POST['title'])) ? htmlspecialchars($_POST['title']) : null;
-        $cleaned_content = (isset($_POST['content']) & !empty($_POST['content'])) ? htmlspecialchars($_POST['content']) : null;
-        $cleaned_is_published = htmlspecialchars($_POST['is_published']);
-        $boolean_is_published = $cleaned_is_published != 1 ? 0 : 1;
+            $cleaned_title = (isset($_POST['title']) & !empty($_POST['title'])) ? htmlspecialchars($_POST['title']) : null;
+            $cleaned_content = (isset($_POST['content']) & !empty($_POST['content'])) ? htmlspecialchars($_POST['content']) : null;
+            $cleaned_is_published = htmlspecialchars($_POST['is_published']);
+            $boolean_is_published = $cleaned_is_published != 1 ? 0 : 1;
 
-        $update_succeeded = $postManager->updatePost($cleaned_postID, $cleaned_title, $cleaned_content, $boolean_is_published);
+            $update_succeeded = $postManager->updatePost($cleaned_postID, $cleaned_title, $cleaned_content, $boolean_is_published);
 
-        $signal_post_postUpdate = $update_succeeded ? 'updated' : 'failed';
-    
-    if ($signal_post_postUpdate === 'updated') {
-        header('Location: index.php?action=posts&signal_post_postUpdate=' . $signal_post_postUpdate);
+            $signal_post_postUpdate = $update_succeeded ? 'updated' : 'failed';
+        
+        if ($signal_post_postUpdate === 'updated') {
+            header('Location: index.php?action=posts&signal_post_postUpdate=' . $signal_post_postUpdate);
+        } else {
+            header('Location: index.php?action=post_create&signal_post_postUpdate=' . $signal_post_postUpdate);
+        }
+
     } else {
-        header('Location: index.php?action=post_create&signal_post_postUpdate=' . $signal_post_postUpdate);
+        header('Location: index.php?action=404');
     }
 }
 
-function post_publish($postID){
-    if ($_SESSION['user_role_lvl'] >= PERMISSION['admin']) {
-        $cleaned_postID = htmlspecialchars($postID);
+function post_publish(){
+    if (isset($_GET['postID']) && !empty($_GET['postID'])) {
+        $postID = htmlspecialchars($_GET['postID']);
 
-        $postManager = new PostManager();
+        if ($_SESSION['user_role_lvl'] >= PERMISSION['admin']) {
+            $cleaned_postID = htmlspecialchars($postID);
 
-        $publication_modification_succeed = $postManager->publishPost($cleaned_postID);
+            $postManager = new PostManager();
+
+            $publication_modification_succeed = $postManager->publishPost($cleaned_postID);
+
+            $signal_post_postPublication = $publication_modification_succeed ? 'succeed' : 'failed';
+
+            header('Location: index.php?action=post&postID=' . $postID . '&signal_post_postPublication=' . $signal_post_postPublication);
+        } else {
+            header('Location: index.php?action=forbidden');
+        }
+
+    } else {
+        header('Location: index.php?action=404');
     }
-
-    $signal_post_postPublication = $publication_modification_succeed ? 'succeed' : 'failed';
-
-    header('Location: index.php?action=post&postID=' . $postID . '&signal_post_postPublication=' . $signal_post_postPublication);
 }
 
 function post_comment_create_post() {
-
+    // user or admin only
     if (isset($_GET['postID']) && !empty($_GET['postID'])) {
-        $cleaned_postID = htmlspecialchars($_GET['postID']);
+        $postID = htmlspecialchars($_GET['postID']);
 
         if (isset($_POST['comment']) && !empty($_POST['comment'])) {
             $cleaned_comment = htmlspecialchars($_POST['comment']);
 
             $commentManager = new CommentManager();
-            $creation_succeeded = $commentManager->createComment($cleaned_postID, $cleaned_comment);
+            $creation_succeeded = $commentManager->createComment($postID, $cleaned_comment);
 
             $signal_post_commentCreation = $creation_succeeded ? 'created' : 'failed';
         } else {
             $signal_post_commentCreation = 'invalid';
         }
 
-        header('Location: index.php?action=post&postID=' . $cleaned_postID . '&signal_post_commentCreation=' . $signal_post_commentCreation);
+        header('Location: index.php?action=post&postID=' . $postID . '&signal_post_commentCreation=' . $signal_post_commentCreation);
 
     } else {
         $signal_post_commentCreation = 'unknownID';

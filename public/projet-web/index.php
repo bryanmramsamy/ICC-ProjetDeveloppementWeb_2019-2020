@@ -18,7 +18,7 @@ const POSTS_NB_COMMENT_PER_PAGE = 10;
 const POSTS_NB_POST_PER_PAGE = 10;
 
 try {
-    if (isset($_GET['page']) && !empty($_GET['page'])) $page = $_GET['page'];
+    if (isset($_GET['page']) && !empty($_GET['page']) && $page > 0) $page = $_GET['page'];
 
     if (isset($_GET['action']) && !empty($_GET['action'])) {
         switch ($_GET['action']) {
@@ -43,8 +43,7 @@ try {
                 break;
 
             case 'post':
-                if (isset($_GET['postID']) && !empty($_GET['postID'])) post($_GET['postID'], $page, POSTS_NB_COMMENT_PER_PAGE);
-                else posts($page, POSTS_NB_POST_PER_PAGE);
+                post($page, POSTS_NB_COMMENT_PER_PAGE);
                 break;
 
             case 'post_comment_create_post':
@@ -64,18 +63,15 @@ try {
                 break;
 
             case 'post_update':
-                if (isset($_GET['postID']) && !empty($_GET['postID'])) post_update($_GET['postID']);
-                else posts($page, POSTS_NB_POST_PER_PAGE);
+                post_update();
                 break;
             
             case 'post_update_post':
-                if (isset($_GET['postID']) && !empty($_GET['postID'])) post_update_post($_GET['postID']);
-                else posts($page, POSTS_NB_POST_PER_PAGE);
+                post_update_post();
                 break;
 
             case 'post_publish':
-                if (isset($_GET['postID']) && !empty($_GET['postID'])) post_publish($_GET['postID']);
-                else posts($page, POSTS_NB_POST_PER_PAGE);
+                post_publish();
                 break;
 
             case 'posts':
@@ -107,7 +103,7 @@ try {
                 break;
 
             default:
-                home();
+                not_found();
                 break;
         }
     } else {

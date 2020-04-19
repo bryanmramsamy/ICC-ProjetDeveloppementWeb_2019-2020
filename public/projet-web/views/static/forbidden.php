@@ -1,4 +1,4 @@
-<?php $title = "KEEP OUT"; ?>
+<?php $title = "Accès restreint"; ?>
 
 <?php ob_start(); ?>
 
