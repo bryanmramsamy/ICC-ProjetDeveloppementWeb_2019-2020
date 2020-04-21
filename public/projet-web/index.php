@@ -34,6 +34,10 @@ try {
                 minichat_post();
                 break;
 
+            case 'password_change_post':
+                password_change_post();
+                break;
+
             case 'post':
                 post($page, POSTS_NB_COMMENT_PER_PAGE);
                 break;
@@ -80,6 +84,14 @@ try {
 
             case 'profile':
                 profile();
+                break;
+            
+            case 'profile_update':
+                profile_update();
+                break;
+
+            case 'profile_update_post':
+                profile_update_post();
                 break;
 
             case 'register':

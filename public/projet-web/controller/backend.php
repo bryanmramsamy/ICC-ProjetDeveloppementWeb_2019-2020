@@ -127,6 +127,72 @@ function unset_session(){
     unset($_SESSION['user_displayed_name']);
 }
 
+function password_change_post(){
+    if (isset($_POST['userID']) && !empty($_POST['userID'])) {
+        $cleaned_userID = htmlspecialchars($_POST['userID']);
+
+        if (isset($_POST['old_password']) && !empty($_POST['old_password'])) {
+            $cleaned_old_password = htmlspecialchars($_POST['old_password']);
+
+            if (isset($_POST['new_password']) && !empty($_POST['new_password'])) {
+                $cleaned_new_password = htmlspecialchars($_POST['new_password']);
+
+                if (isset($_POST['new_password_confirmation']) && !empty($_POST['new_password_confirmation'])) {
+                    $cleaned_new_password_confirmation = htmlspecialchars($_POST['new_password_confirmation']);
+                } else { 
+                    $signal_post_password_change = 'empty_new_password';
+                }
+
+            } else {
+                $signal_post_password_change = 'empty_new_password';
+            }
+
+        } else {
+            $signal_post_password_change = 'empty_old_password';
+        }
+
+    } else {
+        $signal_post_password_change = 'empty_userID';
+    }
+
+    if (empty($signal_post_password_change)) {
+        $userManager = new UserManager();
+        $user = $userManager->getUser_byID($cleaned_userID);
+
+        if (!empty($user['id'])) {
+            if (password_verify($cleaned_old_password, $user['passwd'])) {
+                if ($cleaned_new_password === $cleaned_new_password_confirmation) {
+                    $hashed_password = password_hash($cleaned_new_password, PASSWORD_DEFAULT);
+
+                    $password_changed = $userManager->password_change($cleaned_userID, $hashed_password);
+
+                    if ($password_changed) {
+                        $signal_post_password_change = 'succeed';
+                    } else {
+                        $signal_post_password_change = 'failed';
+                    }
+                    
+                } else {
+                    $signal_post_password_change = 'passwords_mismatch';
+                }
+                
+            } else {
+                $signal_post_password_change = 'incorrect_credentials';
+            }
+        } else {
+            $signal_post_password_change = 'user_unknown';
+        }
+    }
+
+    $profileID_GET = checkPermissions('admin', false) ? "&userID=" . $cleaned_userID : "";
+
+    if ($signal_post_password_change == 'succeed') {
+        header('Location: index.php?action=profile' . $profileID_GET);
+    } else {
+        header('Location: index.php?action=profile_update' . $profileID_GET);
+    }
+}
+
 
 # Posts
 

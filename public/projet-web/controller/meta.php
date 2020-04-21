@@ -11,6 +11,20 @@ use \ProjetWeb\Model\PostManager;
 use \ProjetWeb\Model\UserManager;
 
 
+# Authentication
+
+function clean_userID() {
+    clean_GETparam('userID');
+}
+
+function check_userExist($userID){
+    $userManager = new UserManager();
+    $user = $userManager->getUser_byID($userID);
+
+    if (empty($user['id'])) header('Location: index.php?action=404');
+}
+
+
 # Permissions
 
 const PERMISSION = array(
@@ -31,8 +45,7 @@ function checkPermissions($required_permissions, $redirection) {
 # Posts
 
 function clean_postID() {
-    if (isset($_GET['postID']) && !empty($_GET['postID'])) return htmlspecialchars($_GET['postID']);
-    else header ('Location: index.php?action=404');
+    clean_GETparam('postID');
 }
 
 function check_postExist($postID){
@@ -43,8 +56,7 @@ function check_postExist($postID){
 }
 
 function clean_commentID() {
-    if (isset($_GET['commentID']) && !empty($_GET['commentID'])) return htmlspecialchars($_GET['commentID']);
-    else header ('Location: index.php?action=404');
+    clean_GETparam('commentID');
 }
 
 function check_commentExist($commentID){
@@ -52,4 +64,11 @@ function check_commentExist($commentID){
     $comment = $commentManager->getComment($commentID);
 
     if (empty($comment['id'])) header('Location: index.php?action=404');
+}
+
+# Utility
+
+function clean_GET($value) {
+    if (isset($_GET[$value]) && !empty($_GET[$value])) return htmlspecialchars($_GET[$value]);
+    else header ('Location: index.php?action=404');
 }
