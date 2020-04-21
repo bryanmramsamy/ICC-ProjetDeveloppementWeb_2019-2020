@@ -36,9 +36,17 @@ function register(){
 }
 
 function profile(){
+    checkPermissions('user', true);
+
+    if (isset($_SESSION['userID']) && !empty($_SESSION['userID'])) $userID = $_SESSION['userID'];
+    else if (checkPermissions('admin', false)) {
+        $userID = clean_userID();
+        check_userExist($userID);
+    }
+
     $userManager = new UserManager();
 
-    $profile = $userManager->getUser_byID($_SESSION['userID']);
+    $user = $userManager->getUser_byID($userID);
 
     require('views/authentication/profile.php');
 }

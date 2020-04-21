@@ -140,7 +140,7 @@ function password_change_post(){
                 if (isset($_POST['new_password_confirmation']) && !empty($_POST['new_password_confirmation'])) {
                     $cleaned_new_password_confirmation = htmlspecialchars($_POST['new_password_confirmation']);
                 } else { 
-                    $signal_post_password_change = 'empty_new_password';
+                    $signal_post_password_change = 'empty_new_password_confirmation';
                 }
 
             } else {
@@ -187,9 +187,9 @@ function password_change_post(){
     $profileID_GET = checkPermissions('admin', false) ? "&userID=" . $cleaned_userID : "";
 
     if ($signal_post_password_change == 'succeed') {
-        header('Location: index.php?action=profile' . $profileID_GET);
+        header('Location: index.php?action=profile&signal_post_password_change=' . $signal_post_password_change . $profileID_GET);
     } else {
-        header('Location: index.php?action=profile_update' . $profileID_GET);
+        header('Location: index.php?action=profile_update&signal_post_password_change=' . $signal_post_password_change . $profileID_GET);
     }
 }
 

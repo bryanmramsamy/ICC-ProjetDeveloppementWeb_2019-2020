@@ -13,7 +13,7 @@ ob_start();
 
     <form method="POST" action="index.php?action=password_change_post">
 
-        <?php # require('views/signals/signal_post_paasword_change.php'); ?>
+        <?php require('views/signals/signal_post_password_change.php'); ?>
 
         <div>
             <input type='hidden' id='userID' name='userID' value='<?= $user['id']; ?>' required/>
