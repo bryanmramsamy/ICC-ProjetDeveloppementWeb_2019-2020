@@ -2,8 +2,9 @@
 
 switch ($_GET['signal_post_userRegister']) {
     case 'created':
-        $signal_post_userRegister = "Votre compte a été créé avec succès";
+        $signal_post_userRegister_message = "Votre compte a été créé avec succès";
+        $alert = "success";
         break;
 }
 
-echo ("<div class='signal'>" . $signal_post_userRegister . "</div>");
+check_signal($signal_post_userRegister_message, $alert);

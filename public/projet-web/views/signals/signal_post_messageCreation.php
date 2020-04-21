@@ -2,12 +2,14 @@
 
 switch ($_GET['signal_post_messageCreation']) {
     case 'created':
-        $signal_post_messageCreation = "Votre message a bien été rajouté au MiniChat !";
+        $signal_post_messageCreation_message = "Votre message a bien été rajouté au MiniChat !";
+        $alert = "success";
         break;
     
     case 'failed':
-        $signal_post_messageCreation = "Une erreur s'est produite ! Votre message n'a pas pu être rajouté !";
+        $signal_post_messageCreation_message = "Une erreur s'est produite ! Votre message n'a pas pu être rajouté !";
+        $alert = "danger";
         break;
 }
 
-echo ("<div class='signal'>" . $signal_post_messageCreation . "</div>");
+check_signal($signal_post_messageCreation_message, $alert);

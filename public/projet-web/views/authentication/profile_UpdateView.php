@@ -42,7 +42,11 @@ ob_start();
 
 </section>
 
+<br/>
+
 <section id="profile_UpdateForm">
+
+    <h2>Modifier votre profile</h2>
 
     <form method="POST" action="index.php?action=profile_update_post&userID=<?= $user['userID']; ?>">
 

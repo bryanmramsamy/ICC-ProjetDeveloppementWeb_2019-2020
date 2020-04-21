@@ -14,7 +14,7 @@ use \ProjetWeb\Model\UserManager;
 # Authentication
 
 function clean_userID() {
-    clean_GETparam('userID');
+    clean_GET('userID');
 }
 
 function check_userExist($userID){
@@ -45,7 +45,7 @@ function checkPermissions($required_permissions, $redirection) {
 # Posts
 
 function clean_postID() {
-    clean_GETparam('postID');
+    return clean_GET('postID');
 }
 
 function check_postExist($postID){
@@ -56,7 +56,7 @@ function check_postExist($postID){
 }
 
 function clean_commentID() {
-    clean_GETparam('commentID');
+    return clean_GET('commentID');
 }
 
 function check_commentExist($commentID){
@@ -71,4 +71,9 @@ function check_commentExist($commentID){
 function clean_GET($value) {
     if (isset($_GET[$value]) && !empty($_GET[$value])) return htmlspecialchars($_GET[$value]);
     else header ('Location: index.php?action=404');
+}
+
+function check_signal($signal_message, $alert){
+    if (empty($signal_message)) echo("");
+    else echo ("<div class=\"alert alert-$alert\" role=\"alert\">$signal_message</div>");
 }

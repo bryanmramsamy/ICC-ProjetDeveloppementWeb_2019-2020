@@ -1,10 +1,6 @@
-<section = class="signals">
-    <div class="signal">
-        <?php require('views/signals/signal_post_userRegister.php'); ?>
-    </div>
-    <div class="signal">
-        <?php require('views/signals/signal_post_userSignin.php'); ?>
-    </div>
+<section class="signals">
+    <?php require('views/signals/signal_post_userRegister.php'); ?>
+    <?php require('views/signals/signal_post_userSignin.php'); ?>
 </section>
 
 <?php if (isset($_SESSION['userID']) && !empty($_SESSION['userID'])) { ?>
