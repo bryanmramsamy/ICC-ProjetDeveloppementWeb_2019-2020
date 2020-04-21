@@ -8,9 +8,8 @@
     <p>
         Bonjour <?= displayed_name($_SESSION['username'], $_SESSION['user_first_name'], $_SESSION['user_last_name']); ?>
         <br />
-        <a href="index.php?action=profile">Voir votre profile</a>
-        <br />
-        <a href="index.php?action=signout">Déconnexion</a>
+        <a class="btn btn-primary" href="index.php?action=profile">Voir votre profile</a> 
+        <a class="btn btn-secondary" href="index.php?action=signout">Déconnexion</a>
     </p>
 
 <?php } else { ?>
@@ -28,11 +27,11 @@
         </div>
 
         <div>
-            <input type=submit value="Se connecter" />
+            <input class="btn btn-primary" type=submit value="Se connecter" /> 
+            <a class="btn btn-secondary" href="index.php?action=register">Créer un compte</a>
         </div>
 
     </form>
-    <p><a href="index.php?action=register">Créer un compte</a></p>
 
 <?php
 }
