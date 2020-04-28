@@ -74,6 +74,5 @@ function clean_GET($value) {
 }
 
 function check_signal($signal_message, $alert){
-    if (empty($signal_message)) echo("");
-    else echo ("<div class=\"alert alert-$alert\" role=\"alert\">$signal_message</div>");
+    if (!empty($signal_message)) echo ("<div class=\"alert alert-$alert\" role=\"alert\">$signal_message</div>");
 }

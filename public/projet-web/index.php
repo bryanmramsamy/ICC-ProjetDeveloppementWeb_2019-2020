@@ -34,6 +34,10 @@ try {
                 minichat_post();
                 break;
 
+            case 'password_change':
+                password_change();
+                break;
+
             case 'password_change_post':
                 password_change_post();
                 break;

@@ -75,7 +75,7 @@ function register_post(){
 
                 $userManager = new UserManager();
 
-                $creation_succeeded = $userManager->createUser($cleaned_username, $hashed_password, $cleaned_email, $cleaned_last_name, $cleaned_first_name);
+                $creation_succeeded = $userManager->createUser($cleaned_username, $hashed_password, $cleaned_email, $cleaned_last_name, $cleaned_first_name, PERMISSION['user']);
 
                 if ($creation_succeeded) {
                     set_session($userManager->getUser_byUsername($cleaned_username));
@@ -129,7 +129,9 @@ function unset_session(){
 
 function password_change_post(){
     if (isset($_POST['userID']) && !empty($_POST['userID'])) {
-        $cleaned_userID = htmlspecialchars($_POST['userID']);
+        $userID = htmlspecialchars($_POST['userID']);
+
+        check_userExist($userID);
 
         if (isset($_POST['old_password']) && !empty($_POST['old_password'])) {
             $cleaned_old_password = htmlspecialchars($_POST['old_password']);
@@ -157,7 +159,7 @@ function password_change_post(){
 
     if (empty($signal_post_password_change)) {
         $userManager = new UserManager();
-        $user = $userManager->getUser_byID($cleaned_userID);
+        $user = $userManager->getUser_byID($userID);
 
         if (!empty($user['id'])) {
             if (password_verify($cleaned_old_password, $user['passwd'])) {
@@ -184,15 +186,50 @@ function password_change_post(){
         }
     }
 
-    $profileID_GET = checkPermissions('admin', false) ? "&userID=" . $cleaned_userID : "";
+    $profileID_GET = checkPermissions('admin', false) ? "&userID=" . $userID : "";
 
     if ($signal_post_password_change == 'succeed') {
         header('Location: index.php?action=profile&signal_post_password_change=' . $signal_post_password_change . $profileID_GET);
     } else {
-        header('Location: index.php?action=profile_update&signal_post_password_change=' . $signal_post_password_change . $profileID_GET);
+        header('Location: index.php?action=password_change&signal_post_password_change=' . $signal_post_password_change . $profileID_GET);
     }
 }
 
+function profile_update_post() {
+    checkPermissions('user', true);
+
+    if (isset($_POST['userID']) && !empty($_POST['userID'])) {
+        $userID = htmlspecialchars($_POST['userID']);
+
+        $userManager = new UserManager();
+        $user = $userManager->getUser_byID($userID);
+
+        $cleaned_email = (isset($_POST['email']) & !empty($_POST['email'])) ? htmlspecialchars($_POST['email']) : null;
+        $cleaned_first_name = (isset($_POST['first_name']) & !empty($_POST['first_name'])) ? htmlspecialchars($_POST['first_name']) : null;
+        $cleaned_last_name = (isset($_POST['last_name']) & !empty($_POST['last_name'])) ? htmlspecialchars($_POST['last_name']) : null;
+        $cleaned_address = (isset($_POST['address']) & !empty($_POST['address'])) ? htmlspecialchars($_POST['address']) : null;
+        $cleaned_zipcode = (isset($_POST['zipcode']) & !empty($_POST['zipcode'])) ? htmlspecialchars($_POST['zipcode']) : null;
+        $cleaned_birthday = (isset($_POST['birthday']) & !empty($_POST['birthday'])) ? htmlspecialchars($_POST['birthday']) : null;
+
+        $update_succeeded = $userManager->updateUser($userID, $cleaned_email, $cleaned_last_name, $cleaned_first_name, $cleaned_address, $cleaned_zipcode, $cleaned_birthday);
+
+        $signal_post_profileUpdate = $update_succeeded ? 'updated' : 'failed';
+        
+        $profileID_GET = checkPermissions('admin', false) ? "&userID=" . $userID : "";
+
+    } else {
+        $signal_post_profileUpdate = "unknown_user";
+    }
+
+    if ($signal_post_profileUpdate === 'updated') {
+        $user = $userManager->getUser_byID($userID);
+        set_session($user);
+
+        header('Location: index.php?action=profile&signal_post_profileUpdate=' . $signal_post_profileUpdate . $profileID_GET);
+    } else {
+        header('Location: index.php?action=profile_update&signal_post_profileUpdate=' . $signal_post_profileUpdate . $profileID_GET);
+    }
+}
 
 # Posts
 

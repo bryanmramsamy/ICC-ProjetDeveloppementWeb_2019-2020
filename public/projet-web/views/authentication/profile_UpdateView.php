@@ -5,44 +5,7 @@ $title = "Modification du profile de " . $user['username'];
 ob_start();
 ?>
 
-<h1>Modification de votre profile (<?= $user['username']; ?>)</h1>
-
-<section id="password_UpdateForm">
-
-    <h2>Changer votre mot de passe</h2>
-
-    <form method="POST" action="index.php?action=password_change_post">
-
-        <?php require('views/signals/signal_post_password_change.php'); ?>
-
-        <div>
-            <input type='hidden' id='userID' name='userID' value='<?= $user['id']; ?>' required/>
-        </div>
-
-        <div>
-            <label for='old_password'>Ancien mot de passe : </label>
-            <input type='password' id='old_password' name='old_password'/>
-        </div>
-
-        <div>
-            <label for='new_password'>Nouveau mot de passe : </label>
-            <input type='password' id='new_password' name='new_password'/>
-        </div>
-
-        <div>
-            <label for='new_password_confirmation'>Confirmation du nouveau mot de passe : </label>
-            <input type='password' id='new_password_confirmation' name='new_password_confirmation'/>
-        </div>
-
-        <div>
-            <input type=submit value="Changer le mot de passe" /> <a href="index.php?action=profile<?php if (checkPermissions('admin', false)) echo ("&userID=" . $user['id']);?>">Annuler</a>
-        </div>
-
-    </from>
-
-</section>
-
-<br/>
+<h1>Modification du profile (<?= $user['username']; ?>)</h1>
 
 <section id="profile_UpdateForm">
 
@@ -50,7 +13,16 @@ ob_start();
 
     <form method="POST" action="index.php?action=profile_update_post&userID=<?= $user['userID']; ?>">
 
-        <?php # require('views/signals/signal_post_profileUpdate.php'); ?>
+        <?php require('views/signals/signal_post_profileUpdate.php'); ?>
+
+        <div>
+            <input type='hidden' id='userID' name='userID' value='<?= $user['id']; ?>' required/>
+        </div>
+
+        <div>
+            <label for='email'>Adresse e-mail : </label>
+            <input type='email' id='email' name='email' value='<?= $user['email']; ?>'/>
+        </div>
 
         <div>
             <label for='first_name'>Prénom : </label>
@@ -82,6 +54,8 @@ ob_start();
         </div>
 
     </form>
+
+</section>
 
 <?php
 $main_section = ob_get_clean();

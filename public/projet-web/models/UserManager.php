@@ -21,22 +21,38 @@ class UserManager extends Manager {
         return $this->getUser('username', $user);
     }
 
-    public function createUser($username, $hashed_password, $email, $last_name, $first_name) {
-        $query = 'INSERT INTO users (username, passwd, email, register_date, last_name, first_name) VALUES (:username, :passwd, :email, NOW(), :last_name, :first_name)';
+    public function createUser($username, $hashed_password, $email, $last_name, $first_name, $role_lvl) {
+        $query = 'INSERT INTO users (username, passwd, email, register_date, last_name, first_name, role_lvl) VALUES (:username, :passwd, :email, NOW(), :last_name, :first_name, :role_lvl)';
 
         $data_array = array(
             'username' => $username,
             'passwd' => $hashed_password,
             'email' => $email,
             'last_name' => $last_name,
-            'first_name' => $first_name
+            'first_name' => $first_name,
+            'role_lvl' => $role_lvl
         );
 
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
 
+    // public function updateUser($userID, $email, $last_name, $first_name, $address, $zipcode, $birthday) {
+    //     $query = 'UPDATE users SET email = :email, last_name = :last_name, first_name = :first_name, zipcode = :zipcode, date_birth = :birthday WHERE id = :id';
+    //     $data_array = array(
+    //         'id' => $userID,
+    //         'email' => $email,
+    //         'last_name' => $last_name,
+    //         'first_name' => $first_name,
+    //         'address' => $address,
+    //         'zipcode' => $zipcode,
+    //         'date_birth' => $birthday
+    //     );
+
+    //     return $this->createUpdateDeleteEntry($query, $data_array);
+    // }
+
     public function updateUser($userID, $email, $last_name, $first_name, $address, $zipcode, $birthday) {
-        $query = 'UPDATE users SET email = :email, last_name = :last_name, first_name = :first_name, address = :address, zipcode = :zipcode, birthday = :birthday WHERE id = :id';
+        $query = 'UPDATE users SET email=:email, last_name=:last_name, first_name=:first_name, address=:address, zipcode=:zipcode, date_birth=:date_birth WHERE id=:id';
         $data_array = array(
             'id' => $userID,
             'email' => $email,
@@ -44,7 +60,7 @@ class UserManager extends Manager {
             'first_name' => $first_name,
             'address' => $address,
             'zipcode' => $zipcode,
-            'birthday' => $birthday
+            'date_birth' => $birthday
         );
 
         return $this->createUpdateDeleteEntry($query, $data_array);

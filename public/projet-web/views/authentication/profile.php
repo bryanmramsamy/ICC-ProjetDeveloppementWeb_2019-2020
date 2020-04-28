@@ -1,8 +1,11 @@
-<?php $title = 'Profile de ' . $user['username']; ?>
+<?php
+$title = 'Profile de ' . $user['username'];
 
-<?php ob_start(); ?>
+ob_start();
 
-<?php require('views/signals/signal_post_password_change.php'); ?>
+require('views/signals/signal_post_password_change.php');
+require('views/signals/signal_post_profileUpdate.php');
+?>
 
 <section id="profile">
     <ul>
@@ -18,7 +21,7 @@
     </ul>
 </section>
 
-<a href="index.php?action=profile_update">Modifier votre user d'utilisateur</a>
+(<a href="index.php?action=profile_update">Modifier votre user d'utilisateur</a>) (<a href="index.php?action=password_change">Changer mot de passe</a>)
 
 <?php $main_section = ob_get_clean(); ?>
 <?php require('views/static/base.php'); ?>
