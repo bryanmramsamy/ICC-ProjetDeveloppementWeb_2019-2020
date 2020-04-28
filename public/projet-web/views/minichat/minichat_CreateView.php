@@ -2,12 +2,26 @@
 
 <form method="post" action="index.php?action=minichat_post">
 
-    <div>
+
+
+    <div class="form-group">
         Entrez votre message ici :
         <br/>
-        <textarea name="message" rows="8" cols="45"></textarea>
+        <textarea class="form-control" name="message" rows="8" cols="45"></textarea>
         <br/>
-        <input type="submit" value="Envoyer"/>
+
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Envoyer"/>
+                </div>
+
+                <div class="col">
+                    <button class="btn btn-secondary btn-lg btn-block" type="reset" value="Éffacer">Reset</button>
+                </div>
+            </div>
+        </div>
+         
     </div>
 
 </form>

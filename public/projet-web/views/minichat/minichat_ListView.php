@@ -20,10 +20,11 @@ ob_start();
         $displayed_name = displayed_name($message['username'], $message['first_name'], $message['last_name']);
     ?>
 
-        <div class="minichat_message">
-            <strong><?= htmlspecialchars($displayed_name); ?></strong> a envoyé le <em><?= ($message['date_creation']); ?></em>:
-            <br/>
-            <p><?= nl2br(htmlspecialchars($message['message'])) ?></p>
+        <div class="alert alert-dark" role="alert">
+            <h4 class="alert-heading"><?= nl2br(htmlspecialchars($message['message'])) ?></h4>
+            <p><?= htmlspecialchars($displayed_name); ?></p>
+            <hr>
+            <p class="mb-0">Envoyé le <em><?= ($message['date_creation']); ?></p>
         </div>
 
     <?php } ?>
