@@ -8,12 +8,12 @@
     </head>
 
     <body>
-        <div class="container">
+        <div class="container pt-2">
             <header>
                 <a href="index.php">
-                    <div class="text-center text-white bg-secondary rounded">
-                        <h1>ICC-2020 Web Project</h1>
-                        <h2>Bienvenue sur le site de vente de matériel et de documentation informatique !</h2>
+                    <div class="text-center text-dark border border-secondary rounded">
+                        <h1>ICC-2020 PROJET DE DÉVELOPPEMENT WEB</h1>
+                        <h2>Bienvenue sur le site de vente de matériel informatique, de livres et de matériel Hi-Fi</h2>
                     </div>
                 </a>
 
@@ -29,11 +29,11 @@
 
             <div id="main_body">
 
-                <nav id="navigation_section">
+                <nav id="navigation_section pb-2">
                     <?php require("views/static/navigation.php"); ?>
                 </nav>
 
-                <div id="main_section">
+                <div id="main_section pt-2">
                     <?= $main_section ?>
                 </div>
 
