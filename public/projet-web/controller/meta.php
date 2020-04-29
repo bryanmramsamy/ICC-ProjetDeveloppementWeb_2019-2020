@@ -30,8 +30,9 @@ function check_userExist($userID){
 const PERMISSION = array(
     'guest' => 0,
     'user' => 10,
-    # 'spec' => 30,
-    'moderator' => 40,
+    'premium' => 20,
+    'vip' => 30,
+    'modo' => 40,
     'admin' => 50,
 );
 

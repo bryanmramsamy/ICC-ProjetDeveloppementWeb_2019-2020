@@ -376,3 +376,29 @@ function minichat_post(){
     
     header('Location: index.php?action=minichat&signal_post_messageCreation=' . $signal_post_messageCreation);
 }
+
+function minichat_update_post(){
+    checkPermissions('user', true);
+
+    $messageID = clean_messageID();
+    check_messageExist($messageID);
+
+    $minichatManager = new MiniChatManager();
+    $message = $minichatManager->getMessage($messageID);
+
+    if (!checkPermissions('modo', false) || $message['userID'] != $_SESSION['userID']) header ('Location: index.php?action=forbidden');
+
+    $cleaned_message = (isset($_POST['message']) & !empty($_POST['message'])) ? htmlspecialchars($_POST['message']) : null;
+    $cleaned_is_visible = htmlspecialchars($_POST['is_visible']);
+    $boolean_is_visible = $cleaned_is_visible != 1 ? 0 : 1;
+
+    $update_succeeded = $minichatManager->updateMessage($messageID, $cleaned_message, $boolean_is_visible);
+
+    $signal_post_messageUpdate = $update_succeeded ? 'updated' : 'failed';
+    
+    if ($signal_post_messageUpdate === 'updated') {
+        header('Location: index.php?action=minichat&signal_post_messageUpdate=' . $signal_post_messageUpdate);
+    } else {
+        header('Location: index.php?action=minichat_update&messageID=' . $messageID . '&signal_post_messageUpdate=' . $signal_post_messageUpdate);
+    }
+}

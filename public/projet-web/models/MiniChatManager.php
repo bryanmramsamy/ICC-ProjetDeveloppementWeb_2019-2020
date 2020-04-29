@@ -36,11 +36,12 @@ class MiniChatManager extends Manager {
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
 
-    public function updateMessage($messageID, $message) {
-        $query = 'UPDATE minichat SET message=:message, date_edition=NOW() WHERE messageID=:messageID';
+    public function updateMessage($messageID, $message, $is_visible) {
+        $query = 'UPDATE minichat SET message=:message, date_edition=NOW(), is_visible=:is_visible WHERE messageID=:messageID';
         $data_array = array(
             'messageID' => $messageID,
-            'message' => $message
+            'message' => $message,
+            'is_visible' => $is_visible,
         );
 
         return $this->createUpdateDeleteEntry($query, $data_array);
