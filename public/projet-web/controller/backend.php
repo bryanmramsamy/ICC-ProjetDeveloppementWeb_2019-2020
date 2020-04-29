@@ -359,7 +359,7 @@ function post_comment_publish(){
 
     $postID = $commentManager->getComment($commentID)['post_id'];
     
-    header('Location: index.php?action=post&postID=' . $postID . '&signal_post_comcommentVisibility=' . $signal_post_comcommentVisibility);
+    header('Location: index.php?action=post&postID=' . $postID . '&signal_post_commentVisibility=' . $signal_post_commentVisibility);
 }
 
 # MiniChat

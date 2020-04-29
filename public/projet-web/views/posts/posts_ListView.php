@@ -28,8 +28,8 @@ if (checkPermissions('admin', false)){
             <p class="mb-0">Posté le <em><?= ($post['date_created']); ?></em> <?php if ($post['date_edited'] != $post['date_created']) echo("et édité le <em>" . $post['date_edited']) . "</em>"; ?> par <strong><?= htmlspecialchars($displayed_name); ?></strong><p>
 
             <div class="text-right">
-                <a class="btn btn-primary" href="index.php?action=post&postID=<?= $post['postID'] ?>">Voir plus...</a>
                 <?php require('views/posts/post_admin_options.php') ?>
+                <a class="btn btn-primary" href="index.php?action=post&postID=<?= $post['postID'] ?>">Voir plus...</a>
             </div>
 
         </div>

@@ -1,5 +1,6 @@
 <?php
 require('views/signals/signal_post_commentCreation.php');
+require('views/signals/signal_post_commentVisibility.php');
 require('views/signals/signal_post_messageCreation.php');
 require('views/signals/signal_post_password_change.php');
 require('views/signals/signal_post_postCreation.php');

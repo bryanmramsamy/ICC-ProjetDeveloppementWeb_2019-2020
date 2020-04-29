@@ -8,13 +8,14 @@ $next_page = $actual_page + 1;
         <ul class="pagination">
 
             <?php
-            $pre_pagination_action = $_GET['action'];
+            unset($pre_pagination_action);
+            foreach($_GET as $key => $value) if($key != 'page') $pre_pagination_action .= $key . "=" . $value . "&";
 
             if ($actual_page > 1) {
             ?>
-                <li class='page-item'><a class='page-link' href='index.php?action=<?= $pre_pagination_action; ?>&page=1'>Première page</a></li>
+                <li class='page-item'><a class='page-link' href='index.php?<?= $pre_pagination_action; ?>page=1'>Première page</a></li>
 
-                <li class='page-item'><a class='page-link' href='index.php?action=<?= $pre_pagination_action; ?>&page=<?= $previous_page; ?>'>Page précédente</a></li>
+                <li class='page-item'><a class='page-link' href='index.php?<?= $pre_pagination_action; ?>page=<?= $previous_page; ?>'>Page précédente</a></li>
             <?php } ?>
 
             <li class="page-item active" aria-current="page">
@@ -23,9 +24,9 @@ $next_page = $actual_page + 1;
             </li>
 
             <?php if ($actual_page < $total_pages) { ?>
-                <li class='page-item'><a class='page-link' href='index.php?action=<?= $pre_pagination_action; ?>&page=<?= $next_page; ?>'>Page suivante</a></li>
+                <li class='page-item'><a class='page-link' href='index.php?<?= $pre_pagination_action; ?>page=<?= $next_page; ?>'>Page suivante</a></li>
 
-                <li class='page-item'><a class='page-link' href='index.php?action=<?= $pre_pagination_action; ?>&page=<?= $total_pages; ?>'>Dernière page</a></li>
+                <li class='page-item'><a class='page-link' href='index.php?<?= $pre_pagination_action; ?>page=<?= $total_pages; ?>'>Dernière page</a></li>
             <?php } ?>
 
         </ul>
