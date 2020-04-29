@@ -389,7 +389,7 @@ function minichat_publish(){
 
     $signal_post_messageVisibility = $visibility_modification_succeed ? 'succeed' : 'failed';
     
-    header('Location: index.php?action=minichat&signal_post_commentVisibility=' . $signal_post_messageVisibility);
+    header('Location: index.php?action=minichat&signal_post_messageVisibility=' . $signal_post_messageVisibility);
 }
 
 function minichat_update_post(){

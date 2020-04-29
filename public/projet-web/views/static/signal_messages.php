@@ -2,6 +2,8 @@
 require('views/signals/signal_post_commentCreation.php');
 require('views/signals/signal_post_commentVisibility.php');
 require('views/signals/signal_post_messageCreation.php');
+require('views/signals/signal_post_messageUpdate.php');
+require('views/signals/signal_post_messageVisibility.php');
 require('views/signals/signal_post_password_change.php');
 require('views/signals/signal_post_postCreation.php');
 require('views/signals/signal_post_postPublication.php');
