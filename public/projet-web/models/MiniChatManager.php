@@ -46,4 +46,17 @@ class MiniChatManager extends Manager {
 
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
+
+    public function makeMessageVisible($messageID){
+        $is_visible = $this->getMessage($messageID)['is_visible'];
+        $set_visible = $is_visible ? 0 : 1;
+
+        $query = 'UPDATE minichat SET is_visible=:set_visible WHERE messageID=:messageID';
+        $data_array = array(
+            'messageID' => $messageID,
+            'set_visible' => $set_visible
+        );
+
+        return $this->createUpdateDeleteEntry($query, $data_array);
+    }
 }

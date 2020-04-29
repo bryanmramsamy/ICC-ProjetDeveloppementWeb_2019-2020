@@ -377,6 +377,21 @@ function minichat_post(){
     header('Location: index.php?action=minichat&signal_post_messageCreation=' . $signal_post_messageCreation);
 }
 
+function minichat_publish(){
+    checkPermissions('modo', true);
+
+    $messageID = clean_messageID();
+    check_messageExist($messageID);
+
+    $minichatManager = new MiniChatManager();
+
+    $visibility_modification_succeed = $minichatManager->makeMessageVisible($messageID);
+
+    $signal_post_messageVisibility = $visibility_modification_succeed ? 'succeed' : 'failed';
+    
+    header('Location: index.php?action=minichat&signal_post_commentVisibility=' . $signal_post_messageVisibility);
+}
+
 function minichat_update_post(){
     checkPermissions('user', true);
 
