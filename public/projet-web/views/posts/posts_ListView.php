@@ -1,6 +1,5 @@
 <?php
 $title = "Billets | Page " . $actual_page;
-
 ob_start();
 
 if (checkPermissions('admin', false)){
@@ -12,7 +11,7 @@ if (checkPermissions('admin', false)){
 
 <?php } ?>
 
-<section class="container" id="posts">
+<section id="posts">
     <?php
     require('views/static/pagination.php');
 

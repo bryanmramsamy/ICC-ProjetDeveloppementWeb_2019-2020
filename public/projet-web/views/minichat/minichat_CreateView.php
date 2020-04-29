@@ -1,22 +1,14 @@
 <h2>Poster un message dans le Mini-Chat</h2>
 
-<form method="post" action="index.php?action=minichat_post">
+<form method="POST" action="index.php?action=minichat_post">
     <div class="form-group">
-        Entrez votre message ici :
-        <br/>
-        <textarea class="form-control" name="message" rows="4" cols="45"></textarea>
-        <br/>
+        <div class="pb-2">
+            <label for='message'>Entrez votre message ici :</label>
+            <textarea class="form-control" id="message" name="message" rows="4" cols="45"></textarea>
+        </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Envoyer"/>
-                </div>
-
-                <div class="col">
-                    <button class="btn btn-secondary btn-lg btn-block" type="reset" value="reset">Tout éffacer</button>
-                </div>
-            </div>
+        <div class="text-right">
+            <input class="btn btn-primary" type="submit" value="Envoyer"/> <button class="btn btn-secondary" type="reset" value="reset">Effacer</button>
         </div>
     </div>
 </form>

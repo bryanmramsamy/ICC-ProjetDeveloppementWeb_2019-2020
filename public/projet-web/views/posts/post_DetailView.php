@@ -2,7 +2,6 @@
 checkPermissions('user', true);
 
 $title = $post['title'];
-
 ob_start();
 ?>
 
@@ -58,7 +57,7 @@ while ($comment = $comments->fetch()) {
         <p class="mb-0">Envoyé le <em><?= ($comment['date_created']); ?></em> <?php if ($comment['date_edited'] != $comment['date_created']) echo("et édité le <em>" . $comment['date_edited']) . "</em>"; ?> par <strong><?= htmlspecialchars($comment_displayed_name); ?></strong><p>
 
         <div class="text-right">
-            <?php require('views/posts/comment_admin_options.php') ?>
+            <?php require('views/posts/comment_admin_options.php'); ?>
         </div>
     </div>
 <?php

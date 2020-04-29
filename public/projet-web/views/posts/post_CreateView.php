@@ -8,25 +8,25 @@ ob_start();
 <h1>Création d'un nouveau billet</h1>
 
 <section id="post_CreateForm">
-    <form method="post" action="index.php?action=post_create_post">
+    <form method="POST" action="index.php?action=post_create_post">
         <div>
             <label for='title'>Titre : </label>
-            <input type='text' id='title' name='title' required/>
+            <input class="form-control" type='text' id='title' name='title' required/>
         </div>
 
         <div>
             <label for='content'>Contenu du billet : </label>
             <br/>
-            <textarea name="content" rows="8" cols="45" required></textarea>
+            <textarea class="form-control" name="content" rows="8" cols="45" required></textarea>
         </div>
 
-        <div>
-            <input type="checkbox" id="is_published" name="is_published" value="1" checked>
-            <label for="is_published">Rendre le billet visible ?</label>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="is_published" name="is_published" value="1" checked>
+            <label class="form-check-label" for="is_published">Rendre le billet visible ?</label>
         </div>
 
-        <div>
-            <input type=submit value="Poster le billet" /> <a href="index.php?action=posts">Annuler</a>
+        <div class="text-right">
+            <input class="btn btn-primary" type=submit value="Poster le billet" /> <a class="btn btn-secondary" href="index.php?action=posts">Annuler</a>
         </div>
     </form>
 </section>

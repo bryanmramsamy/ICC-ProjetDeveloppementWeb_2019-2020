@@ -2,28 +2,32 @@
 if ($_SESSION['user_role_lvl'] < PERMISSION['user']) header('Location: index.php?action=forbidden');
 
 $title = "Mini-Chat | Page " . $actual_page;
-
 ob_start();
 ?>
 
-<section id="minichat_CreateView">
+<section>
     <?php require('views/minichat/minichat_CreateView.php'); ?>
 </section>
 
-<section id="minichat">
-
+<section>
     <?php
+    require('views/static/pagination.php');
+
     while ($message = $messages->fetch()){ 
         $displayed_name = displayed_name($message['username'], $message['first_name'], $message['last_name']);
+        $bg_color = $message['is_visible'] ? "dark" : "danger";
     ?>
 
-        <div class="alert alert-dark" role="alert">
-            <h4 class="alert-heading"><?= nl2br(htmlspecialchars($message['message'])) ?></h4>
-            <p><?= htmlspecialchars($displayed_name); ?></p>
+        <div class="alert alert-<?= $bg_color; ?>">
+            <h5 class="mb-0"><?= nl2br(htmlspecialchars($message['message'])) ?></h5>
             <hr>
-            <p class="mb-0">Envoyé le <em><?= ($message['date_creation']); ?></p>
-        </div>
+            <p class="mb-0">Envoyé le <em><?= ($message['date_creation']); ?></em> <?php if ($message['date_edition'] != $message['date_creation']) echo("et édité le <em>" . $message['date_edition']) . "</em>"; ?> par <strong><?= htmlspecialchars($displayed_name); ?></strong><p>
 
+            <div class="text-right">
+                <?php require('views/minichat/minichat_admin_options.php') ?>
+                <a class="btn btn-primary" href="#">Modifier le commentaire</a>
+            </div>
+        </div>
     <?php
     }
     
