@@ -2,9 +2,6 @@
 $title = 'Profile de ' . $user['username'];
 
 ob_start();
-
-require('views/signals/signal_post_password_change.php');
-require('views/signals/signal_post_profileUpdate.php');
 ?>
 
 <section id="profile">

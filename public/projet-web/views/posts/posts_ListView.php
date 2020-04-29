@@ -3,19 +3,12 @@ $title = "Billets | Page " . $actual_page;
 
 ob_start();
 
-if (checkPermissions('admin', false)){ ?>
+if (checkPermissions('admin', false)){
+?>
 
-    <section id="before_posts">
-
-        <a class="btn btn-info btn-lg btn-block" href="index.php?action=post_create">Créer un nouveau billet</a>
-        <br/>
-        <?php
-        require('views/signals/signal_post_postCreation.php');
-        require('views/signals/signal_post_postUpdate.php');
-        require('views/signals/signal_post_commentCreation.php')
-        ?>
-
-    </section>
+<section id="before_posts">
+    <a class="btn btn-primary btn-lg btn-block" href="index.php?action=post_create">Créer un nouveau billet</a>
+</section>
 
 <?php } ?>
 

@@ -13,8 +13,6 @@ ob_start();
 
     <form method="POST" action="index.php?action=profile_update_post&userID=<?= $user['userID']; ?>">
 
-        <?php require('views/signals/signal_post_profileUpdate.php'); ?>
-
         <div>
             <input type='hidden' id='userID' name='userID' value='<?= $user['id']; ?>' required/>
         </div>

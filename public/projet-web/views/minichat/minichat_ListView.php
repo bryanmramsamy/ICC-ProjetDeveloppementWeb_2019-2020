@@ -6,11 +6,8 @@ $title = "Mini-Chat | Page " . $actual_page;
 ob_start();
 ?>
 
-<section id="before_minichat">
-    <?php 
-    require('views/signals/signal_post_messageCreation.php');
-    require('views/minichat/minichat_CreateView.php');
-    ?>
+<section id="minichat_CreateView">
+    <?php require('views/minichat/minichat_CreateView.php'); ?>
 </section>
 
 <section id="minichat">
@@ -27,12 +24,16 @@ ob_start();
             <p class="mb-0">Envoyé le <em><?= ($message['date_creation']); ?></p>
         </div>
 
-    <?php } ?>
-
-    <?php require('views/static/pagination.php'); ?>
+    <?php
+    }
+    
+    require('views/static/pagination.php');
+    ?>
 
 </section>
 
-<?php $main_section = ob_get_clean();
+<?php
+$main_section = ob_get_clean();
 
-require('views/static/base.php'); ?>
+require('views/static/base.php');
+?>

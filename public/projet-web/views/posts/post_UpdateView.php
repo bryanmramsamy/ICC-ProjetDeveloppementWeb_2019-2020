@@ -11,8 +11,6 @@ ob_start();
 
     <form method="post" action="index.php?action=post_update_post&postID=<?= $post['id']; ?>">
 
-        <?php require('views/signals/signal_post_postUpdate.php'); ?>
-
         <div>
             <label for='title'>Titre : </label>
             <input type='text' id='title' name='title' value='<?= $post['title']; ?>' required/>

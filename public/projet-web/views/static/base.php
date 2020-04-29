@@ -15,12 +15,19 @@
         <div class="container">
 
             <header>
+                <a href="index.php">
+                    <div class="text-center border border-primary">
+                        <h1>ICC-2020 Web Project</h1>
+                        <h2>Bienvenue sur le site de vente de matériel et de documentation informatique !</h2>
+                    </div>
+                </a>
 
-                <h1><a href="index.php">ICC-2020 Web Project</a></h1>
-                <h2>Bienvenue sur le site de vente de matériel et de documentation informatique !</h2>
+                <div id='signals'>
+                    <?php require("views/static/signal_messages.php"); ?>
+                </div>
 
                 <div id="login_area">
-                    <?php require("views/authentication/signin.php") ?>
+                    <?php require("views/authentication/signin.php"); ?>
                 </div>
 
             </header>
@@ -28,7 +35,7 @@
             <div id="main_body">
 
                 <nav id="navigation_section">
-                    <?php require("views/static/navigation.php") ?>
+                    <?php require("views/static/navigation.php"); ?>
                 </nav>
 
                 <div id="main_section">
