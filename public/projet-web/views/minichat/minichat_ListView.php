@@ -25,7 +25,7 @@ ob_start();
 
             <div class="text-right">
                 <?php require('views/minichat/minichat_admin_options.php') ?>
-                <a class="btn btn-primary" href="#">Modifier le commentaire</a>
+                <a class="btn btn-secondary" href="#">Signaler le commentaire</a><!-- TODO: Add flag option -->
             </div>
         </div>
     <?php

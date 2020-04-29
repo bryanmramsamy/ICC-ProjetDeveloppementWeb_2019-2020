@@ -36,21 +36,6 @@ class UserManager extends Manager {
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
 
-    // public function updateUser($userID, $email, $last_name, $first_name, $address, $zipcode, $birthday) {
-    //     $query = 'UPDATE users SET email = :email, last_name = :last_name, first_name = :first_name, zipcode = :zipcode, date_birth = :birthday WHERE id = :id';
-    //     $data_array = array(
-    //         'id' => $userID,
-    //         'email' => $email,
-    //         'last_name' => $last_name,
-    //         'first_name' => $first_name,
-    //         'address' => $address,
-    //         'zipcode' => $zipcode,
-    //         'date_birth' => $birthday
-    //     );
-
-    //     return $this->createUpdateDeleteEntry($query, $data_array);
-    // }
-
     public function updateUser($userID, $email, $last_name, $first_name, $address, $zipcode, $birthday) {
         $query = 'UPDATE users SET email=:email, last_name=:last_name, first_name=:first_name, address=:address, zipcode=:zipcode, date_birth=:date_birth WHERE id=:id';
         $data_array = array(

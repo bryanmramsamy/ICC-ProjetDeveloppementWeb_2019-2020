@@ -34,6 +34,18 @@ try {
                 minichat_post();
                 break;
 
+            case 'minichat_update':
+                minichat_update();
+                break;
+
+            case 'minichat_update_post':
+                minichat_update_post();
+                break;
+
+            case 'minichat_publish':
+                minichat_publish();
+                break;
+
             case 'password_change':
                 password_change();
                 break;

@@ -66,6 +66,19 @@ function check_commentExist($commentID){
     if (empty($comment['id'])) header('Location: index.php?action=404');
 }
 
+# MiniChat
+
+function clean_messageID() {
+    return clean_GET('messageID');
+}
+
+function check_messageExist($messageID){
+    $minichatManager = new MiniChatManager();
+    $message = $minichatManager->getMessage($messageID);
+
+    if (empty($message['messageID'])) header('Location: index.php?action=404');
+}
+
 # Utility
 
 function clean_GET($value) {

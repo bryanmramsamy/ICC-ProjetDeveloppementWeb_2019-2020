@@ -8,6 +8,10 @@ class MiniChatManager extends Manager {
 
     private $db_table = 'minichat';
 
+    public function getMessage($messageID){
+        return $this->getEntry($this->db_table, 'messageID', $messageID);
+    }
+
     public function getMessages_byPage($page, $nb_message_per_page){
         $query = 'SELECT minichat.*, users.id, users.username, users.last_name, users.first_name FROM minichat INNER JOIN users ON minichat.userID = users.id ORDER BY date_edition DESC';
 
@@ -26,6 +30,16 @@ class MiniChatManager extends Manager {
         $query = 'INSERT INTO minichat (userID, message, date_creation, date_edition) VALUES (:userID, :message, NOW(), NOW())';
         $data_array = array(
             'userID' => $_SESSION['userID'],
+            'message' => $message
+        );
+
+        return $this->createUpdateDeleteEntry($query, $data_array);
+    }
+
+    public function updateMessage($messageID, $message) {
+        $query = 'UPDATE minichat SET message=:message, date_edition=NOW() WHERE messageID=:messageID';
+        $data_array = array(
+            'messageID' => $messageID,
             'message' => $message
         );
 

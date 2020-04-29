@@ -153,6 +153,17 @@ function minichat($page=1, $nb_message_per_page){
     require('views/minichat/minichat_ListView.php');
 }
 
+function minichat_update(){
+    checkPermissions('user', true);
+
+    $messageID = clean_messageID();
+    check_messageExist($messageID);
+
+    $minichatManager = new MiniChatManager();
+    $message = $minichatManager->getMessage($messageID);
+
+    require('views/minichat/minichat_UpdateView.php');
+}
 
 # Utilities
 
