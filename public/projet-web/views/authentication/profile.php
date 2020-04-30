@@ -4,21 +4,54 @@ $title = 'Profile de ' . $user['username'];
 ob_start();
 ?>
 
-<section id="profile">
-    <ul>
-        <li>Pseudonyme: <?= $user['username']; ?></li>
-        <li>Email: <?= $user['email']; ?></li>
-        <li>Inscrit le: <?= $user['register_date']; ?></li>
-        <li>Nom de famille: <?= $user['last_name']; ?></li>
-        <li>Prénom: <?= $user['first_name']; ?></li>
-        <li>Adresse: <?= $user['address']; ?></li>
-        <li>Code postal: <?= $user['zipcode']; ?></li>
-        <li>Date de naissance: <?= $user['date_birth']; ?></li>
-        <!-- <li>Image: <?= $user['picture']; ?></li> -->
-    </ul>
+<section class="h4">
+    <div class="row">
+        <div class="col">Pseudonyme:</div>
+        <div class="col"><?= $user['username']; ?></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col">Adresse électronique:</div>
+        <div class="col"><?= $user['email']; ?></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col">Date d'inscription:</div>
+        <div class="col"><?= $user['register_date']; ?></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col">Prénom:</div>
+        <div class="col"><?= $user['first_name']; ?></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col">Nom de famille:</div>
+        <div class="col"><?= $user['last_name']; ?></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col">Adresse:</div>
+        <div class="col"><?= $user['address'];; ?><br/><?= $user['zipcode']; ?></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col">Date de naissance:</div>
+        <div class="col"><?= $user['date_birth']; ?></div>
+    </div>
+    <hr>
+    <!-- <div class="row">
+        <div class="col">Photo de profile:</div>
+        <div class="col"><?= $user['picture']; ?></div>
+    </div> -->
 </section>
 
-(<a href="index.php?action=profile_update">Modifier votre user d'utilisateur</a>) (<a href="index.php?action=password_change">Changer mot de passe</a>)
+<div class="text-right pb-2">
+    <a class="btn btn-primary" href="index.php?action=profile_update">Modifier votre profile d'utilisateur</a>
+    <a class="btn btn-secondary" href="index.php?action=password_change">Changer votre mot de passe</a>
+</div>
 
-<?php $main_section = ob_get_clean(); ?>
-<?php require('views/static/base.php'); ?>
+<?php
+$main_section = ob_get_clean();
+require('views/static/base.php');
+?>

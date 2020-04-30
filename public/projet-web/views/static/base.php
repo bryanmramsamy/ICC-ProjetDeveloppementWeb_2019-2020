@@ -10,7 +10,7 @@
     <body>
         <div class="container pt-2">
             <header>
-                <a href="index.php">
+                <a style="text-decoration: none" href="index.php">
                     <div class="text-center text-dark border border-secondary rounded">
                         <h1>ICC-2020 PROJET DE DÉVELOPPEMENT WEB</h1>
                         <h2>Bienvenue sur le site de vente de matériel informatique, de livres et de matériel Hi-Fi</h2>
