@@ -29,11 +29,11 @@
 
             <div id="main_body">
 
-                <nav id="navigation_section pb-2">
+                <nav id="navigation_section" class="pb-2">
                     <?php require("views/static/navigation.php"); ?>
                 </nav>
 
-                <div id="main_section pt-2">
+                <div id="main_section">
                     <?= $main_section ?>
                 </div>
 

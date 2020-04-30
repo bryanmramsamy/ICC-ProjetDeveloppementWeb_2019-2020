@@ -1,4 +1,4 @@
-<h2>Poster un message dans le Mini-Chat</h2>
+<h2 class="text-center">Poster un message dans le Mini-Chat</h2>
 
 <form method="POST" action="index.php?action=minichat_post">
     <div class="form-group">
