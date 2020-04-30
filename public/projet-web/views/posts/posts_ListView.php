@@ -22,6 +22,7 @@ if (checkPermissions('admin', false)){
     ?>
         <div class="alert alert-<?= $bg_color; ?>">
             <h4 class="alert-heading d-flex justify-content-center"><?= htmlspecialchars($post['title']) ?></h4>
+            <hr>
             <p><?= nl2br(htmlspecialchars(truncate($post['content']))) ?></p>
             <hr>
             <p class="mb-0">Posté le <em><?= ($post['date_created']); ?></em> <?php if ($post['date_edited'] != $post['date_created']) echo("et édité le <em>" . $post['date_edited']) . "</em>"; ?> par <strong><?= htmlspecialchars($displayed_name); ?></strong><p>
