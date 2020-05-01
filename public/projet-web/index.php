@@ -14,10 +14,6 @@ try {
 
     if (isset($_GET['action']) && !empty($_GET['action'])) {
         switch ($_GET['action']) {
-            case 'admin':
-                home();
-                break;
-
             case 'forbidden':
                 forbidden();
                 break;
@@ -116,6 +112,10 @@ try {
             
             case 'register_post':
                 register_post();
+                break;
+
+            case 'shop':
+                shop();
                 break;
 
             case 'signin':

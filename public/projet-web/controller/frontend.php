@@ -81,6 +81,32 @@ function profile_update(){
     require('views/authentication/profile_UpdateView.php');
 }
 
+
+# MiniChat
+
+function minichat($page=1, $nb_message_per_page){
+    $minichatManager = new MiniChatManager();
+
+    $messages = $minichatManager->getMessages_byPage($page, $nb_message_per_page);
+    $actual_page = $minichatManager->getActualPageMessage($page, $nb_message_per_page);
+    $total_pages = $minichatManager->getTotalPagesMessage($nb_message_per_page);
+
+    require('views/minichat/minichat_ListView.php');
+}
+
+function minichat_update(){
+    checkPermissions('user', true);
+
+    $messageID = clean_messageID();
+    check_messageExist($messageID);
+
+    $minichatManager = new MiniChatManager();
+    $message = $minichatManager->getMessage($messageID);
+
+    require('views/minichat/minichat_UpdateView.php');
+}
+
+
 # Posts
 
 function posts($page=1, $nb_post_per_page){
@@ -141,28 +167,11 @@ function post_comment_update(){
     require('views/posts/comment_UpdateView.php');
 }
 
-# MiniChat
 
-function minichat($page=1, $nb_message_per_page){
-    $minichatManager = new MiniChatManager();
+# Shop
 
-    $messages = $minichatManager->getMessages_byPage($page, $nb_message_per_page);
-    $actual_page = $minichatManager->getActualPageMessage($page, $nb_message_per_page);
-    $total_pages = $minichatManager->getTotalPagesMessage($nb_message_per_page);
+function shop(){
 
-    require('views/minichat/minichat_ListView.php');
-}
-
-function minichat_update(){
-    checkPermissions('user', true);
-
-    $messageID = clean_messageID();
-    check_messageExist($messageID);
-
-    $minichatManager = new MiniChatManager();
-    $message = $minichatManager->getMessage($messageID);
-
-    require('views/minichat/minichat_UpdateView.php');
 }
 
 # Utilities
