@@ -8,6 +8,7 @@ require('controller/frontend.php');
 const MINICHAT_NB_MESSAGE_PER_PAGE = 10;
 const POSTS_NB_COMMENT_PER_PAGE = 10;
 const POSTS_NB_POST_PER_PAGE = 10;
+const SHOP_NB_ARTICLE_PER_PAGE = 10;
 
 try {
     if (isset($_GET['page']) && !empty($_GET['page']) && $_GET['page'] > 0) $page = $_GET['page'];
@@ -115,7 +116,7 @@ try {
                 break;
 
             case 'shop':
-                shop();
+                shop($page, SHOP_NB_ARTICLE_PER_PAGE);
                 break;
 
             case 'signin':

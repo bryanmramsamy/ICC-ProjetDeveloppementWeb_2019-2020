@@ -9,8 +9,8 @@ class ShopArticleManager extends Manager {
 
     private $db_table = 'shop_article';
 
-    public function getArticle_byPage($page, $nb_post_per_page){
-        $query = 'SELECT * FROM shop_article ORDER BY name, availability DESC';
+    public function getArticles_byPage($page, $nb_post_per_page){
+        $query = 'SELECT shop_article.name AS article_name, shop_article.*, shop_categories.name AS categorie_name FROM shop_article INNER JOIN shop_categories ON shop_article.categorieID = shop_categories.id ORDER BY categorieID, shop_article.name, availability DESC';
 
         return $this->getEntries_byPage($this->db_table, $query, $page, $nb_post_per_page);
     }

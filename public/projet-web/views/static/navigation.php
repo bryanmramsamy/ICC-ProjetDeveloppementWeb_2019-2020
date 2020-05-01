@@ -12,6 +12,6 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link disabled" href="index.php" tabindex="-1" aria-disabled="true">Boutique</a>
+        <a class="nav-link" href="index.php?action=shop">BOUTIQUE</a>
     </li>
 </ul>

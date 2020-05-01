@@ -3,12 +3,15 @@
 require_once('models/CommentManager.php');
 require_once('models/MiniChatManager.php');
 require_once('models/PostManager.php');
+require_once('models/ShopArticleManager.php');
 require_once('models/UserManager.php');
 
 use \ProjetWeb\Model\CommentManager;
 use \ProjetWeb\Model\MiniChatManager;
 use \ProjetWeb\Model\PostManager;
+use \ProjetWeb\Model\ShopArticleManager;
 use \ProjetWeb\Model\UserManager;
+
 
 # Static pages
 
@@ -170,8 +173,14 @@ function post_comment_update(){
 
 # Shop
 
-function shop(){
+function shop($page=1, $nb_post_per_page){
+    $shopArticleManager = new ShopArticleManager();
 
+    $articles = $shopArticleManager->getArticles_byPage($page, $nb_post_per_page);
+    $actual_page = $shopArticleManager->getActualPageArticle($page, $nb_post_per_page);
+    $total_pages = $shopArticleManager->getTotalPagesArticle($nb_post_per_page);
+
+    require('views/shop/articles_ListView.php');
 }
 
 # Utilities
