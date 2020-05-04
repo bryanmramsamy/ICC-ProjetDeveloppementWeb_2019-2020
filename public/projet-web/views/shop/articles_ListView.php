@@ -14,15 +14,15 @@ if (checkPermissions('modo', false)){
 <section>
     <?php
     require('views/static/pagination.php');
+    echo "<h1>" . $categorie . "</h1>";
 
     while ($article = $articles->fetch()){
-        if ($article['availibility'] || checkPermissions('modo', false)) {
-            $bg_color = $article['availibility'] ? "dark" : "danger";
+        if ((empty($category) || $article['categorieID'] == $category) && ($article['availability'] || checkPermissions('modo', false))) {
+            $bg_color = $article['availability'] ? "dark" : "danger";
     ?>
         <div class="alert alert-<?= $bg_color; ?>">
             <h4 class="alert-heading d-flex justify-content-center"><?= htmlspecialchars($article['article_name']) ?></h4>
-            <hr>
-            <div><?= htmlspecialchars($article['categorie_name']) ?></div>
+            <div class="text-center"><a href="index.php?action=shop&category=<?= $article['categorieID']; ?>" class="badge badge-pill badge-secondary"><?= htmlspecialchars($article['categorie_name']) ?></a></div>
             <hr>
             <div><?= htmlspecialchars($article['unit_price']) ?></div>
             <div><?= htmlspecialchars($article['quantity_left']) ?></div>

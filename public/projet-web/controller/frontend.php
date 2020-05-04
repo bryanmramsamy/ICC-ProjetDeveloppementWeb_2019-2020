@@ -174,6 +174,8 @@ function post_comment_update(){
 # Shop
 
 function shop($page=1, $nb_post_per_page){
+    if (isset($_GET['category']) && !empty($_GET['category'])) $category = htmlspecialchars($_GET['category']);
+    
     $shopArticleManager = new ShopArticleManager();
 
     $articles = $shopArticleManager->getArticles_byPage($page, $nb_post_per_page);
@@ -181,6 +183,11 @@ function shop($page=1, $nb_post_per_page){
     $total_pages = $shopArticleManager->getTotalPagesArticle($nb_post_per_page);
 
     require('views/shop/articles_ListView.php');
+}
+
+function shop_by_category($page=1, $nb_post_per_page){
+    
+    shop($page, $nb_post_per_page);
 }
 
 # Utilities
