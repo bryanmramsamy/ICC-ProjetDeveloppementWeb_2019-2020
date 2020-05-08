@@ -123,9 +123,13 @@ try {
                 shop_article();
                 break;
 
-            case 'signin':
-                signin();
+            case 'shop_article_create':
+                shop_article_create();
                 break;
+
+            // case 'signin':
+            //     signin();
+            //     break;
 
             case 'signin_post':
                 signin_post();

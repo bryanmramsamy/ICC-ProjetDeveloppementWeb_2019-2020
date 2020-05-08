@@ -33,6 +33,28 @@ function not_found(){
 # Authentication
 
 function signin(){
+    switch ($_SESSION['user_role_lvl']) {
+        case 20:
+            $role_colour = 'warning';
+            $role_tag = 'Premium';
+            break;
+
+        case 30:
+            $role_colour = 'success';
+            $role_tag = 'V.I.P.';
+            break;
+        
+        case 40:
+            $role_colour = 'info';
+            $role_tag = 'Modérateur';
+            break;
+
+        case '50':
+            $role_colour = 'info';
+            $role_tag = 'Administrateur';
+            break;
+    }
+
     require('views/authentication/signin.php');
 }
 
@@ -197,6 +219,16 @@ function shop_article(){
     $category = $shopCategoryManager->getCategory_byID($article['categorieID']);
 
     require('views/shop/article_DetailView.php');
+}
+
+function shop_article_create(){
+    checkPermissions('modo', true);
+
+    $shopCategoryManager = new ShopCategoryManager();
+
+    $categories = $shopCategoryManager->getAllCategories();
+
+    require('views/shop/article_CreateView.php');
 }
 
 # Utilities

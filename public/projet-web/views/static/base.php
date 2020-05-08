@@ -22,7 +22,7 @@
                 </div>
 
                 <div id="login_area">
-                    <?php require("views/authentication/signin.php"); ?>
+                    <?php signin(); ?>
                 </div>
 
             </header>
