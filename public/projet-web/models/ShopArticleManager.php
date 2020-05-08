@@ -31,8 +31,8 @@ class ShopArticleManager extends Manager {
         return $this->getArticle('id', $articleID);
     }
 
-    public function createArticle($name, $categorieID, $permission_lvl, $unit_price, $quantity_left, $description, $availibility) {
-        $query = 'INSERT INTO shop_article (name, categorieID, permission_lvl, unit_price, quantity_left, description, availibility) VALUES (:name, :categorieID, :permission_lvl, :unit_price, :quantity_left, :description, :availibility)';
+    public function createArticle($name, $categorieID, $permission_lvl, $unit_price, $quantity_left, $description, $availability) {
+        $query = 'INSERT INTO shop_article (name, categorieID, permission_lvl, unit_price, quantity_left, description, availability) VALUES (:name, :categorieID, :permission_lvl, :unit_price, :quantity_left, :description, :availability)';
         $data_array = array(
             'name' => $name,
             'categorieID' => $categorieID,
@@ -40,14 +40,14 @@ class ShopArticleManager extends Manager {
             'unit_price' => $unit_price,
             'quantity_left' => $quantity_left,
             'description' => $description,
-            'availibility' => $availibility,
+            'availability' => $availability,
         );
 
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
 
-    public function updateArticle($articleID, $name, $categorieID, $permission_lvl, $unit_price, $quantity_left, $description, $availibility) {
-        $query = 'UPDATE shop_article SET name=:name, categorieID=:categorieID, permission_lvl=:permission_lvl, unit_price=:unit_price, quantity_left=:quantity_left, description=:description, availibility=:availibility WHERE id=:articleID';
+    public function updateArticle($articleID, $name, $categorieID, $permission_lvl, $unit_price, $quantity_left, $description, $availability) {
+        $query = 'UPDATE shop_article SET name=:name, categorieID=:categorieID, permission_lvl=:permission_lvl, unit_price=:unit_price, quantity_left=:quantity_left, description=:description, availability=:availability WHERE id=:articleID';
         $data_array = array(
             'articleID' => $articleID,
             'name' => $name,
@@ -56,17 +56,17 @@ class ShopArticleManager extends Manager {
             'unit_price' => $unit_price,
             'quantity_left' => $quantity_left,
             'description' => $description,
-            'availibility' => $availibility,
+            'availability' => $availability,
         );
 
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
 
-    public function changeArticleAvailibility($articleID){
-        $is_available = $this->getPost_byID($articleID)['availibility'];
+    public function changeArticleAvailability($articleID){
+        $is_available = $this->getPost_byID($articleID)['availability'];
         $set_available = $is_available ? 0 : 1;
 
-        $query = 'UPDATE article SET availibility=:set_available WHERE id=:articleID';
+        $query = 'UPDATE article SET availability=:set_available WHERE id=:articleID';
         $data_array = array(
             'articleID' => $articleID,
             'set_available' => $set_available

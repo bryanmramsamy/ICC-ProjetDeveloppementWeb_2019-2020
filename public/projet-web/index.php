@@ -127,6 +127,10 @@ try {
                 shop_article_create();
                 break;
 
+            case 'shop_article_create_post':
+                shop_article_create_post();
+                break;
+
             // case 'signin':
             //     signin();
             //     break;

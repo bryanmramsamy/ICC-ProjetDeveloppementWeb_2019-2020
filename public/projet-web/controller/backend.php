@@ -366,6 +366,29 @@ function post_comment_publish(){
     header('Location: index.php?action=post&postID=' . $postID . '&signal_post_commentVisibility=' . $signal_post_commentVisibility);
 }
 
+
+# Shop
+
+function shop_article_create_post(){
+    checkPermissions('modo', true);
+
+    $cleaned_name = htmlspecialchars($_POST['name']);
+    $cleaned_categorieID = htmlspecialchars($_POST['categorieID']);
+    $cleaned_permission_lvl = htmlspecialchars($_POST['permission_lvl']);
+    $cleaned_unit_price = htmlspecialchars($_POST['unit_price']);
+    $cleaned_quantity_left = htmlspecialchars($_POST['quantity_left']);
+    $cleaned_description = htmlspecialchars($_POST['description']);
+    $cleaned_availability = htmlspecialchars($_POST['availability']);
+    $boolean_availability = $cleaned_availability != 1 ? 0 : 1;
+
+    $shopArticleManager = new ShopArticleManager();
+    $creation_succeeded = $shopArticleManager->createArticle($cleaned_name, $cleaned_categorieID, $cleaned_permission_lvl, $cleaned_unit_price, $cleaned_quantity_left, $cleaned_description, $boolean_availability);
+
+    $signal_post_articleCreation = $creation_succeeded ? 'created' : 'failed';
+
+    header('Location: index.php?action=shop&signal_post_articleCreation=' . $signal_post_articleCreation);
+}
+
 # MiniChat
 
 function minichat_post(){

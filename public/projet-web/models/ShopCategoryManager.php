@@ -23,6 +23,10 @@ class ShopCategoryManager extends Manager {
     //     return $this->getTotalPages($this->db_table, $nb_post_per_page);
     // }
 
+    public function getAllCategories(){
+        return $this->getAllEntries($this->db_table);
+    }
+
     public function getCategory($key, $value){
         return $this->getEntry($this->db_table, $key, $value);
     }

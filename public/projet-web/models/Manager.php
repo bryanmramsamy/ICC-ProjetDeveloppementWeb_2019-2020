@@ -73,6 +73,13 @@ class Manager {
         return $request;
     }
 
+    protected function getAllEntries($db_table){
+        $db = $this->dbConnect();
+        $request = $db->query('SELECT * FROM ' . $db_table);
+
+        return $request;
+    }
+
     protected function createUpdateDeleteEntry($query, $data_array){
         $db = $this->dbConnect();
 

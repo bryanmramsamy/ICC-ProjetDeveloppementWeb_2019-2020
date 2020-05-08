@@ -6,7 +6,8 @@ if (checkPermissions('modo', false)){
 ?>
 
 <section class="pb-2">
-    <a class="btn btn-info btn-lg btn-block" href="index.php?action=article_create">Ajouter un article</a>
+<a class="btn btn-info btn-lg btn-block" href="index.php?action=shop_article_create">Ajouter un article</a>
+<a class="btn btn-info btn-lg btn-block" href="index.php?action=shop_category_create">Ajouter une catégorie</a>
 </section>
 
 <?php } ?>
