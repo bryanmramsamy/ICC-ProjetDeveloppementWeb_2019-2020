@@ -69,6 +69,20 @@ function check_commentExist($commentID){
     if (empty($comment['id'])) header('Location: index.php?action=404');
 }
 
+
+# Shop
+
+function clean_articleID() {
+    return clean_GET('articleID');
+}
+
+function check_articleExist($articleID){
+    $shopArticleManager = new ShopArticleManager();
+    $article = $shopArticleManager->getArticle_byID($articleID);
+
+    if (empty($article['id'])) header('Location: index.php?action=404');
+}
+
 # MiniChat
 
 function clean_messageID() {

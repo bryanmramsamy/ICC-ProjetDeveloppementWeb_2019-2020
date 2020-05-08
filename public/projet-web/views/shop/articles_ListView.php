@@ -23,7 +23,7 @@ if (checkPermissions('modo', false)){
         <div class="alert alert-<?= $bg_color; ?>">
             <h4 class="alert-heading d-flex justify-content-center"><?= htmlspecialchars($article['article_name']) ?></h4>
             <div class="text-center"><a href="index.php?action=shop&category=<?= $article['categorieID']; ?>" class="badge badge-pill badge-secondary"><?= htmlspecialchars($article['categorie_name']) ?></a></div>
-            <p class="text-justify"><?= nl2br(htmlspecialchars($article['description'])) ?></p>
+            <p class="text-justify"><?= nl2br(htmlspecialchars(truncate($article['description']))) ?></p>
 
             <hr>
 
@@ -34,7 +34,7 @@ if (checkPermissions('modo', false)){
             </div>
             <div class="text-right">
                 <?php require('views/shop/article_admin_options.php') ?>
-                <a class="btn btn-primary" href="index.php?action=article&articleID=<?= $article['articleID'] ?>">Voir plus...</a>
+                <a class="btn btn-primary" href="index.php?action=shop_article&articleID=<?= $article['id'] ?>">Voir plus...</a>
             </div>
 
         </div>

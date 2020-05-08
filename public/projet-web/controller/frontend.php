@@ -185,9 +185,14 @@ function shop($page=1, $nb_post_per_page){
     require('views/shop/articles_ListView.php');
 }
 
-function shop_by_category($page=1, $nb_post_per_page){
-    
-    shop($page, $nb_post_per_page);
+function shop_article(){
+    $articleID = clean_articleID();
+
+    $shopArticleManager = new ShopArticleManager();
+
+    $article = $shopArticleManager->getArticle_byID($articleID);
+
+    require('views/shop/article_DetailView.php');
 }
 
 # Utilities

@@ -9,5 +9,5 @@ if (checkPermissions('modo', false)){
     echo(' ');
 
     # Update option
-    echo ("<a class=\"btn btn-primary\" href=\"index.php?action=shop_article_update&articleID=" . $article['id'] . "\">Modifier l'article</a>");
+    echo ("<a class=\"btn btn-info\" href=\"index.php?action=shop_article_update&articleID=" . $article['id'] . "\">Modifier l'article</a>");
 }
