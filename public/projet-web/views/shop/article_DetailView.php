@@ -10,8 +10,8 @@ ob_start();
 
     <div class="alert alert-<?= $bg_color; ?>">
         <h4 class="alert-heading d-flex justify-content-center"><?= htmlspecialchars($article['name']) ?></h4>
-        <div class="text-center"><a href="index.php?action=shop&category=<?= $article['categorieID']; ?>" class="badge badge-pill badge-secondary"><?= htmlspecialchars($article['categorie_name']) ?></a></div>
-        <p class="text-justify"><?= nl2br(htmlspecialchars(truncate($article['description']))) ?></p>
+        <div class="text-center"><a href="index.php?action=shop&category=<?= $article['categorieID']; ?>" class="badge badge-pill badge-secondary"><?= htmlspecialchars($category['name']) ?></a></div>
+        <p class="text-justify"><?= nl2br(htmlspecialchars($article['description'])) ?></p>
 
         <hr>
 
@@ -20,9 +20,14 @@ ob_start();
 
             <div class="border border-secondary rounded p-1 mx-2">Quantité restante: <?= htmlspecialchars($article['quantity_left']) ?></div>
         </div>
-        <div class="text-right">
-            <?php require('views/shop/article_admin_options.php') ?>
-            <a class="btn btn-primary" href="index.php?action=shop_article&articleID=<?= $article['id'] ?>">Voir plus...</a>
+        <div class="d-flex d-inline justify-content-end p-1 m-1">
+            <?php 
+            if (checkPermissions('user', false)) {
+                require('views/shop/article_purchase_form.php');
+            }
+            require('views/shop/article_admin_options.php');
+            ?>
+            <a class="btn btn-primary ml-1" href="index.php?action=shop">Revenir à la boutique</a>
         </div>
 
     </div>

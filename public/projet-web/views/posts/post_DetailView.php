@@ -1,6 +1,4 @@
 <?php
-checkPermissions('user', true);
-
 $title = $post['title'];
 ob_start();
 ?>

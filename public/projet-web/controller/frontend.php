@@ -4,12 +4,14 @@ require_once('models/CommentManager.php');
 require_once('models/MiniChatManager.php');
 require_once('models/PostManager.php');
 require_once('models/ShopArticleManager.php');
+require_once('models/ShopCategoryManager.php');
 require_once('models/UserManager.php');
 
 use \ProjetWeb\Model\CommentManager;
 use \ProjetWeb\Model\MiniChatManager;
 use \ProjetWeb\Model\PostManager;
 use \ProjetWeb\Model\ShopArticleManager;
+use \ProjetWeb\Model\ShopCategoryManager;
 use \ProjetWeb\Model\UserManager;
 
 
@@ -189,8 +191,10 @@ function shop_article(){
     $articleID = clean_articleID();
 
     $shopArticleManager = new ShopArticleManager();
+    $shopCategoryManager = new shopCategoryManager();
 
     $article = $shopArticleManager->getArticle_byID($articleID);
+    $category = $shopCategoryManager->getCategory_byID($article['categorieID']);
 
     require('views/shop/article_DetailView.php');
 }
