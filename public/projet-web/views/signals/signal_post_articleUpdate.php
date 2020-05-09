@@ -2,12 +2,12 @@
 
 switch ($_GET['signal_post_articleUpdate']) {
     case 'created':
-        $signal_post_articleUpdate_message = "Le nouvel article a été créé avec succès";
+        $signal_post_articleUpdate_message = "L'article a été modifié avec succès";
         $alert = "success";
         break;
     
     case 'failed':
-        $signal_post_articleUpdate_message = "Le nouvel article n'a pas être créer";
+        $signal_post_articleUpdate_message = "L'article n'a pas pu être modifié";
         $alert = "danger";
         break;
 }

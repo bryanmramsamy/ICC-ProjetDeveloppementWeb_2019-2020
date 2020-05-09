@@ -248,6 +248,12 @@ function shop_article_update(){
     require('views/shop/article_UpdateView.php');
 }
 
+function shop_category_create(){
+    checkPermissions('modo', true);
+
+    require('views/shop/category_CreateView.php');
+}
+
 # Utilities
 
 function displayed_name($username, $first_name=null, $last_name=null){

@@ -138,6 +138,10 @@ try {
             case 'shop_article_update_post':
                 shop_article_update_post();
                 break;
+            
+            case 'shop_category_create':
+                shop_category_create();
+                break;
 
             // case 'signin':
             //     signin();
