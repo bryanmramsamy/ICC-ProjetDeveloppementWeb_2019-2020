@@ -1,14 +1,14 @@
 <?php
 checkPermissions('modo', true);
 
-$title = $post['title'];
+$title = "Modification de l'article: " . $article['name'];
 ob_start();
 ?>
 
 <section>
 
     <section>
-    <form id="update_article" method="post" action="index.php?action=shop_article_update_post">
+    <form id="update_article" method="post" action="index.php?action=shop_article_update_post&articleID=<?= $article['id']; ?>">
         <div>
             <label for='name'>Nom de l'article : </label>
             <input class="form-control" type='text' id='name' name='name' value="<?= $article['name']; ?>" required/>
