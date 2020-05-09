@@ -231,6 +231,23 @@ function shop_article_create(){
     require('views/shop/article_CreateView.php');
 }
 
+function shop_article_update(){
+    checkPermissions('modo', true);
+
+    $articleID = clean_articleID();
+    check_articleExist($articleID);
+
+    $cleaned_articleID = htmlspecialchars($articleID);
+
+    $shopArticleManager = new ShopArticleManager();
+    $shopCategoryManager = new ShopCategoryManager();
+
+    $article = $shopArticleManager->getArticle_byID($cleaned_articleID);
+    $categories = $shopCategoryManager->getAllCategories();
+
+    require('views/shop/article_UpdateView.php');
+}
+
 # Utilities
 
 function displayed_name($username, $first_name=null, $last_name=null){

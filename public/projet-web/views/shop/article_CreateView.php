@@ -65,7 +65,7 @@ ob_start();
         </div>
 
         <div class="text-right">
-            <input class="btn btn-primary" type=submit value="Ajouter l'article" /> <a class="btn btn-secondary" href="index.php?action=posts">Annuler</a>
+            <input class="btn btn-primary" type=submit value="Ajouter l'article" /> <a class="btn btn-secondary" href="index.php?action=shop">Annuler</a>
         </div>
     </form>
 </section>

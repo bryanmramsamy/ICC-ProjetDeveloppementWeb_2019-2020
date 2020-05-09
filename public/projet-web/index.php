@@ -131,6 +131,10 @@ try {
                 shop_article_create_post();
                 break;
 
+            case 'shop_article_update':
+                shop_article_update();
+                break;
+
             // case 'signin':
             //     signin();
             //     break;
