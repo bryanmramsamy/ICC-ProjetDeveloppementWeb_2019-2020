@@ -119,6 +119,10 @@ try {
                 shop($page, SHOP_NB_ARTICLE_PER_PAGE);
                 break;
 
+            case 'shop_add_to_basket':
+                shop_add_to_basket();
+                break;
+
             case 'shop_article':
                 shop_article();
                 break;

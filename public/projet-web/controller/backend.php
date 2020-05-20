@@ -369,6 +369,10 @@ function post_comment_publish(){
 
 # Shop
 
+function shop_add_to_basket_post(){
+    
+}
+
 function shop_article_create_post(){
     checkPermissions('modo', true);
 

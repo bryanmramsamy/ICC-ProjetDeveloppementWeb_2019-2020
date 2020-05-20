@@ -7,6 +7,8 @@ require_once('models/Manager.php');
 
 /**
  * Manager of the shop_order model
+ * 
+ * Acts like a basket containing purchases and like an order when payed
  */
 class OrderManager extends Manager {
     

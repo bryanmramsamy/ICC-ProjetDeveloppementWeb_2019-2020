@@ -209,6 +209,12 @@ function shop($page=1, $nb_post_per_page){
     require('views/shop/articles_ListView.php');
 }
 
+function shop_add_to_basket(){
+    checkPermissions('user', true);
+
+    shop_add_to_basket_post();
+}
+
 function shop_article(){
     $articleID = clean_articleID();
 
