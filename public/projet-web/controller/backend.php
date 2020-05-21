@@ -384,7 +384,7 @@ function post_comment_publish(){
  * 
  * A signal is returned as URL-GET paramter to be use as information message to the user.
  *
- * @return void Redirect the user to the shop page
+ * @return void Redirect the user to the shop page and send a $signal_post_add_to_basket signal
  */
 function shop_add_to_basket_post(){
     $orderManager = new OrderManager();
@@ -397,7 +397,11 @@ function shop_add_to_basket_post(){
         $_SESSION['orderID'] = $order['id'];
     }
 
-    # TODO: Check if order was created correctly
+    # Check if order was created correctly
+    if (!$order_creation_succeeded) {
+        $signal_post_add_to_basket = 'failed_order_creation';
+        header('Location: index.php?action=shop&signal_post_add_to_basket=' . $signal_post_add_to_basket);
+    }
 
     # Check if the chosen article exist
     if (isset($_POST['articleID']) && !empty($_POST['articleID'])) {
@@ -431,7 +435,7 @@ function shop_add_to_basket_post(){
     } else {
         $signal_post_add_to_basket = 'invalid_article';
     }
-;
+
     header('Location: index.php?action=shop&signal_post_add_to_basket=' . $signal_post_add_to_basket);
 }
 
@@ -493,7 +497,8 @@ function shop_update_total_price_order($orderID){
     $purchaseManager = new PurchaseManager();
 
     $order_total_price = $purchaseManager->sumPurchasesOrder($_SESSION['orderID']);
-    $success = $orderManager->updateTotal($_SESSION['orderID'], $order_total_price);
+    $order_total_update_succeeded = $orderManager->updateTotal($_SESSION['orderID'], $order_total_price);
+    return $order_total_update_succeeded;
 }
 
 # MiniChat
