@@ -2,14 +2,18 @@
 
 require_once('models/CommentManager.php');
 require_once('models/MiniChatManager.php');
+require_once('models/OrderManager.php');
 require_once('models/PostManager.php');
+require_once('models/PurchaseManager.php');
 require_once('models/ShopArticleManager.php');
 require_once('models/ShopCategoryManager.php');
 require_once('models/UserManager.php');
 
 use \ProjetWeb\Model\CommentManager;
 use \ProjetWeb\Model\MiniChatManager;
+use \ProjetWeb\Model\OrderManager;
 use \ProjetWeb\Model\PostManager;
+use \ProjetWeb\Model\PurchaseManager;
 use \ProjetWeb\Model\ShopArticleManager;
 use \ProjetWeb\Model\ShopCategoryManager;
 use \ProjetWeb\Model\UserManager;
@@ -118,6 +122,7 @@ function set_session($user){
     $_SESSION['user_last_name'] = $user['last_name'];
     $_SESSION['user_first_name'] = $user['first_name'];
     $_SESSION['user_image'] = $user['image'];
+    $_SESSION['orderID'] = 0;
 }
 
 function unset_session(){
@@ -129,6 +134,7 @@ function unset_session(){
     unset($_SESSION['user_first_name']);
     unset($_SESSION['user_image']);
     unset($_SESSION['user_displayed_name']);
+    unset($_SESSION['orderID']);
 }
 
 function password_change_post(){
@@ -369,8 +375,63 @@ function post_comment_publish(){
 
 # Shop
 
+/**
+ * Create a new order if the user didn't created one before the start of his session.
+ * If the user already had one order not closed yet, this one will be chosen.
+ * 
+ * The purchase created and added to the order.
+ * The total price of the order is updated.
+ * 
+ * A signal is returned as URL-GET paramter to be use as information message to the user.
+ *
+ * @return void Redirect the user to the shop page
+ */
 function shop_add_to_basket_post(){
+    $orderManager = new OrderManager();
     
+    # If no order or purchase was made, we create a new one
+    if ($_SESSION['orderID'] == 0) {
+        $order_creation_succeeded = $orderManager->createOrder($_SESSION['userID']);
+        $order = $orderManager->getLatestCreatedOrder($_SESSION['userID']);
+
+        $_SESSION['orderID'] = $order['id'];
+    }
+
+    # TODO: Check if order was created correctly
+
+    # Check if the chosen article exist
+    if (isset($_POST['articleID']) && !empty($_POST['articleID'])) {
+        $cleaned_articleID = htmlspecialchars($_POST['articleID']);
+
+        # Check if quantity is valid
+        if (isset($_POST['quantity']) && !empty($_POST['quantity'])) {
+            $cleaned_quantity = htmlspecialchars($_POST['quantity']);
+
+            $purchaseManager = new PurchaseManager();
+            $shopArticleManager = new ShopArticleManager();
+
+            $article = $shopArticleManager->getArticle_byID($cleaned_articleID);
+            $total_price = $article['unit_price'] * $cleaned_quantity;
+
+            $purchase_creation_succeeded = $purchaseManager->createPurchase($_SESSION['orderID'], $cleaned_articleID, $cleaned_quantity, $total_price);
+    
+            if ($$purchase_creation_succeeded) {
+                if (shop_update_total_price_order($_SESSION['orderID'])) {
+                    $signal_post_add_to_basket = 'succeeded';
+                } else {
+                    $signal_post_add_to_basket = 'failed_order_total_update';
+                }
+            } else {
+                $signal_post_add_to_basket = 'failed_purchase_creation';
+            }
+        } else {
+            $signal_post_add_to_basket = 'invalid_quantity';
+        }
+    } else {
+        $signal_post_add_to_basket = 'invalid_article';
+    }
+;
+    header('Location: index.php?action=shop&signal_post_add_to_basket=' . $signal_post_add_to_basket);
 }
 
 function shop_article_create_post(){
@@ -418,6 +479,20 @@ function shop_article_update_post(){
     } else {
         header('Location: index.php?action=shop_article_update&articleID=' . $articleID . '&signal_post_articleUpdate=' . $signal_post_articleUpdate);
     }
+}
+
+/**
+ * Update the total price of an order by calculation the sum of all the total prices of each of its purchases
+ *
+ * @param   int     $orderID ID of the order which total price must be calculated
+ * @return  boolean True if the value updated succeeded
+ */
+function shop_update_total_price_order($orderID){
+    $orderManager = new OrderManager();
+    $purchaseManager = new PurchaseManager();
+
+    $order_total_price = $purchaseManager->sumPurchasesOrder($_SESSION['orderID']);
+    return $orderManager->updateTotal($_SESSION['orderID'], $order_total_price);
 }
 
 # MiniChat

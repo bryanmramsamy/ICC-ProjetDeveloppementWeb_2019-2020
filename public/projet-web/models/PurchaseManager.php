@@ -59,7 +59,7 @@ class PurchaseManager extends Manager {
      * @return  boolean True if the purchase was correctly created
      */
     public function createPurchase($orderID, $articleID, $quantity, $total_price) {
-        $query = 'INSERT INTO shop_purchase (orderID=:orderID articleID, quantity, total_price) VALUES (:orderID, :articleID, :quantity, :total_price)';
+        $query = 'INSERT INTO shop_purchase (orderID, articleID, quantity, total_price) VALUES (:orderID, :articleID, :quantity, :total_price)';
         $data_array = array(
             'orderID' => $orderID,
             'articleID' => $articleID,
@@ -102,5 +102,18 @@ class PurchaseManager extends Manager {
         );
 
         return $this->createUpdateDeleteEntry($query, $data_array);
+    }
+
+    public function sumPurchasesOrder($orderID){
+        $db = $this->dbConnect();
+        $request = $db->prepare('SELECT SUM(total_price) FROM shop_purchase WHERE orderID=:orderID');
+        $data_array = array(
+            'orderID' => $orderID,
+        );
+        $order_total_price = $request->fetch();
+
+        $request->closeCursor();
+
+        return $order_total_price;
     }
 }

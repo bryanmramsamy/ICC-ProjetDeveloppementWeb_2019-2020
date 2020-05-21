@@ -17,7 +17,7 @@ class OrderManager extends Manager {
      *
      * @var string  $db_table Name of the database of the shop_order model
      */
-    private $db_table = 'shop_order';
+    private $db_table = 'shop_orders';
     
     /**
      * Get a list of all existing orders
@@ -56,7 +56,7 @@ class OrderManager extends Manager {
      * @return  boolean True if the order was correctly created
      */
     public function createOrder($userID) {
-        $query = 'INSERT INTO shop_order (userID) VALUES (:userID)';
+        $query = 'INSERT INTO shop_orders (userID) VALUES (:userID)';
         $data_array = array(
             'userID' => $userID,
         );
@@ -64,6 +64,27 @@ class OrderManager extends Manager {
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
     
+    /**
+     * Get the latest created order of a specific user on his ID
+     *
+     * @param   int     $userID Id of the related user of the order
+     * @return  Order   Latest order created by the given user or null if the user didn't create any order before
+     */
+    public function getLatestCreatedOrder($userID){
+        $db = $this->dbConnect();
+
+        $request = $db->prepare('SELECT * FROM shop_orders WHERE userID=:userID ORDER BY id DESC');
+        $data_array = array(
+            'userID' => $userID,
+        );
+        $orderID = $request->execute($data_array);
+        $orderID = $request->fetch();
+
+        $request->closeCursor();
+
+        return $orderID;
+    }
+
     /**
      * Update the total price of the order based on the total price of each purchase part of that order
      * The calculation must be made beforehand !It isn't proceeded in this function !
@@ -73,7 +94,7 @@ class OrderManager extends Manager {
      * @return  boolean True if the total price of the order correctly updated
      */
     public function updateTotal($orderID, $total) {
-        $query = 'UPDATE shop_order SET total=:total WHERE id=:orderID';
+        $query = 'UPDATE shop_orders SET total=:total WHERE id=:orderID';
         $data_array = array(
             'orderID' => $orderID,
             'total' => $total,
@@ -90,7 +111,7 @@ class OrderManager extends Manager {
      * @return  boolean True if the bank account number was correctly updated
      */
     public function updateBankAccount($orderID, $bank_account){
-        $query = 'UPDATE shop_order SET bank_account=:bank_account WHERE id=:orderID';
+        $query = 'UPDATE shop_orders SET bank_account=:bank_account WHERE id=:orderID';
         $data_array = array(
             'orderID' => $orderID,
             'bacnk_account' => $bank_account,
@@ -113,7 +134,7 @@ class OrderManager extends Manager {
     private function setOrderBooleanDate($orderID, $boolean_key, $boolean_value) {
         $boolean_value == 1 ? $date_value = 'NOW()' : $date_value = 'null';
 
-        $query = 'UPDATE shop_order SET ' . $boolean_key . '=:boolean_value, ' . $date_key . '=' . $date_value . ': WHERE id=:orderID';
+        $query = 'UPDATE shop_orders SET ' . $boolean_key . '=:boolean_value, ' . $date_key . '=' . $date_value . ': WHERE id=:orderID';
         $data_array = array(
             'orderID' => $orderID,
             'ordered' => $boolean_value,
@@ -169,7 +190,7 @@ class OrderManager extends Manager {
      * @return  boolean True if the order was correctly deleted from the database
      */
     public function deleteOrder($orderID) {
-        $query = 'DELETE FROM shop_order WHERE id=:orderID';
+        $query = 'DELETE FROM shop_orders WHERE id=:orderID';
         $data_array = array(
             'orderID' => $orderID
         );
