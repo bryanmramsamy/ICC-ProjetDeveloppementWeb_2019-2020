@@ -29,6 +29,23 @@ class PurchaseManager extends Manager {
     }
     
     /**
+     * Get all the purchases made for one given order
+     *
+     * @param   int         $orderID ID of the order
+     * @return  Purchase[]  Purchases of the order
+     */
+    public function getAllPurchases_byOrder($orderID){
+        $db = $this->dbConnect();
+
+        $request = $db->prepare('SELECT shop_purchase.id AS purchaseID, shop_purchase.*, shop_article.* FROM shop_purchase INNER JOIN shop_article ON shop_purchase.articleID = shop_article.id WHERE shop_purchase.orderID=:orderID ORDER BY unit_price, quantity DESC');
+        $request->execute(array(
+            'orderID' => $orderID
+        ));
+
+        return $request;
+    }
+    
+    /**
      * Get a specific purchase based on a given field and its value
      *
      * @param   string      $key Name of the field where the search is made on

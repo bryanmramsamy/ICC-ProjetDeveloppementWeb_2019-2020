@@ -15,6 +15,10 @@ try {
 
     if (isset($_GET['action']) && !empty($_GET['action'])) {
         switch ($_GET['action']) {
+            case 'basket':
+                basket();
+                break;
+
             case 'forbidden':
                 forbidden();
                 break;

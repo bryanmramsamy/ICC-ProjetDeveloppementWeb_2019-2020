@@ -201,6 +201,22 @@ function post_comment_update(){
 
 # Shop
 
+function basket(){
+    checkPermissions('user', true);
+
+    if ($_SESSION['orderID'] != 0) {
+        $empty_basket = false;
+        
+        $purchaseManager = new PurchaseManager();
+
+        $current_pruchases = $purchaseManager->getAllPurchases_byOrder($_SESSION['orderID']);
+    } else {
+        $empty_basket = true;
+    }
+
+    require('views/shop/basket.php');
+}
+
 function shop($page=1, $nb_post_per_page){
     if (isset($_GET['category']) && !empty($_GET['category'])) $category = htmlspecialchars($_GET['category']);
     
@@ -280,6 +296,14 @@ function displayed_name($username, $first_name=null, $last_name=null){
     return $displayed_name;
 }
 
+/**
+ * Truncate a string to a given amount of characters without cutting through words and adds suspension points at the end of the truncated string.
+ * Doesn't truncate the string if shorter than the nomber of allowed characters.
+ *
+ * @param   string  $text String to truncate
+ * @param   int     $chars Number of caracters allowed before truncation.
+ * @return  string  Truncated string
+ */
 function truncate($text, $chars=150) {
     if (strlen($text) <= $chars) {
         return $text;
