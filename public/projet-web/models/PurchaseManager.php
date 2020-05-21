@@ -110,10 +110,11 @@ class PurchaseManager extends Manager {
         $data_array = array(
             'orderID' => $orderID,
         );
+        $order_total_price = $request->execute($data_array);
         $order_total_price = $request->fetch();
 
         $request->closeCursor();
 
-        return $order_total_price;
+        return $order_total_price[0];
     }
 }

@@ -415,8 +415,9 @@ function shop_add_to_basket_post(){
 
             $purchase_creation_succeeded = $purchaseManager->createPurchase($_SESSION['orderID'], $cleaned_articleID, $cleaned_quantity, $total_price);
     
-            if ($$purchase_creation_succeeded) {
-                if (shop_update_total_price_order($_SESSION['orderID'])) {
+            if ($purchase_creation_succeeded) {
+                $order_total_update = shop_update_total_price_order($_SESSION['orderID']);
+                if ($order_total_update) {
                     $signal_post_add_to_basket = 'succeeded';
                 } else {
                     $signal_post_add_to_basket = 'failed_order_total_update';
@@ -492,7 +493,7 @@ function shop_update_total_price_order($orderID){
     $purchaseManager = new PurchaseManager();
 
     $order_total_price = $purchaseManager->sumPurchasesOrder($_SESSION['orderID']);
-    return $orderManager->updateTotal($_SESSION['orderID'], $order_total_price);
+    $success = $orderManager->updateTotal($_SESSION['orderID'], $order_total_price);
 }
 
 # MiniChat
