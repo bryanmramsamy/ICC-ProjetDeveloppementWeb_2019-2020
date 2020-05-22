@@ -3,6 +3,7 @@
     <div class="d-flex">
         <div class="mr-auto p-2 h3">Bonjour <?= displayed_name($_SESSION['username'], $_SESSION['user_first_name'], $_SESSION['user_last_name']); ?> <span class="badge badge-<?= $role_colour ?>"><?= $role_tag ?></span></div>
         <div class="p-2"><a class="btn btn-primary" href="index.php?action=profile">Voir votre profile</a> </div>
+        <div class="p-2"><a class="btn btn-primary" href="index.php?action=basket">Voir votre panier <span class="badge badge-light"><?= $nbItems_inBasket; ?></span></a> </div>
         <div class="p-2"><a class="btn btn-secondary" href="index.php?action=signout">Déconnexion</a></div>
     </div>
 

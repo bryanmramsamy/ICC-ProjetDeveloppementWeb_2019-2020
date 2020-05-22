@@ -197,4 +197,26 @@ class OrderManager extends Manager {
 
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
+    
+    /**
+     * Counts the amout of article in a specific order
+     *
+     * @param   int $orderID ID of the order
+     * @return  int Number of items in the order
+     */
+    public function getNumberItems($orderID){
+        $db = $this->dbConnect();
+
+        $request = $db->prepare('SELECT SUM(quantity) AS total_items FROM shop_purchase WHERE orderID=:orderID');
+        $data_array = array(
+            'orderID' => $orderID,
+        );
+        $request->execute($data_array);
+        $data = $request->fetch();
+
+        $request->closeCursor();
+
+        return $data['total_items'];
+        ; 
+    }
 }

@@ -59,6 +59,9 @@ function signin(){
             break;
     }
 
+    $orderManager = new OrderManager();
+    $nbItems_inBasket = $orderManager->getNumberItems($_SESSION['orderID']);
+
     require('views/authentication/signin.php');
 }
 
@@ -206,17 +209,24 @@ function basket(){
 
     if ($_SESSION['orderID'] != 0) {
         $empty_basket = false;
-        
+
         $orderManager = new OrderManager();
         $purchaseManager = new PurchaseManager();
 
         $order = $orderManager->getOrder_byID($_SESSION['orderID']);
+        $number_items = $orderManager->getNumberItems($_SESSION['orderID']);
         $purchases = $purchaseManager->getAllPurchases_byOrder($_SESSION['orderID']);
     } else {
         $empty_basket = true;
     }
 
     require('views/shop/basket.php');
+}
+
+function checkout(){
+    checkPermissions('user', true);
+
+    if ($_SESSION['orderID'] != 0) header('Location: index.php?action=basket');
 }
 
 function shop($page=1, $nb_post_per_page){
