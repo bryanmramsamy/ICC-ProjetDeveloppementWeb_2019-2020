@@ -486,7 +486,7 @@ function shop_remove_from_basket_post(){
         if (isset($_GET['purchaseID']) && !empty($_GET['purchaseID'])) {
             $cleaned_purchasedID = htmlspecialchars($_GET['purchaseID']);
             $purchase_deletion_succeeded = $purchaseManager->deletePurchase($cleaned_purchaseID);
-            $purchase_deletion_succeeded ? $signal_post_remove_from_basket = 'succeeded' : 'failed';
+            $purchase_deletion_succeeded ? $signal_post_remove_from_basket = 'succeeded' : $signal_post_remove_from_basket = 'failed';
         } else {
             $signal_post_remove_from_basket = 'invalid_purchaseID';
         }
@@ -495,6 +495,23 @@ function shop_remove_from_basket_post(){
     }
     
     header('Location: index.php?action=basket&signal_post_remove_from_basket=' . $signal_post_remove_from_basket);
+}
+
+/**
+ * Delete the basket by deleting the related order
+ *
+ * @return void Delete the current basket and its related order
+ */
+function cancel_order(){
+    $orderManager = new OrderManager();
+
+    $deletion_succeeded = $orderManager->deleteOrder($_SESSION['orderID']);
+    $deletion_succeeded ? $signal_post_order_cancel = 'succeeded' : $signal_post_order_cancel = 'failed';
+
+    $_SESSION['orderID'] = 0;
+    setcookie("orderID", "", time() - 3600);
+
+    header('Location: index.php?action=shop&signal_post_order_cancel=' . $signal_post_order_cancel);
 }
 
 function shop_article_create_post(){

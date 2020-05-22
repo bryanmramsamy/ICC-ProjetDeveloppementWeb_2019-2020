@@ -19,6 +19,10 @@ try {
                 basket();
                 break;
 
+            case 'cancel_order':
+                cancel_order();
+                break;
+
             case 'checkout':
                 checkout();
                 break;
