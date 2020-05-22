@@ -19,6 +19,10 @@ try {
                 basket();
                 break;
 
+            case 'checkout':
+                checkout();
+                break;
+
             case 'forbidden':
                 forbidden();
                 break;
@@ -125,6 +129,10 @@ try {
 
             case 'shop_add_to_basket_post':
                 shop_add_to_basket_post();
+                break;
+
+            case 'shop_remove_from_basket_post':
+                shop_remove_from_basket_post();
                 break;
 
             case 'shop_article':

@@ -128,7 +128,27 @@ function set_session($user){
     $_SESSION['user_last_name'] = $user['last_name'];
     $_SESSION['user_first_name'] = $user['first_name'];
     $_SESSION['user_image'] = $user['image'];
-    $_SESSION['orderID'] = 0;
+
+    if (isset($_COOKIE['orderID']) && !empty($_COOKIE['orderID'])
+        && order_is_from_user($_SESSION['userID'], $_COOKIE['orderID'])) {
+            $_SESSION['orderID'] = $_COOKIE['orderID'];
+    } else {
+        $_SESSION['orderID'] = 0;
+    }
+}
+
+/**
+ * Check if the given order was made from the given user
+ *
+ * @param   int     $userID User ID
+ * @param   int     $orderID Order ID
+ * @return  boolean True if the order was made by the user
+ */
+function order_is_from_user($userID, $orderID){
+    $orderManager = new OrderManager();
+
+    $order = $orderManager->getOrder_byID($orderID);
+    return $userID == $order['userID'];
 }
 
 function unset_session(){
@@ -401,6 +421,7 @@ function shop_add_to_basket_post(){
         $order = $orderManager->getLatestCreatedOrder($_SESSION['userID']);
 
         $_SESSION['orderID'] = $order['id'];
+        setcookie('orderID', $_SESSION['orderID'], time() + 10 * 12 * 30 * 24 * 60 * 60, null, null, false, true);
     }
 
     # Check if order was created correctly
@@ -420,9 +441,17 @@ function shop_add_to_basket_post(){
             $purchaseManager = new PurchaseManager();
             $shopArticleManager = new ShopArticleManager();
 
+            # Get article
             $article = $shopArticleManager->getArticle_byID($cleaned_articleID);
             $total_price = $article['unit_price'] * $cleaned_quantity;
 
+            # Check if article already in order
+
+                # Add quantity and total_price
+
+                # Deny purchase if quantity over 10
+
+            # Create new purchase and add to order
             $purchase_creation_succeeded = $purchaseManager->createPurchase($_SESSION['orderID'], $cleaned_articleID, $cleaned_quantity, $total_price);
     
             if ($purchase_creation_succeeded) {
@@ -443,6 +472,29 @@ function shop_add_to_basket_post(){
     }
 
     header('Location: index.php?action=shop&signal_post_add_to_basket=' . $signal_post_add_to_basket);
+}
+
+/**
+ * Remove a purchase from the basket order
+ *
+ * @return void Remove a purchase from the basket order
+ */
+function shop_remove_from_basket_post(){
+    if ($_SESSION['orderID'] != 0) {
+        $purchaseManager = new PurchaseManager();
+
+        if (isset($_GET['purchaseID']) && !empty($_GET['purchaseID'])) {
+            $cleaned_purchasedID = htmlspecialchars($_GET['purchaseID']);
+            $purchase_deletion_succeeded = $purchaseManager->deletePurchase($cleaned_purchaseID);
+            $purchase_deletion_succeeded ? $signal_post_remove_from_basket = 'succeeded' : 'failed';
+        } else {
+            $signal_post_remove_from_basket = 'invalid_purchaseID';
+        }
+    } else {
+        $signal_post_remove_from_basket = 'no_order';
+    }
+    
+    header('Location: index.php?action=basket&signal_post_remove_from_basket=' . $signal_post_remove_from_basket);
 }
 
 function shop_article_create_post(){
