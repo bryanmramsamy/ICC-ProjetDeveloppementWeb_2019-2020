@@ -9,24 +9,23 @@ ob_start();
     <?php if ($empty_basket) { ?>
         <h2>Votre panier est vide, mais il n'est pas trop tard pour le remplir.</h2>
         <a>Lien vers boutique</a>
-    <?php
-    } else {
-        $one_purchase = $current_pruchases->fetch();
-    ?>
+    <?php } else { ?>
         <div>
-            <table style="width:100%">
+            <table style="width:100%; border-style: solid;">
                 <tr>
                     <th>Numéro de commande</th>
                     <th>Utilisateur</th>
                     <th>Prix total de la commande</th>
                 </tr>
                 <tr>
-                    <td>0123456789-<?= $one_pruchases['orderID']; ?></td>
+                    <td>0123456789-<?= $order['id']; ?></td>
                     <td><?= $_SESSION['username']; ?></td>
-                    <td><?= $one_pruchases['total']; ?></td>
+                    <td>€ <?= number_format((float)$order['total'], 2, ',', ''); ?></td>
                 </tr>
             </table> 
         </div>
+
+        <br>
 
         <table style="width:100%">
             <tr>
@@ -34,18 +33,15 @@ ob_start();
                 <th>Quantité</th>
                 <th>Prix unitaire</th>
                 <th>Prix total</th>
-                <th>Quantité</th>
             </tr>
-            <tr>
-                <td><?= $one_pruchases['name'] ?></td>
-                <td>Smith</td>
-                <td>50</td>
-            </tr>
-            <tr>
-                <td>Eve</td>
-                <td>Jackson</td>
-                <td>94</td>
-            </tr>
+            <?php while ($purchase = $purchases->fetch()) { ?>
+                <tr>
+                    <td><?= $purchase['name']; ?></td>
+                    <td><?= $purchase['quantity']; ?></td>
+                    <td>€ <?= number_format((float)$purchase['unit_price'], 2, ',', ''); ?></td>
+                    <td>€ <?= number_format((float)$purchase['total_price'], 2, ',', ''); ?></td>
+                </tr>
+            <?php } ?>
         </table> 
 
 

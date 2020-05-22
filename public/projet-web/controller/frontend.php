@@ -207,9 +207,11 @@ function basket(){
     if ($_SESSION['orderID'] != 0) {
         $empty_basket = false;
         
+        $orderManager = new OrderManager();
         $purchaseManager = new PurchaseManager();
 
-        $current_pruchases = $purchaseManager->getAllPurchases_byOrder($_SESSION['orderID']);
+        $order = $orderManager->getOrder_byID($_SESSION['orderID']);
+        $purchases = $purchaseManager->getAllPurchases_byOrder($_SESSION['orderID']);
     } else {
         $empty_basket = true;
     }

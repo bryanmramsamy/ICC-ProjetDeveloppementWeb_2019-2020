@@ -114,6 +114,12 @@ function register_post(){
     
 }
 
+/**
+ * Set all session variables when a user is logged in
+ *
+ * @param   User    $user The logged in user
+ * @return  void    Set the user session variables for the user
+ */
 function set_session($user){
     $_SESSION['userID'] = $user['id'];
     $_SESSION['username'] = $user['username'];

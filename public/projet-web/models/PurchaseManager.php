@@ -37,11 +37,10 @@ class PurchaseManager extends Manager {
     public function getAllPurchases_byOrder($orderID){
         $db = $this->dbConnect();
 
-        $request = $db->prepare('SELECT shop_purchase.id AS purchaseID, shop_purchase.*, shop_article.* FROM shop_purchase INNER JOIN shop_article ON shop_purchase.articleID = shop_article.id WHERE shop_purchase.orderID=:orderID ORDER BY unit_price, quantity DESC');
+        $request = $db->prepare('SELECT shop_purchase.id AS purchaseID, shop_purchase.*, shop_article.name AS name, shop_article.* FROM shop_purchase INNER JOIN shop_article ON shop_purchase.articleID = shop_article.id WHERE orderID=:orderID ORDER BY unit_price, quantity DESC');
         $request->execute(array(
             'orderID' => $orderID
         ));
-
         return $request;
     }
     
