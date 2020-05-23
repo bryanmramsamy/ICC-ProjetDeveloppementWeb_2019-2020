@@ -151,6 +151,11 @@ function order_is_from_user($userID, $orderID){
     return $userID == $order['userID'];
 }
 
+/**
+ * Unset all the session's variables
+ *
+ * @return void Unset all the session's variables
+ */
 function unset_session(){
     unset($_SESSION['userID']);
     unset($_SESSION['username']);
@@ -518,6 +523,20 @@ function cancel_order(){
     header('Location: index.php?action=shop&signal_post_order_cancel=' . $signal_post_order_cancel);
 }
 
+function confirm_order(){
+    # TODO: Create function
+}
+
+function pay_order(){
+    # TODO: Create function
+}
+
+/**
+ * Create a new article based on the data gotten by the CreationFrom.
+ * All the inputs are cleaned before insertion.
+ *
+ * @return void Create a new article
+ */
 function shop_article_create_post(){
     checkPermissions('modo', true);
 
