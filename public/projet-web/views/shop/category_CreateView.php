@@ -13,7 +13,7 @@ ob_start();
             <label for='name'>Nom de la catégorie : </label>
             <input class="form-control" type='text' id='name' name='name' required/>
         </div>
-
+        <br>
         <div class="text-right">
             <input class="btn btn-primary" type=submit value="Ajouter la catégorie" /> <a class="btn btn-secondary" href="index.php?action=shop">Annuler</a>
         </div>

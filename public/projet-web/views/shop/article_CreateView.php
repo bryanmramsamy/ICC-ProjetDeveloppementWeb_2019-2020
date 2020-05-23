@@ -47,7 +47,7 @@ ob_start();
                 <input class="form-control" type="number" id="unit_price" name="unit_price" step='0.01' placeholder="EUR" required>
             </div>
 
-            <div classe='col'>
+            <div class='col'>
                 <label for='quantity_left'>Quantité d'articles disponible : </label>
                 <input class="form-control" type="number" id="quantity_left" name="quantity_left" step='1' required>
             </div>

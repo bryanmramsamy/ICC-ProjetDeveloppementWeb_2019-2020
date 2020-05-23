@@ -15,11 +15,15 @@ ob_start();
 
         <hr>
 
-        <div class="d-flex justify-content-center">
-            <div class="bg-success border border-secondary rounded p-1 mx-2">Prix unitaire: € <?= number_format((float)htmlspecialchars($article['unit_price']), 2, ',', '') ?></div>
-
-            <div class="bg-success border border-secondary rounded p-1 mx-2">Quantité restante: <?= htmlspecialchars($article['quantity_left']) ?></div>
+        <div class="row text-center h5">
+            <div class="col border border-secondary rounded p-1 mx-2">
+                Quantité restante: <?= htmlspecialchars($article['quantity_left']) ?>
+            </div>
+            <div class="col border border-secondary rounded p-1 mx-2">
+                Prix unitaire: € <?= number_format((float)htmlspecialchars($article['unit_price']), 2, ',', '') ?>
+            </div>
         </div>
+
         <div class="d-flex d-inline justify-content-end p-1 m-1">
             <?php 
             if (checkPermissions('user', false)) {
