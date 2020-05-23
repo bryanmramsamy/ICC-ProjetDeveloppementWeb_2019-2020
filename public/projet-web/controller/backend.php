@@ -484,9 +484,13 @@ function shop_remove_from_basket_post(){
         $purchaseManager = new PurchaseManager();
 
         if (isset($_GET['purchaseID']) && !empty($_GET['purchaseID'])) {
-            $cleaned_purchasedID = htmlspecialchars($_GET['purchaseID']);
+            $cleaned_purchaseID = htmlspecialchars($_GET['purchaseID']);
+
             $purchase_deletion_succeeded = $purchaseManager->deletePurchase($cleaned_purchaseID);
+
             $purchase_deletion_succeeded ? $signal_post_remove_from_basket = 'succeeded' : $signal_post_remove_from_basket = 'failed';
+            $order_total_update = shop_update_total_price_order($_SESSION['orderID']);
+
         } else {
             $signal_post_remove_from_basket = 'invalid_purchaseID';
         }

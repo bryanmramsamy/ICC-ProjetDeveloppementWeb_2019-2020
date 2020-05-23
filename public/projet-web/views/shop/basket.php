@@ -7,9 +7,32 @@ ob_start();
     <h1>Panier</h1>
 
     <?php if ($empty_basket) { ?>
-        <h2>Votre panier est vide, mais il n'est pas trop tard pour le remplir.</h2>
-        <br>
-        <a class="btn btn-primary btn-lg btn-block" href="index.php?action=shop">Visiter notre boutique</a>
+        <section class="alert alert-warning" role="alert">
+            <h1 class="alert-heading text-center">Votre panier est vide</h1>
+            <hr>
+            <p class="text-justify">
+                Votre panier est actuellement vide. Il vous est donc impossible de confirmer votre commande.
+                <br><br>
+                Visitez notre boutique et rajouter les articles qui vous plaisent dans votre panier.
+                <br>
+                Une fois fais, vous pourrez revenir sur cette page afin de voir le contenu de votre panier.
+                <br><br>
+                D'ici, vous pourrez voir le récapitulatif de votre commande, supprimer des articles de votre panier et valider votre commande afin de procéder au paiement de celui-ci.
+                <hr>
+                Si vous vous déconnectez de la session, votre panier sera enregistré et disponible lors de votre prochaine visite.
+                <br>
+                Cependant, si un autre utilisateur se connecte à sa session depuis votre navigateur, votre panier sera perdu car écrasé par le sien.
+            </p>
+            <hr>
+            <div class=row>
+                <div class="col">
+                    <a class="btn btn-lg btn-block btn-primary" href="index.php?action=shop">Visiter notre boutique</a>
+                </div>
+                <div class="col">
+                    <a class="btn btn-lg btn-block btn-secondary" href="index.php">Retourner à l'accueil</a>
+                </div>
+            </div>
+        </section>
     <?php } else { ?>
         <div>
             <table class="table table-bordered table-striped">
@@ -36,10 +59,13 @@ ob_start();
 
         <div class="row">
             <div class="col">
-                <a class="col btn btn-primary btn-lg btn-block" href="index.php?action=checkout">Confirmer la commande</a>
+                <a class="col btn btn-success btn-lg btn-block" href="index.php?action=checkout">Confirmer la commande</a>
             </div>
             <div class="col">
                 <a class="col btn btn-secondary btn-lg btn-block" href="index.php?action=cancel_order">Annuler la commande</a>
+            </div>
+            <div class="col">
+                <a class="col btn btn-primary btn-lg btn-block" href="index.php?action=shop">Retourner à la boutique</a>
             </div>
         </div>
 
@@ -71,7 +97,23 @@ ob_start();
                     </tr>
                 <?php } ?>
             </tbody>
-        </table> 
+        </table>
+
+        <br>
+
+        <div class="row">
+            <div class="col">
+                <a class="col btn btn-success btn-lg btn-block" href="index.php?action=checkout">Confirmer la commande</a>
+            </div>
+            <div class="col">
+                <a class="col btn btn-secondary btn-lg btn-block" href="index.php?action=cancel_order">Annuler la commande</a>
+            </div>
+            <div class="col">
+                <a class="col btn btn-primary btn-lg btn-block" href="index.php?action=shop">Retourner à la boutique</a>
+            </div>
+        </div>
+
+        <br>
     <?php } ?>
 
     <?php
