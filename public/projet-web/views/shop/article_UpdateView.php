@@ -6,8 +6,6 @@ ob_start();
 ?>
 
 <section>
-
-    <section>
     <form id="update_article" method="post" action="index.php?action=shop_article_update_post&articleID=<?= $article['id']; ?>">
         <div>
             <label for='name'>Nom de l'article : </label>
@@ -68,7 +66,7 @@ ob_start();
             <input class="btn btn-primary" type=submit value="Modifier l'article" /> <a class="btn btn-secondary" href="index.php?action=shop_article&articleID=<?= $article['id']; ?>">Annuler</a>
         </div>
     </form>
-    </section>
+</section>
 
 <?php
 $main_section = ob_get_clean();

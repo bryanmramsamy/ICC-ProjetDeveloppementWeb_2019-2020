@@ -109,6 +109,13 @@ function clean_GET($value) {
     else header ('Location: index.php?action=404');
 }
 
+/**
+ * Display a signal alert based on its message and its warning level to display
+ *
+ * @param   string  $signal_message Message of the signal
+ * @param   string  $alert Warning level of the signal
+ * @return  void    Display the signal
+ */
 function check_signal($signal_message, $alert){
     if (!empty($signal_message)) echo ("<div class=\"alert alert-$alert\" role=\"alert\">$signal_message</div>");
 }

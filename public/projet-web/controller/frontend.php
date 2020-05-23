@@ -69,11 +69,16 @@ function register(){
     require('views/authentication/register.php');
 }
 
+/**
+ * Display a user profile to the user itself, or to a moderator or an administrator.
+ *
+ * @return void Display the user profile
+ */
 function profile(){
     checkPermissions('user', true);
 
     if (isset($_SESSION['userID']) && !empty($_SESSION['userID'])) $userID = $_SESSION['userID'];
-    else if (checkPermissions('admin', false)) {
+    else if (checkPermissions('modo', false)) {
         $userID = clean_userID();
         check_userExist($userID);
     }
@@ -204,6 +209,12 @@ function post_comment_update(){
 
 # Shop
 
+/**
+ * Display the basket of the user with all the items added to and all the details of its purchases and its orders.
+ * This view can lead to the order confirmation with the checkout view.
+ *
+ * @return void Display the basket views
+ */
 function basket(){
     checkPermissions('user', true);
 
@@ -223,10 +234,30 @@ function basket(){
     require('views/shop/basket.php');
 }
 
+/**
+ * Display the checkout view where the user can confirm its order.
+ * One must enters its bank account and its address before being redirected to the payment view.
+ *
+ * If the user saved an address in his profile, this will pre-fill the form by default.
+ * Otherwise, the form will be empty and one must enter the data manually.
+ *
+ * @return void Display the checkout view
+ */
 function checkout(){
     checkPermissions('user', true);
 
-    if ($_SESSION['orderID'] != 0) header('Location: index.php?action=basket');
+    if ($_SESSION['orderID'] == 0) header('Location: index.php?action=basket');
+
+    $userManager = new UserManager();
+    $orderManager = new OrderManager();
+    $purchaseManager = new PurchaseManager();
+
+    $user = $userManager->getUser_byID($_SESSION['userID']);
+    $order = $orderManager->getOrder_byID($_SESSION['orderID']);
+    $number_items = $orderManager->getNumberItems($_SESSION['orderID']);
+    $purchases = $purchaseManager->getAllPurchases_byOrder($_SESSION['orderID']);
+
+    require('views/shop/checkout.php');
 }
 
 function shop($page=1, $nb_post_per_page){
@@ -294,6 +325,18 @@ function shop_category_create(){
 
 # Utilities
 
+/**
+ * Display the name of the user based on the data filled by the user.
+ * 
+ * If the user didn't enter any firstname and lastname, its username will be displayed by default.
+ * If the firstname is filled, this will be shown. Same for the lastname, but preceeded by a "Mister/Miss".
+ * In the case both were filled, btoh will be displayed.
+ *
+ * @param   string  $username User's username
+ * @param   string  $first_name User's filled firstname
+ * @param   string  $last_name User's filled lastname
+ * @return  string  Name of the user to display
+ */
 function displayed_name($username, $first_name=null, $last_name=null){
     if ($first_name != null && $last_name != null) {
         $displayed_name = $first_name . " " . $last_name;

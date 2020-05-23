@@ -33,14 +33,16 @@ ob_start();
             <input class="form-control" type='text' id='last_name' name='last_name' value='<?= $user['last_name']; ?>'/>
         </div>
 
-        <div class="form-group">
-            <label for='address'>Adresse : </label>
-            <input class="form-control" type='text' id='address' name='address' value='<?= $user['address']; ?>'/>
-        </div>
+        <div class='row'>
+            <div class="col-8 form-group">
+                <label for='address'>Adresse : </label>
+                <input class="form-control" type='text' id='address' name='address' value='<?= $user['address']; ?>'/>
+            </div>
 
-        <div class="form-group">
-            <label for='zipcode'>Code postal : </label>
-            <input class="form-control" type='text' id='zipcode' name='zipcode' value='<?= $user['zipcode']; ?>'/>
+            <div class="col-4 form-group">
+                <label for='zipcode'>Code postal : </label>
+                <input class="form-control" type='text' id='zipcode' name='zipcode' value='<?= $user['zipcode']; ?>'/>
+            </div>
         </div>
 
         <div class="form-group">
