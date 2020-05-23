@@ -24,7 +24,7 @@ ob_start();
                 <tbody>
                     <tr>
                         <td>XXXX-XXXX<?= $order['id']; ?></td>
-                        <td><?= $_SESSION['username']; ?></td>
+                        <td><?= displayed_name($_SESSION['username'], $_SESSION['user_first_name'], $_SESSION['user_last_name']) ?></td>
                         <td><?= $number_items ?></td>
                         <td>€ <?= number_format((float)$order['total'], 2, ',', ''); ?></td>
                     </tr>

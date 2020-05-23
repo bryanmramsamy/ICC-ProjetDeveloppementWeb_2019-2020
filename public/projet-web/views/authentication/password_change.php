@@ -11,27 +11,27 @@ ob_start();
 
     <form method="POST" action="index.php?action=password_change_post">
 
-        <div>
+        <div class="form-group">
             <input type='hidden' id='userID' name='userID' value='<?= $user['id']; ?>' required/>
         </div>
 
-        <div>
+        <div class="form-group">
             <label for='old_password'>Ancien mot de passe : </label>
-            <input type='password' id='old_password' name='old_password'/>
+            <input class="form-control" type='password' id='old_password' name='old_password'/>
         </div>
 
-        <div>
+        <div class="form-group">
             <label for='new_password'>Nouveau mot de passe : </label>
-            <input type='password' id='new_password' name='new_password'/>
+            <input class="form-control" type='password' id='new_password' name='new_password'/>
         </div>
 
-        <div>
+        <div class="form-group">
             <label for='new_password_confirmation'>Confirmation du nouveau mot de passe : </label>
-            <input type='password' id='new_password_confirmation' name='new_password_confirmation'/>
+            <input class="form-control" type='password' id='new_password_confirmation' name='new_password_confirmation'/>
         </div>
 
-        <div>
-            <input type=submit value="Changer le mot de passe" /> <a href="index.php?action=profile<?php if (checkPermissions('admin', false)) echo ("&userID=" . $user['id']);?>">Annuler</a>
+        <div class="text-right">
+            <input class="btn btn-primary" type=submit value="Changer le mot de passe" /> <a class="btn btn-secondary" href="index.php?action=profile<?php if (checkPermissions('admin', false)) echo ("&userID=" . $user['id']);?>">Annuler</a>
         </div>
 
     </from>
