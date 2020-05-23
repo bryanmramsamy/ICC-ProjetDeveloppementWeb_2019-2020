@@ -119,66 +119,36 @@ class OrderManager extends Manager {
 
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
-
-    /**
-     * Set a boolean and its correspending date attribute
-     * 
-     * If the boolean is set to true, the date attribute is set on the current time.
-     * Otherwise, the date is set on null.
-     *
-     * @param   int     $orderID ID of the order
-     * @param   string  $boolean_key The concerned boolean th set (ordered or payed)
-     * @param   int     $boolean_value The value of the boolean in TinyInt (false == 0, true == 1)
-     * @return  boolean True if the boolean and its values were correctly set
-     */
-    private function setOrderBooleanDate($orderID, $boolean_key, $boolean_value) {
-        $boolean_value == 1 ? $date_value = 'NOW()' : $date_value = 'null';
-
-        $query = 'UPDATE shop_orders SET ' . $boolean_key . '=:boolean_value, ' . $date_key . '=' . $date_value . ': WHERE id=:orderID';
-        $data_array = array(
-            'orderID' => $orderID,
-            'ordered' => $boolean_value,
-        );
-
-        return $this->createUpdateDeleteEntry($query, $data_array);
-    }
-
-    /**
-     * Flag an order as ordered and add the current datetime to the order
-     *
-     * @param   int     $orderID ID of the order
-     * @return  boolean True if the order was correctly flagged as ordered
-     */
-    public function order($orderID){
-        return $this->setOrderBooleanDate($orderID, 'ordered', 1);
-    }
     
     /**
-     * Unflag an order as ordered and set the date_order to null
+     * Flag an order as ordered.
+     * The user's bank account and its delivery address and zipcodes are added to the order.
      *
-     * @param   int     $orderID ID of the order
-     * @return  boolean True if the order was correctly unflagged as ordered
+     * @param   int     $orderID User's ID
+     * @param   string  $bank_account User's bank account number
+     * @param   string  $address User's delivery address
+     * @param   string  $zipcode User's devivery address' zip code
+     * @return  boolean True if the order was correctly updated and flagged as ordered
      */
+    public function order($orderID, $bank_account, $address, $zipcode){
+        $query = 'UPDATE shop_orders SET bank_account=:bank_account, address=:address, zipcode=:zipcode, ordered=1, date_ordered=NOW() WHERE id=:orderID';
+        $data_array = array(
+            'orderID' => $orderID,
+            'bank_account' => $bank_account,
+            'address' => $address,
+            'zipcode' => $zipcode
+        );
+        return $this->createUpdateDeleteEntry($query, $data_array);
+    }
+    
     public function unorder($orderID){
         return $this->setOrderBooleanDate($orderID, 'ordered', 0);
     }
-    
-    /**
-     * Flag an order as payed and add the current datetime to the order
-     *
-     * @param   int     $orderID ID of the order
-     * @return  boolean True if the order was correctly flagged as payed
-     */
+
     public function checkout($orderID){
-        return $this->setOrderBooleanDate($orderID, 'payed', 1);
+ 
     }
-    
-    /**
-     * Unflag an order as payed and set the date_payed to null
-     *
-     * @param   int     $orderID ID of the order
-     * @return  boolean True if the order was correctly unflagged as payed
-     */
+
     public function uncheckout($orderID){
         return $this->setOrderBooleanDate($orderID, 'payed', 0);
     }

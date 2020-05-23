@@ -523,8 +523,51 @@ function cancel_order(){
     header('Location: index.php?action=shop&signal_post_order_cancel=' . $signal_post_order_cancel);
 }
 
-function confirm_order(){
-    # TODO: Create function
+function checkout_post(){
+    checkPermissions('user', true);
+
+    $cleaned_bank_account = htmlspecialchars($_POST['bank_account']);
+    $cleaned_address = htmlspecialchars($_POST['delivery_address']);
+    $cleaned_zipcode = htmlspecialchars($_POST['zipcode']);
+
+    $orderManager = new OrderManager();
+
+    $order_succeeded = $orderManager->order($_SESSION['orderID'], $cleaned_bank_account, $cleaned_address, $cleaned_zipcode);
+
+    if ($order_succeeded) {
+        $quantity_substraction_succeeded = remove_ordered_items_from_available_articles($_SESSION['orderID']);
+
+        $quantity_substraction_succeeded ? $signal_post_checkout = 'success' : $signal_post_checkout = 'failed_quantity_substraction';
+    } else {
+        $signal_post_checkout = 'failed_order_update';
+    }
+
+    if ($signal_post_checkout = 'success') {
+        header('Location: index.php?action=payment&signal_post_checkout=' . $signal_post_checkout);
+    } else {
+        header('Location: index.php?action=shop&signal_post_checkout=' . $signal_post_checkout);
+    }
+}
+
+/**
+ * Substract the quantities of all the purchases made in an order form the quantity_left of the related article
+ *
+ * @param   int     $orderID Order's ID
+ * @return  boolean True if all the quantities of all the related articles have successfully been substracted
+ */
+function remove_ordered_items_from_available_articles($orderID){
+    $purchaseManager = new PurchaseManager();
+    $shopArticleManager = new ShopArticleManager();
+
+    $purchases = $purchaseManager->getAllPurchases_byOrder($orderID);
+
+    $substraction_succeeded == true;
+    while ($purchase = $purchases->fetch() && $substraction_succeeded) {
+        $substraction_succeeded = $shopArticleManager->substractQuantity($purchase['articleID'], $purchase['quantity']);
+    }
+    
+    $purchases->closeCursor();
+    return $substraction_succeeded;
 }
 
 function pay_order(){

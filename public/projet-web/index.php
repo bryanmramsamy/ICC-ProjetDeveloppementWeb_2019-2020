@@ -27,6 +27,10 @@ try {
                 checkout();
                 break;
 
+            case 'checkout_post':
+                checkout_post();
+                break;
+
             case 'forbidden':
                 forbidden();
                 break;

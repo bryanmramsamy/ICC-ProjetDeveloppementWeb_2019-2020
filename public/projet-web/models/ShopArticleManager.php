@@ -26,7 +26,13 @@ class ShopArticleManager extends Manager {
     public function getArticle($key, $value){
         return $this->getEntry($this->db_table, $key, $value);
     }
-
+    
+    /**
+     * Get a specific article by its ID
+     *
+     * @param   int     $articleID Article's ID
+     * @return  Article The looked article or a null value if the article doesn't exist
+     */
     public function getArticle_byID($articleID){
         return $this->getArticle('id', $articleID);
     }
@@ -73,6 +79,35 @@ class ShopArticleManager extends Manager {
         );
 
         return $this->createUpdateDeleteEntry($query, $data_array);
+    }
+    
+    /**
+     * Update the quantity left of an article
+     *
+     * @param   int     $articleID Article's ID
+     * @param   int     $quantity_left Quantity of the article left
+     * @return  boolean True if the quantity has correctly been updated
+     */
+    public function updateQuantityLeft($articleID, $quantity_left){
+        $query = 'UPDATE shop_article SET quantity_left=:quantity_left WHERE id=:articleID';
+        $data_array = array(
+            'articleID' => $articleID,
+            'quantity_left' => $quantity_left,
+        );
+        return $this->createUpdateDeleteEntry($query, $data_array);
+    }
+    
+    /**
+     * Substract the quantity left of an article by a given value
+     *
+     * @param   int     $articleID Article's ID
+     * @param   int     $quantity_to_substract The quantity to substract from the article
+     * @return  boolean True if the quantity has correctly been substracted
+     */
+    public function substractQuantity($articleID, $quantity_to_substract){
+        $start_quantity_left = $this->getArticle_byID($articleID)['quantity_left'];
+        $end_quantity_left = $start_quantity_left - $quantity_to_substract;
+        return $this->updateQuantityLeft($articleID, $end_quantity_left);
     }
 
 }
