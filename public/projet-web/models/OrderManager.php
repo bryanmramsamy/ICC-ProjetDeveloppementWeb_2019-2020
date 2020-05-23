@@ -140,17 +140,9 @@ class OrderManager extends Manager {
         );
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
-    
-    public function unorder($orderID){
-        return $this->setOrderBooleanDate($orderID, 'ordered', 0);
-    }
 
-    public function checkout($orderID){
+    public function payement($orderID){
  
-    }
-
-    public function uncheckout($orderID){
-        return $this->setOrderBooleanDate($orderID, 'payed', 0);
     }
     
     /**

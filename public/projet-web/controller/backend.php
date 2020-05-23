@@ -537,7 +537,7 @@ function checkout_post(){
     if ($order_succeeded) {
         $quantity_substraction_succeeded = remove_ordered_items_from_available_articles($_SESSION['orderID']);
 
-        $quantity_substraction_succeeded ? $signal_post_checkout = 'success' : $signal_post_checkout = 'failed_quantity_substraction';
+        $quantity_substraction_succeeded ? $signal_post_checkout = 'success' : $signal_post_checkout = 'not_enough_articles';
     } else {
         $signal_post_checkout = 'failed_order_update';
     }
@@ -560,9 +560,9 @@ function remove_ordered_items_from_available_articles($orderID){
     $shopArticleManager = new ShopArticleManager();
 
     $purchases = $purchaseManager->getAllPurchases_byOrder($orderID);
-
-    $substraction_succeeded == true;
-    while ($purchase = $purchases->fetch() && $substraction_succeeded) {
+    
+    $substraction_succeeded  = true;
+    while ($substraction_succeeded && $purchase = $purchases->fetch()) {
         $substraction_succeeded = $shopArticleManager->substractQuantity($purchase['articleID'], $purchase['quantity']);
     }
     

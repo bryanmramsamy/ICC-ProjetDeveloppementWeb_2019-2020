@@ -107,7 +107,11 @@ class ShopArticleManager extends Manager {
     public function substractQuantity($articleID, $quantity_to_substract){
         $start_quantity_left = $this->getArticle_byID($articleID)['quantity_left'];
         $end_quantity_left = $start_quantity_left - $quantity_to_substract;
-        return $this->updateQuantityLeft($articleID, $end_quantity_left);
+
+        if ($end_quantity_left >= 0) $response = $this->updateQuantityLeft($articleID, $end_quantity_left);
+        else $response = false;
+
+        return $response;
     }
 
 }
