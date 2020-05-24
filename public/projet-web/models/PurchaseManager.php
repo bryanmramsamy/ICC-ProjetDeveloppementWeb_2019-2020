@@ -129,7 +129,13 @@ class PurchaseManager extends Manager {
 
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
-
+    
+    /**
+     * Calculate the sum of all the items in an order
+     *
+     * @param   int     $orderID Order's ID
+     * @return  double  Sum of the prices of all the items in the order
+     */
     public function sumPurchasesOrder($orderID){
         $db = $this->dbConnect();
         $request = $db->prepare('SELECT SUM(total_price) FROM shop_purchase WHERE orderID=:orderID');

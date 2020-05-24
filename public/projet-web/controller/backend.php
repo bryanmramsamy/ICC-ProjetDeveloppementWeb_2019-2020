@@ -480,7 +480,7 @@ function shop_add_to_basket_post(){
 }
 
 /**
- * Remove a purchase from the basket order
+ * Remove a purchase from the basket order and delete the order from the basket when the last item is removed
  *
  * @return void Remove a purchase from the basket order
  */
@@ -492,10 +492,9 @@ function shop_remove_from_basket_post(){
             $cleaned_purchaseID = htmlspecialchars($_GET['purchaseID']);
 
             $purchase_deletion_succeeded = $purchaseManager->deletePurchase($cleaned_purchaseID);
-
             $purchase_deletion_succeeded ? $signal_post_remove_from_basket = 'succeeded' : $signal_post_remove_from_basket = 'failed';
-            $order_total_update = shop_update_total_price_order($_SESSION['orderID']);
 
+            $order_total_update = shop_update_total_price_order($_SESSION['orderID']);
         } else {
             $signal_post_remove_from_basket = 'invalid_purchaseID';
         }
@@ -503,7 +502,12 @@ function shop_remove_from_basket_post(){
         $signal_post_remove_from_basket = 'no_order';
     }
     
-    header('Location: index.php?action=basket&signal_post_remove_from_basket=' . $signal_post_remove_from_basket);
+    if (empty($order_total_update)) {
+        header('Location: index.php?action=cancel_order');
+    } else {
+        header('Location: index.php?action=basket&signal_post_remove_from_basket=' . $signal_post_remove_from_basket);
+    }
+    
 }
 
 /**
@@ -646,8 +650,14 @@ function shop_update_total_price_order($orderID){
     $purchaseManager = new PurchaseManager();
 
     $order_total_price = $purchaseManager->sumPurchasesOrder($_SESSION['orderID']);
-    $order_total_update_succeeded = $orderManager->updateTotal($_SESSION['orderID'], $order_total_price);
-    return $order_total_update_succeeded;
+    if (empty($order_total_price)) {
+        return null;
+    } else {
+        $order_total_update_succeeded = $orderManager->updateTotal($_SESSION['orderID'], $order_total_price);
+        return $order_total_update_succeeded;
+    }
+
+
 }
 
 # MiniChat
