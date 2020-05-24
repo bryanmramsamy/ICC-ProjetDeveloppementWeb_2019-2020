@@ -8,6 +8,7 @@ require_once('models/PurchaseManager.php');
 require_once('models/ShopArticleManager.php');
 require_once('models/ShopCategoryManager.php');
 require_once('models/UserManager.php');
+require_once('models/UserLogsManager.php');
 
 use \ProjetWeb\Model\CommentManager;
 use \ProjetWeb\Model\MiniChatManager;
@@ -17,6 +18,7 @@ use \ProjetWeb\Model\PurchaseManager;
 use \ProjetWeb\Model\ShopArticleManager;
 use \ProjetWeb\Model\ShopCategoryManager;
 use \ProjetWeb\Model\UserManager;
+use \ProjetWeb\Model\UserLogsManager;
 
 
 # Authentication
@@ -29,14 +31,16 @@ function signin_post(){
         $cleaned_password = htmlspecialchars($_POST['password']);
 
         $userManager = new UserManager;
+        $userLogsManager = new UserLogsManager();
 
         $user_found = $userManager->getUser_byUsername($cleaned_username);
 
         if (!empty($user_found) && password_verify($cleaned_password, $user_found['passwd'])) {
             if ($user_found['active'] == true) {
                 set_session($user_found);
+                $connection_logged = $userLogsManager->login($_SESSION['userID']);
 
-                $signal_post_userSignin = 'connected';
+                $connection_logged ? $signal_post_userSignin = 'connected' : $signal_post_userSignin = 'logged_failed';
             } else {
                 $signal_post_userSignin = 'inactive';
             }

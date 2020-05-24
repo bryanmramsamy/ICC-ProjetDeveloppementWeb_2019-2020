@@ -8,6 +8,7 @@ require_once('models/PurchaseManager.php');
 require_once('models/ShopArticleManager.php');
 require_once('models/ShopCategoryManager.php');
 require_once('models/UserManager.php');
+require_once('models/UserLogsManager.php');
 
 use \ProjetWeb\Model\CommentManager;
 use \ProjetWeb\Model\MiniChatManager;
@@ -17,6 +18,7 @@ use \ProjetWeb\Model\PurchaseManager;
 use \ProjetWeb\Model\ShopArticleManager;
 use \ProjetWeb\Model\ShopCategoryManager;
 use \ProjetWeb\Model\UserManager;
+use \ProjetWeb\Model\UserLogsManager;
 
 
 # Static pages

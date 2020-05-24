@@ -8,6 +8,7 @@ require_once('models/PurchaseManager.php');
 require_once('models/ShopArticleManager.php');
 require_once('models/ShopCategoryManager.php');
 require_once('models/UserManager.php');
+require_once('models/UserLogsManager.php');
 
 use \ProjetWeb\Model\CommentManager;
 use \ProjetWeb\Model\MiniChatManager;
@@ -17,6 +18,7 @@ use \ProjetWeb\Model\PurchaseManager;
 use \ProjetWeb\Model\ShopArticleManager;
 use \ProjetWeb\Model\ShopCategoryManager;
 use \ProjetWeb\Model\UserManager;
+use \ProjetWeb\Model\UserLogsManager;
 
 
 # Authentication
@@ -113,8 +115,14 @@ function check_messageExist($messageID){
 
 # Utility
 
-function clean_GET($value) {
-    if (isset($_GET[$value]) && !empty($_GET[$value])) return htmlspecialchars($_GET[$value]);
+/**
+ * Check and clean a GET argument and redirect to a not found page if the argument doesn't isn't valid
+ *
+ * @param  mixed $key Keyword of the GET argument
+ * @return void The cleaned GET argument value or redirect to the not found page
+ */
+function clean_GET($key) {
+    if (isset($_GET[$key]) && !empty($_GET[$key])) return htmlspecialchars($_GET[$key]);
     else header ('Location: index.php?action=404');
 }
 
