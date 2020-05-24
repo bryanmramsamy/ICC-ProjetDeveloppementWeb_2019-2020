@@ -181,4 +181,16 @@ class OrderManager extends Manager {
         return $data['total_items'];
         ; 
     }
+
+    public function isArticle_inOrder($articleID, $orderId){
+        $db = $this->dbConnect();
+
+        $request = $db->prepare('SELECT COUNT(*) FROM shop_purchase INNER JOIN shop_article ON shop_purchase.articleID = shop_article.id INNER JOIN shop_orders ON shop_purchase.orderID = shop_orders.id WHERE shop_purchase.orderID = :orderID AND shop_purchase.articleID = :articleID');
+        $request->execute(array(
+            'articleID' => $articleID,
+            'orderID' => $orderID
+        ));
+        $result = $request->fetch();
+        return $result == 1;
+    }
 }

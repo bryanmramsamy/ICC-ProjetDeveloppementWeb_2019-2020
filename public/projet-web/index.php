@@ -9,7 +9,7 @@ const MINICHAT_NB_MESSAGE_PER_PAGE = 10;
 const POSTS_NB_COMMENT_PER_PAGE = 10;
 const POSTS_NB_POST_PER_PAGE = 10;
 const SHOP_NB_ARTICLE_PER_PAGE = 10;
-const SHOP_MAXIMUM_ALLOWED_ARTICLE_PER_USER = 10;
+const SHOP_MAXIMUM_ALLOWED_ITEM_PER_USER = 10;
 
 try {
     if (isset($_GET['page']) && !empty($_GET['page']) && $_GET['page'] > 0) $page = $_GET['page'];
@@ -137,7 +137,7 @@ try {
                 break;
 
             case 'shop_add_to_basket_post':
-                shop_add_to_basket_post();
+                shop_add_to_basket_post(SHOP_MAXIMUM_ALLOWED_ITEM_PER_USER);
                 break;
 
             case 'shop_remove_from_basket_post':

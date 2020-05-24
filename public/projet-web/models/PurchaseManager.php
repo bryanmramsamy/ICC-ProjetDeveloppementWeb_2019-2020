@@ -65,16 +65,10 @@ class PurchaseManager extends Manager {
         return $this->getPurchase('id', $purchaseID);
     }
 
-    public function isPurchase_inOrder($purchaseID, $orderId){
-        $db = $this->dbConnect();
-
-        $request = $db->prepare('SELECT shop_purchase.id AS purchaseID, shop_purchase.*, shop_article.name AS name, shop_article.* FROM shop_purchase INNER JOIN shop_article ON shop_purchase.articleID = shop_article.id WHERE orderID=:orderID ORDER BY unit_price, quantity DESC');
-        $request->execute(array(
-            'orderID' => $orderID
-        ));
-        return $request;
+    public function getPurchase_byArticleID($articleID){
+        return $this->getPurchase('articleID', $articleID);
     }
-    
+
     /**
      * Create a new purchase
      *

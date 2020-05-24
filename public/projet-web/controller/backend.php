@@ -417,7 +417,7 @@ function post_comment_publish(){
  *
  * @return void Redirect the user to the shop page and send a $signal_post_add_to_basket signal
  */
-function shop_add_to_basket_post(){
+function shop_add_to_basket_post($max_item_allowed){
     $orderManager = new OrderManager();
     
     # If no order or purchase was made, we create a new one
@@ -427,6 +427,8 @@ function shop_add_to_basket_post(){
 
         $_SESSION['orderID'] = $order['id'];
         setcookie('orderID', $_SESSION['orderID'], time() + 10 * 12 * 30 * 24 * 60 * 60, null, null, false, true);
+    } else {
+        $order_creation_succeeded = true;
     }
 
     # Check if order was created correctly
@@ -451,15 +453,28 @@ function shop_add_to_basket_post(){
             $total_price = $article['unit_price'] * $cleaned_quantity;
 
             # Check if article already in order
+            $article_already_in_order = $orderManager->isArticle_inOrder($article['id'], $_SESSION['orderID']);
 
-                # Add quantity and total_price
-
+            if ($article_already_in_order) {
                 # Deny purchase if quantity over 10
+                $purchase = $purchaseManager->getPurchase_byArticleID($article['id']);
+                $purchase_item_quantity = $purchase['quantity'];
 
-            # Create new purchase and add to order
-            $purchase_creation_succeeded = $purchaseManager->createPurchase($_SESSION['orderID'], $cleaned_articleID, $cleaned_quantity, $total_price);
-    
-            if ($purchase_creation_succeeded) {
+                $number_items_under_limit = $purchase_item_quantity + $cleaned_quantity <= $max_item_allowed;
+
+                if ($number_items_under_limit) {
+                    $purchase_creationUpdate_succeeded = $purchaseManager->updatePurchase($purchase['id'], $cleaned_quantity, $total_price);
+                }
+            } else {
+                $number_items_under_limit = $cleaned_quantity <= $max_item_allowed;
+
+                if ($number_items_under_limit) {
+                    $purchase_creationUpdate_succeeded = $purchaseManager->createPurchase($_SESSION['orderID'], $cleaned_articleID, $cleaned_quantity, $total_price);
+                }
+            }
+
+            if ($purchase_creationUpdate_succeeded) {
+                # Add quantity and total_price
                 $order_total_update = shop_update_total_price_order($_SESSION['orderID']);
                 if ($order_total_update) {
                     $signal_post_add_to_basket = 'succeeded';
@@ -467,7 +482,7 @@ function shop_add_to_basket_post(){
                     $signal_post_add_to_basket = 'failed_order_total_update';
                 }
             } else {
-                $signal_post_add_to_basket = 'failed_purchase_creation';
+                $number_items_under_limit ? $signal_post_add_to_basket = 'too_much_items' : $signal_post_add_to_basket = 'failed_purchase_creation';
             }
         } else {
             $signal_post_add_to_basket = 'invalid_quantity';
