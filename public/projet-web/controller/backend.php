@@ -527,9 +527,14 @@ function cancel_order(){
     header('Location: index.php?action=shop&signal_post_order_cancel=' . $signal_post_order_cancel);
 }
 
+/**
+ * Confirm the basket as checkout and update the quantity left of each items from the order.
+ * Add the payement and delivery informations to the order.
+ * Redirect the user to the payment view.
+ *
+ * @return void Flag the order as ordered, add the payement and delivery data to the order and redirect the user to the payment view
+ */
 function checkout_post(){
-    checkPermissions('user', true);
-
     $cleaned_bank_account = htmlspecialchars($_POST['bank_account']);
     $cleaned_address = htmlspecialchars($_POST['delivery_address']);
     $cleaned_zipcode = htmlspecialchars($_POST['zipcode']);

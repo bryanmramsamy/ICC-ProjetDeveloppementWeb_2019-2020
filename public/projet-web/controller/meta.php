@@ -44,6 +44,15 @@ const PERMISSION = array(
     'admin' => 50,
 );
 
+/**
+ * Check if the access is granted or denied to a user based on its permission level.
+ * Return boolean according to the permission level and the needed access.
+ * Redirect the user which access was denied if the redirection arugment is set to true.
+ *
+ * @param   string  $required_permissions Needed permission level to have the access granted
+ * @param   boolean $redirection Indicates if the user whom access was denied must be redirected to the forbidden page
+ * @return  boolean True if the access was granted. False if the access was denied but the redirection argument is set to false.
+ */
 function checkPermissions($required_permissions, $redirection) {
     $premissions_granted = $_SESSION['user_role_lvl'] >= PERMISSION[$required_permissions];
 

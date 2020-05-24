@@ -5,8 +5,18 @@ namespace ProjetWeb\Model;
 require_once('models/Manager.php');
 
 
+/**
+ * Manager of the shop_article model
+ * 
+ * Represent an item to be sold in the shop
+ */
 class ShopArticleManager extends Manager {
-
+    
+    /**
+     * Name of the database table
+     *
+     * @var string  $db_table Name of the database table
+     */
     private $db_table = 'shop_article';
 
     public function getArticles_byPage($page, $nb_post_per_page){
@@ -22,7 +32,14 @@ class ShopArticleManager extends Manager {
     public function getTotalPagesArticle($nb_post_per_page){
         return $this->getTotalPages($this->db_table, $nb_post_per_page);
     }
-
+    
+    /**
+     * Get a shop item based on a specific attribute with a matching value
+     *
+     * @param   string  $key Search attribute
+     * @param   mixed   $value Value of the searching attribute
+     * @return  Article The looked item or null if no item was found with the matching key-value pair
+     */
     public function getArticle($key, $value){
         return $this->getEntry($this->db_table, $key, $value);
     }
@@ -37,6 +54,19 @@ class ShopArticleManager extends Manager {
         return $this->getArticle('id', $articleID);
     }
 
+    /**
+     * Create an new shop item
+     *
+     * @param   int             $articleID Item's ID
+     * @param   string          $name Name of the item
+     * @param   int             $categorieID Item's related category ID
+     * @param   int             $permission_lvl Premission level required to be able to buy the article
+     * @param   double          $unit_price Unit price of the article in EUR
+     * @param   int             $quantity_left Amount of items left to be sold
+     * @param   string          $description Full description of the item
+     * @param   int (boolean)   $availability True if the item is available to be sold
+     * @return  boolean         True if the shop item was successfully created
+     */
     public function createArticle($name, $categorieID, $permission_lvl, $unit_price, $quantity_left, $description, $availability) {
         $query = 'INSERT INTO shop_article (name, categorieID, permission_lvl, unit_price, quantity_left, description, availability) VALUES (:name, :categorieID, :permission_lvl, :unit_price, :quantity_left, :description, :availability)';
         $data_array = array(
@@ -51,7 +81,20 @@ class ShopArticleManager extends Manager {
 
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
-
+    
+    /**
+     * Updates the attributes of a shop item
+     *
+     * @param   int             $articleID Item's ID
+     * @param   string          $name Name of the item
+     * @param   int             $categorieID Item's related category ID
+     * @param   int             $permission_lvl Premission level required to be able to buy the article
+     * @param   double          $unit_price Unit price of the article in EUR
+     * @param   int             $quantity_left Amount of items left to be sold
+     * @param   string          $description Full description of the item
+     * @param   int (boolean)   $availability True if the item is available to be sold
+     * @return  boolean         True if the update was successfull
+     */
     public function updateArticle($articleID, $name, $categorieID, $permission_lvl, $unit_price, $quantity_left, $description, $availability) {
         $query = 'UPDATE shop_article SET name=:name, categorieID=:categorieID, permission_lvl=:permission_lvl, unit_price=:unit_price, quantity_left=:quantity_left, description=:description, availability=:availability WHERE id=:articleID';
         $data_array = array(
@@ -68,6 +111,7 @@ class ShopArticleManager extends Manager {
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
 
+    # TODO: Function not implemented yet
     public function changeArticleAvailability($articleID){
         $is_available = $this->getPost_byID($articleID)['availability'];
         $set_available = $is_available ? 0 : 1;
@@ -117,5 +161,4 @@ class ShopArticleManager extends Manager {
 
         return $return_code;
     }
-
 }
