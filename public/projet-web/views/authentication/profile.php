@@ -4,7 +4,7 @@ $title = 'Profile de ' . $user['username'];
 ob_start();
 ?>
 
-<section class="h4">
+<section class="h5 container border pt-2">
     <div class="row">
         <div class="col">Pseudonyme:</div>
         <div class="col"><?= $user['username']; ?></div>
@@ -40,16 +40,21 @@ ob_start();
         <div class="col"><?= $user['date_birth']; ?></div>
     </div>
     <hr>
-    <!-- <div class="row">
-        <div class="col">Photo de profile:</div>
-        <div class="col"><?= $user['picture']; ?></div>
-    </div> -->
+
+    <div class="text-right pb-2">
+        <a class="btn btn-primary" href="index.php?action=profile_update">Modifier votre profile d'utilisateur</a>
+        <a class="btn btn-secondary" href="index.php?action=password_change">Changer votre mot de passe</a>
+    </div>
 </section>
 
-<div class="text-right pb-2">
-    <a class="btn btn-primary" href="index.php?action=profile_update">Modifier votre profile d'utilisateur</a>
-    <a class="btn btn-secondary" href="index.php?action=password_change">Changer votre mot de passe</a>
-</div>
+<section>
+<?= $userLogs_lastDay; ?>
+<?= $userLogs_lastWeek; ?>
+<?= $userLogs_lastMonth; ?>
+<?= $userLogs_lastYear; ?>
+</section>
+
+
 
 <?php
 $main_section = ob_get_clean();

@@ -23,14 +23,31 @@ use \ProjetWeb\Model\UserLogsManager;
 
 # Static pages
 
+/**
+ * Display homepage
+ *
+ * @return void Display homepage
+ */
 function home(){
     require('views/static/home.php');
 }
 
+/**
+ * Display forbidden page.
+ * 
+ * Shoud appear when a non-user or a user without the required access tries to access to a page one is not allowed to.
+ *
+ * @return void Display de forbidden page.
+ */
 function forbidden(){
     require('views/static/forbidden.php');
 }
 
+/**
+ * Display the not found page when a page or a query wasn't found.
+ *
+ * @return void Display the not found page.
+ */
 function not_found(){
     require('views/static/not_found.php');
 }
@@ -38,6 +55,14 @@ function not_found(){
 
 # Authentication
 
+/**
+ * Display the signin module on each page.
+ * 
+ * A login form is shown if the visitor isn't logged in.
+ * Otherwise, the user displayed name is shown with a role tag if one has a special role.
+ *
+ * @return  void Display the signin bar on the top of each page.
+ */
 function signin(){
     switch ($_SESSION['user_role_lvl']) {
         case 20:
@@ -86,10 +111,19 @@ function profile(){
     }
 
     $userManager = new UserManager();
+    $userLogsManager = new UserLogsManager();
 
     $user = $userManager->getUser_byID($userID);
+    $userLogs_lastDay = $userLogsManager->lastLogs($userID, 1);
+    $userLogs_lastWeek = $userLogsManager->lastLogs($userID, 7);
+    $userLogs_lastMonth = $userLogsManager->lastLogs($userID, 30);
+    $userLogs_lastYear = $userLogsManager->lastLogs($userID, 365);
 
     require('views/authentication/profile.php');
+}
+
+function last_login_logs($userID){
+    
 }
 
 function password_change(){

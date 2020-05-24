@@ -140,7 +140,13 @@ class OrderManager extends Manager {
         );
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
-
+    
+    /**
+     * Flag an order as payed and add the payed date to the current datetime.
+     *
+     * @param   int     $orderID Order's Id
+     * @return  boolean True if the order was corretcly flagged as paid
+     */
     public function payment($orderID){
         $query = 'UPDATE shop_orders SET payed=1, date_payed=NOW() WHERE id=:orderID';
         $data_array = array(

@@ -65,4 +65,27 @@ class UserLogsManager extends Manager {
 
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
+    
+    /**
+     * Calculate the numbe of logs of a specific user for the last specific days
+     *
+     * @param   int $userID Related user's ID
+     * @param   int $nb_days Number of days in range calculation
+     * @return  int Number of logs in this time range.
+     */
+    public function lastLogs($userID, $nb_days){
+        $db = $this->dbConnect();
+
+        $request = $db->prepare('SELECT COUNT(*) FROM user_logs WHERE (userID = :userID) AND (login > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL :nb_days DAY))');
+
+        $request->execute(array(
+            'userID' => $userID,
+            'nb_days' => $nb_days
+        ));
+
+        $nb_logs = $request->fetch();
+        $request->closeCursor();
+
+        return $nb_logs[0];
+    }
 }
