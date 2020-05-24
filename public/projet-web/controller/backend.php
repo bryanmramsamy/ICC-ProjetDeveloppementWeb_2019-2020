@@ -23,6 +23,18 @@ use \ProjetWeb\Model\UserLogsManager;
 
 # Authentication
 
+/**
+ * Log the user in.
+ * 
+ * Check if the credential inputs are valid and safe.
+ * Check if the logged user already exist in the database and if the password hash match with the one stored in the database.
+ * Then assign the sessions variables to the user.
+ * 
+ * Returns error messages acording the the error thrown.
+ * Save a login log in the database if the user successfully logged itself in.
+ *
+ * @return  void Redirect to the homepage, no matter if the user succeed to log itself in or not.
+ */
 function signin_post(){
     if (isset($_POST['username']) && !empty($_POST['username'])
         && isset($_POST['password']) && !empty($_POST['password'])) {
@@ -86,26 +98,24 @@ function register_post(){
                 $cleaned_first_name = (isset($_POST['first_name']) && !empty($_POST['first_name'])) ? $_POST['first_name'] : NULL;
 
                 $userManager = new UserManager();
+                $userLogsManager = new UserLogsManager();
 
                 $creation_succeeded = $userManager->createUser($cleaned_username, $hashed_password, $cleaned_email, $cleaned_last_name, $cleaned_first_name, PERMISSION['user']);
 
                 if ($creation_succeeded) {
                     set_session($userManager->getUser_byUsername($cleaned_username));
+                    $connection_logged = $userLogsManager->login($_SESSION['userID']);
 
-                    $signal_post_userRegister = 'created';
+                    $connection_logged ? $signal_post_userRegister = 'created' : $signal_post_userRegister = 'logged_failed';
                 } else {
                     $signal_post_userRegister = 'failed';
                 }
-
             } else {
                 $signal_post_userRegister = 'passwords_mismatch';
             }
-
         } else {
             $signal_post_userRegister = 'already_exist';
         }
-        
-
     } else {
         $signal_post_userRegister = 'invalid_inputs';
     }
