@@ -340,6 +340,16 @@ function shop_category_create(){
     require('views/shop/category_CreateView.php');
 }
 
+/**
+ * Display a thank you page to the user when one finished to proceed to the payment of its order
+ *
+ * @return void Display the thank you page
+ */
+function thank_you(){
+    $user_display_name = displayed_name($_SESSION['username'], $_SESSION['user_first_name'], $_SESSION['user_last_name']);
+    require('views/shop/thank_you.php');
+}
+
 # Utilities
 
 /**

@@ -602,8 +602,18 @@ function remove_ordered_items_from_available_articles($orderID){
     return $substraction_succeeded_return_code;
 }
 
-function pay_order(){
-    # TODO: Create function
+function payment_post(){
+    checkPermissions('user', true);
+
+    $orderManager = new OrderManager();
+
+    $payment_succeeded = $orderManager->payment($_SESSION['orderID']);
+    if ($payment_succeeded) {
+        $_SESSION['orderID'] = 0;
+        header('Location: index.php?action=thank_you&signal_post_payment=succeeded');
+    } else {
+        header('Location: index.php?action=checkout&signal_post_payment=failed');
+    }
 }
 
 /**

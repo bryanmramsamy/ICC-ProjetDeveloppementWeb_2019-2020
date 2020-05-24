@@ -126,5 +126,7 @@ function clean_GET($value) {
  * @return  void    Display the signal
  */
 function check_signal($signal_message, $alert){
-    if (!empty($signal_message)) echo ("<div class=\"alert alert-$alert\" role=\"alert\">$signal_message</div>");
+    $alert == 'danger' ?  $contact_mail = "<a href=\"mailto:raccoon-city@rpd.com\">Veuillez nous contacter en cliquant sur ce lien pour obtenir assistance</a>" : $contact_mail = "";
+
+    if (!empty($signal_message)) echo ("<div class=\"alert alert-$alert\" role=\"alert\">$signal_message $contact_mail</div>");
 }

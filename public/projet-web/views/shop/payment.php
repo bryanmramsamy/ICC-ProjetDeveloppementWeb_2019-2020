@@ -15,7 +15,7 @@ ob_start();
     </div>
     <hr>
     <div>
-        <a class="col btn btn-success btn-lg btn-block" href="index.php?action=payement_post">Valider le paiement</a>
+        <a class="col btn btn-success btn-lg btn-block" href="index.php?action=payment_post">Valider le paiement</a>
     </div>
 
     <br>

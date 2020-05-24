@@ -6,6 +6,7 @@ require('views/signals/signal_post_articleUpdate.php');
 # Order management signals
 require('views/signals/signal_post_add_to_basket.php');
 require('views/signals/signal_post_order_cancel.php');
+require('views/signals/signal_post_payment.php');
 require('views/signals/signal_post_remove_from_basket.php');
 
 # Post's comments management signals

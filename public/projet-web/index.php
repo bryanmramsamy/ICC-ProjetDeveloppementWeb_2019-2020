@@ -72,6 +72,10 @@ try {
                 payment();
                 break;
 
+            case 'payment_post':
+                payment_post();
+                break;
+
             case 'post':
                 post($page, POSTS_NB_COMMENT_PER_PAGE);
                 break;
@@ -182,6 +186,10 @@ try {
 
             case 'signout':
                 signout();
+                break;
+
+            case 'thank_you':
+                thank_you();
                 break;
 
             default:

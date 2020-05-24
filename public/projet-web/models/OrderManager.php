@@ -141,8 +141,12 @@ class OrderManager extends Manager {
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
 
-    public function payement($orderID){
- 
+    public function payment($orderID){
+        $query = 'UPDATE shop_orders SET payed=1, date_payed=NOW() WHERE id=:orderID';
+        $data_array = array(
+            'orderID' => $orderID
+        );
+        return $this->createUpdateDeleteEntry($query, $data_array);
     }
     
     /**
