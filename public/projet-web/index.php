@@ -29,7 +29,7 @@ try {
                 break;
 
             case 'checkout_post':
-                checkout_post(SHOP_MAXIMUM_ALLOWED_ARTICLE_PER_USER);
+                checkout_post();
                 break;
 
             case 'forbidden':
@@ -66,6 +66,10 @@ try {
 
             case 'password_change_post':
                 password_change_post();
+                break;
+
+            case 'payment':
+                payment();
                 break;
 
             case 'post':

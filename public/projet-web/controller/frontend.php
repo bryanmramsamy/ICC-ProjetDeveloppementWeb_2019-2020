@@ -260,6 +260,23 @@ function checkout(){
     require('views/shop/checkout.php');
 }
 
+/**
+ * Display the payment view where the user validate his payment
+ *
+ * @return void Diplay the payment view
+ */
+function payment(){
+    checkPermissions('user', true);
+
+    $orderManager = new OrderManager();
+
+    $orderTotalPrice = $orderManager->getOrder_byID($_SESSION['orderID'])['total'];
+    $user_display_name = displayed_name($_SESSION['username'], $_SESSION['user_first_name'], $_SESSION['user_last_name']);
+    $cleaned_bank_account = htmlspecialchars($_POST['bank_account']);
+
+    require('views/shop/payment.php');
+}
+
 function shop($page=1, $nb_post_per_page){
     if (isset($_GET['category']) && !empty($_GET['category'])) $category = htmlspecialchars($_GET['category']);
     
