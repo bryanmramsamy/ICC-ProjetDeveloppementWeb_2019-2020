@@ -98,7 +98,7 @@ class ShopArticleManager extends Manager {
     }
     
     /**
-     * Substract the quantity left of an article by a given value
+     * Substract the quantity left of an article by a given value after checking if there is still enough of the requested item left
      *
      * @param   int     $articleID Article's ID
      * @param   int     $quantity_to_substract The quantity to substract from the article
@@ -108,10 +108,14 @@ class ShopArticleManager extends Manager {
         $start_quantity_left = $this->getArticle_byID($articleID)['quantity_left'];
         $end_quantity_left = $start_quantity_left - $quantity_to_substract;
 
-        if ($end_quantity_left >= 0) $response = $this->updateQuantityLeft($articleID, $end_quantity_left);
-        else $response = false;
+        $end_quantity_left >= 0 ? $return_code = 0 : $return_code = 1;
 
-        return $response;
+        if ($return_code == 0){
+            $quantity_succesfully_substracted = $this->updateQuantityLeft($articleID, $end_quantity_left);
+            $quantity_succesfully_substracted ? $return_code = 0 : $return_code = 2;
+        }
+
+        return $return_code;
     }
 
 }

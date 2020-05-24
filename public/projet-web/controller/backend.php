@@ -530,19 +530,27 @@ function checkout_post(){
     $cleaned_address = htmlspecialchars($_POST['delivery_address']);
     $cleaned_zipcode = htmlspecialchars($_POST['zipcode']);
 
-    $orderManager = new OrderManager();
+    $quantity_substraction_return_code = remove_ordered_items_from_available_articles($_SESSION['orderID']);
 
-    $order_succeeded = $orderManager->order($_SESSION['orderID'], $cleaned_bank_account, $cleaned_address, $cleaned_zipcode);
+    switch ($quantity_substraction_return_code) {
+        case 0:
+            $signal_post_checkout = 'success';
+            break;
 
-    if ($order_succeeded) {
-        $quantity_substraction_succeeded = remove_ordered_items_from_available_articles($_SESSION['orderID']);
+        case 1:
+            $signal_post_checkout = 'not_enough_items';
+            break;
 
-        $quantity_substraction_succeeded ? $signal_post_checkout = 'success' : $signal_post_checkout = 'not_enough_articles';
-    } else {
-        $signal_post_checkout = 'failed_order_update';
+        case 2:
+            $signal_post_checkout = 'failed_substraction';
+            break;
     }
 
-    if ($signal_post_checkout = 'success') {
+    if ($signal_post_checkout == 'success') {
+        $orderManager = new OrderManager();
+        $order_succeeded = $orderManager->order($_SESSION['orderID'], $cleaned_bank_account, $cleaned_address, $cleaned_zipcode);
+        $order_succeeded ? $signal_post_checkout = 'success' : $signal_post_checkout = 'failed_order_update';
+
         header('Location: index.php?action=payment&signal_post_checkout=' . $signal_post_checkout);
     } else {
         header('Location: index.php?action=shop&signal_post_checkout=' . $signal_post_checkout);
@@ -560,14 +568,14 @@ function remove_ordered_items_from_available_articles($orderID){
     $shopArticleManager = new ShopArticleManager();
 
     $purchases = $purchaseManager->getAllPurchases_byOrder($orderID);
-    
-    $substraction_succeeded  = true;
-    while ($substraction_succeeded && $purchase = $purchases->fetch()) {
-        $substraction_succeeded = $shopArticleManager->substractQuantity($purchase['articleID'], $purchase['quantity']);
+
+    $substraction_succeeded_return_code = 0;  # 0 if everything is fine; 1 if not enought quantity left; 2 if substraction failed
+    while ($substraction_succeeded_return_code == 0 && $purchase = $purchases->fetch()) {
+        $substraction_succeeded_return_code = $shopArticleManager->substractQuantity($purchase['articleID'], $purchase['quantity']);
     }
     
     $purchases->closeCursor();
-    return $substraction_succeeded;
+    return $substraction_succeeded_return_code;
 }
 
 function pay_order(){
