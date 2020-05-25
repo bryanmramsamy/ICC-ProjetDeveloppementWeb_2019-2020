@@ -8,6 +8,7 @@ require('controller/frontend.php');
 const MINICHAT_NB_MESSAGE_PER_PAGE = 10;
 const POSTS_NB_COMMENT_PER_PAGE = 10;
 const POSTS_NB_POST_PER_PAGE = 10;
+const PROFILE_NB_LAST_COMMENT = 5;
 const SHOP_NB_ARTICLE_PER_PAGE = 10;
 const SHOP_MAXIMUM_ALLOWED_ITEM_PER_USER = 10;
 
@@ -121,7 +122,7 @@ try {
                 break;
 
             case 'profile':
-                profile();
+                profile(PROFILE_NB_LAST_COMMENT);
                 break;
             
             case 'profile_update':

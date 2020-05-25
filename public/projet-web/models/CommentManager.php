@@ -61,4 +61,16 @@ class CommentManager extends Manager {
 
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
+
+    public function getLastComments_ofUser($userID, $offset){
+        $db = $this->dbConnect();
+
+        $request = $db->prepare('SELECT comments.id AS commentID, comments.*, posts.id, posts.title FROM comments INNER JOIN posts ON posts.id = comments.post_id WHERE comments.created_by=:userID ORDER BY date_created DESC LIMIT 0, ' . $offset);
+        $data_array = array(
+            'userID' => $userID
+        );
+        $request->execute($data_array);
+
+        return $request;
+    }
 }

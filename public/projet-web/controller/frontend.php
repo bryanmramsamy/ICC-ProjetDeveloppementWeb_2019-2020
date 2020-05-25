@@ -101,7 +101,7 @@ function register(){
  *
  * @return void Display the user profile
  */
-function profile(){
+function profile($nb_last_comment){
     checkPermissions('user', true);
 
     if (isset($_SESSION['userID']) && !empty($_SESSION['userID'])) $userID = $_SESSION['userID'];
@@ -112,6 +112,7 @@ function profile(){
 
     $userManager = new UserManager();
     $userLogsManager = new UserLogsManager();
+    $commentManager = new CommentManager();
 
     $user = $userManager->getUser_byID($userID);
     $userLogs_lastDay = $userLogsManager->lastLogs($userID, 1);
@@ -123,6 +124,7 @@ function profile(){
     $purchaseManager = new PurchaseManager();
     $user_orders = $orderManager->getAllOrders_ofUser($userID);
     $all_purchases = $purchaseManager->getAllPurchases();
+    $lastComments = $commentManager->getLastComments_ofUser($userID, $nb_last_comment);
 
     require('views/authentication/profile.php');
 }

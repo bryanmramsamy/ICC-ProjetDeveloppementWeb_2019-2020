@@ -27,7 +27,13 @@ class OrderManager extends Manager {
     public function getAllOrders(){
         return $this->getAllEntries($this->db_table);
     }
-
+    
+    /**
+     * Get all the orders of a specific user
+     *
+     * @param   int     $userID Related user's Id
+     * @return  Order[] List of all user's orders made or ongoing
+     */
     public function getAllOrders_ofUser($userID){
         $db = $this->dbConnect();
 

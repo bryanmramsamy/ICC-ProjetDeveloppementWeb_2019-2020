@@ -99,8 +99,24 @@ ob_start();
         </table>
     </section>
 
-    <section>
-        
+    <section class="container border pt-2">
+        <h5>Derniers commentaires:</h5>
+        <?php
+        while ($comment = $lastComments->fetch()) { 
+            if ($comment['is_visible'] || checkPermissions('modo', false)) {
+                $comment_bg_color = $comment['is_visible'] ? "dark" : "danger";
+        ?>
+                <div class="alert alert-<?= $comment_bg_color; ?>">
+                    <h5 class="mb-0"><?= nl2br(htmlspecialchars($comment['comment'])) ?></h5>
+                    <hr>
+                    <p class="mb-0">Envoyé le <em><?= ($comment['date_created']); ?></em> <?php if ($comment['date_edited'] != $comment['date_created']) echo("et édité le <em>" . $comment['date_edited']) . "</em>"; ?><p>
+                    <p class="mb-0">Commentaire écrit sur le billet: <a href="index.php?action=post&postID=<?= $comment['post_id']?>"><?= $comment['title']; ?></a></p>
+
+                    <div class="text-right">
+                        <?php require('views/posts/comment_admin_options.php'); ?>
+                    </div>
+                </div>
+        <?php }} ?>
     </section>
 
 </section>
