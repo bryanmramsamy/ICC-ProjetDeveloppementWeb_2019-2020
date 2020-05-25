@@ -48,10 +48,27 @@ ob_start();
 </section>
 
 <section>
-<?= $userLogs_lastDay; ?>
-<?= $userLogs_lastWeek; ?>
-<?= $userLogs_lastMonth; ?>
-<?= $userLogs_lastYear; ?>
+    <table class="table table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th colspan="4">Nombre de connexion récentes</th>
+            </tr>
+            <tr>
+                <th>Dernières 24 heures</th>
+                <th>Derniere semaine</th>
+                <th>Dernier mois</th>
+                <th>Dernière annéee</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><?= $userLogs_lastDay; ?> connection(s)</td>
+                <td><?= $userLogs_lastWeek; ?> connection(s)</td>
+                <td><?= $userLogs_lastMonth; ?> connection(s)</td>
+                <td><?= $userLogs_lastYear; ?> connection(s)</td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
 
