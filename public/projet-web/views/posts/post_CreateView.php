@@ -1,6 +1,4 @@
 <?php
-checkPermissions('modo', true);
-
 $title = "Création d'un nouveau billet";
 ob_start();
 ?>

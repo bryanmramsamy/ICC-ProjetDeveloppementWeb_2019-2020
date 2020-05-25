@@ -1,9 +1,9 @@
 <?php
-if (checkPermissions('admin', false) || $_SESSION['userID'] == $message['userID']){
+if (checkPermissions('modo', false) || $_SESSION['userID'] == $message['userID']){
     if (isset($message['messageID']) && !empty($message['messageID'])) $messageID = $message['messageID'];
     
     # Publication option
-    if (checkPermissions('admin', false)) {
+    if (checkPermissions('modo', false)) {
         $publish_link = "index.php?action=minichat_publish&messageID=" . $messageID;
 
         if ($message['is_visible']) echo("<a class=\"btn btn-info\" href='" . $publish_link . "'>Cacher le commentaire</a>");

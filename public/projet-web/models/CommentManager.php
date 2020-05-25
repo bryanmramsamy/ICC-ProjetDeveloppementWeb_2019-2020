@@ -65,7 +65,7 @@ class CommentManager extends Manager {
     public function getLastComments_ofUser($userID, $offset){
         $db = $this->dbConnect();
 
-        $request = $db->prepare('SELECT comments.id AS commentID, comments.*, posts.id, posts.title FROM comments INNER JOIN posts ON posts.id = comments.post_id WHERE comments.created_by=:userID ORDER BY date_created DESC LIMIT 0, ' . $offset);
+        $request = $db->prepare('SELECT comments.id AS commentID, comments.*, posts.id, posts.title FROM comments INNER JOIN posts ON posts.id = comments.post_id WHERE comments.created_by=:userID ORDER BY date_edited DESC LIMIT 0, ' . $offset);
         $data_array = array(
             'userID' => $userID
         );

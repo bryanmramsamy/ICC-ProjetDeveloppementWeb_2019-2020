@@ -11,6 +11,7 @@ require('views/signals/signal_post_remove_from_basket.php');
 
 # Post's comments management signals
 require('views/signals/signal_post_commentCreation.php');
+require('views/signals/signal_post_commentUpdate.php');
 require('views/signals/signal_post_commentVisibility.php');
 
 # MiniChat messages management signals

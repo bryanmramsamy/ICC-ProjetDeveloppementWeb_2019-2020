@@ -1,6 +1,4 @@
 <?php
-checkPermissions('admin', true);
-
 $title = "Modification du billet \"" . $post['title'] . "\"";
 ob_start();
 ?>

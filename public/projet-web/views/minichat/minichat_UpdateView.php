@@ -1,8 +1,4 @@
 <?php
-checkPermissions('user', true);
-
-if (!checkPermissions('admin', false) && $_SESSION['userID'] != $message['userID']) header('Location: index.php?action=forbidden');
-
 $title = "Modification du message du MiniChat";
 ob_start();
 ?>

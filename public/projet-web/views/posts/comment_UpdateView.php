@@ -1,8 +1,4 @@
 <?php
-checkPermissions('user', true);
-
-if (!checkPermissions('admin', false) && $_SESSION['userID'] != $comment['created_by']) header('Location: index.php?action=forbidden');
-
 $title = "Modification du commentaire \"" . $comment['title'] . "\"";
 ob_start();
 ?>

@@ -129,10 +129,6 @@ function profile($nb_last_comment){
     require('views/authentication/profile.php');
 }
 
-function last_login_logs($userID){
-    
-}
-
 function password_change(){
     checkPermissions('user', true);
 
@@ -178,6 +174,7 @@ function minichat($page=1, $nb_message_per_page){
 
 function minichat_update(){
     checkPermissions('user', true);
+    if (!checkPermissions('modo', false) && $_SESSION['userID'] != $message['userID']) header('Location: index.php?action=forbidden');
 
     $messageID = clean_messageID();
     check_messageExist($messageID);
@@ -218,13 +215,24 @@ function post($page=1, $nb_comment_per_page){
     require('views/posts/post_DetailView.php');
 }
 
+/**
+ * Display the Post CreateView only for moderators or administrators
+ *
+ * @return void Display the Post CreateView
+ */
 function post_create(){
-    checkPermissions('admin', true);
+    checkPermissions('modo', true);
     require('views/posts/post_CreateView.php');
 }
 
+/**
+ * Display the Post UpdateView.
+ * Only moderators and administrators are allowed on this page.
+ *
+ * @return void Display the Post UpdateView
+ */
 function post_update(){
-    checkPermissions('admin', true);
+    checkPermissions('modo', true);
 
     $postID = clean_postID();
     check_postExist($postID);
@@ -237,7 +245,15 @@ function post_update(){
     require('views/posts/post_UpdateView.php');
 }
 
+/**
+ * Display the Comment UpdateView for moderators and administrators
+ *
+ * @return void Display the Comment UpdateView
+ */
 function post_comment_update(){
+    checkPermissions('user', true);
+    if (!checkPermissions('modo', false) && $_SESSION['userID'] != $comment['created_by']) header('Location: index.php?action=forbidden');
+
     $is_admin = checkPermissions('user', true);
 
     $commentID = clean_commentID();

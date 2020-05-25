@@ -16,7 +16,7 @@ if (checkPermissions('admin', false)){
     require('views/static/pagination.php');
 
     while ($post = $posts->fetch()){
-        if ($post['is_published'] || checkPermissions('admin', false)) {
+        if ($post['is_published'] || checkPermissions('modo', false)) {
             $displayed_name = displayed_name($post['username'], $post['first_name'], $post['last_name']);
             $bg_color = $post['is_published'] ? "primary" : "danger";
     ?>

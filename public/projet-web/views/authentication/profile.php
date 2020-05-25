@@ -77,10 +77,11 @@ ob_start();
         <table class="table table-bordered table-striped">
             <thead class="table-primary">
                 <tr>
-                    <th colspan="4">Liste des commandes effectuées</th>
+                    <th colspan="5">Liste des commandes effectuées</th>
                 </tr>
                 <tr>
                     <th>Numéro de commande</th>
+                    <th>Date de la commande</th>
                     <th>Nombre total d'article</th>
                     <th>Prix total de la commande</th>
                     <th class="text-center"></th>
@@ -90,6 +91,7 @@ ob_start();
                 <tbody>
                     <tr>
                         <td>XXXX-XXXX<?= $order['id']; ?></td>
+                        <td class="text-center"><?= $order['date_ordered']; ?></td>
                         <td class="text-center"><?php echo $orderManager->getNumberItems($order['id']); ?></td>
                         <td class="text-right">€ <?= number_format((float)$order['total'], 2, ',', ''); ?></td>
                         <td class="text-center"><a class="btn-sm btn-block btn-primary" href="index.php?action=order_details&orderID=<?= $order['id']; ?>">Voir la commande</a></td>

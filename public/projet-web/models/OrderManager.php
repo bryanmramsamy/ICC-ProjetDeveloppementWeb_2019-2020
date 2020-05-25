@@ -37,7 +37,7 @@ class OrderManager extends Manager {
     public function getAllOrders_ofUser($userID){
         $db = $this->dbConnect();
 
-        $request = $db->prepare('SELECT * FROM shop_orders WHERE userID=:userID ORDER BY ordered DESC');
+        $request = $db->prepare('SELECT * FROM shop_orders WHERE (userID=:userID) AND (ordered=1) ORDER BY date_ordered DESC');
         $data_array = array(
             'userID' => $userID,
         );
