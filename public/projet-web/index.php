@@ -61,6 +61,10 @@ try {
                 minichat_publish();
                 break;
 
+            case 'order_details':
+                order_details();
+                break;
+
             case 'password_change':
                 password_change();
                 break;

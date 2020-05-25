@@ -320,6 +320,33 @@ function checkout(){
 }
 
 /**
+ * Display Order DetailView with all the purchases of the order
+ *
+ * @return void Display the Order DetailView
+ */
+function order_details(){
+    checkPermissions('user', true);
+
+    $orderID = clean_GET('orderID');
+
+    $orderManager = new OrderManager();
+    $order = $orderManager->getOrder_byID($orderID);
+
+    if (checkPermissions('modo', false) || ($order['userID'] == $_SESSION['userID'])){
+    $userManager = new UserManager();
+    $purchaseManager = new PurchaseManager();
+
+    $user = $userManager->getUser_byID($order['userID']);
+    $number_items = $orderManager->getNumberItems($orderID);
+    $purchases = $purchaseManager->getAllPurchases_byOrder($orderID);
+
+    require('views/shop/order_details.php');
+    } else {
+        header('Location: index.php?action=forbidden');
+    }
+}
+
+/**
  * Display the payment view where the user validate his payment
  *
  * @return void Diplay the payment view
