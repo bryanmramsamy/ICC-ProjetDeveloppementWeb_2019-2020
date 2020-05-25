@@ -111,12 +111,20 @@ class ShopArticleManager extends Manager {
         return $this->createUpdateDeleteEntry($query, $data_array);
     }
 
-    # TODO: Function not implemented yet
+    
+    /**
+     * Change the item availability status.
+     * 
+     * Flag an avalalible item as unavailable and otherwise.
+     *
+     * @param   int     $articleID Item's ID
+     * @return  boolean True if the item availablity was correctly updated
+     */
     public function changeArticleAvailability($articleID){
-        $is_available = $this->getPost_byID($articleID)['availability'];
+        $is_available = $this->getArticle_byID($articleID)['availability'];
         $set_available = $is_available ? 0 : 1;
 
-        $query = 'UPDATE article SET availability=:set_available WHERE id=:articleID';
+        $query = 'UPDATE shop_article SET availability=:set_available WHERE id=:articleID';
         $data_array = array(
             'articleID' => $articleID,
             'set_available' => $set_available

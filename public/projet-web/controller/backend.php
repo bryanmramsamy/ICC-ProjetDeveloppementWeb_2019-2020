@@ -23,6 +23,11 @@ use \ProjetWeb\Model\UserLogsManager;
 
 # Administration
 
+/**
+ * Change the user activation status
+ *
+ * @return void Redirect to the User ListView after the user status update
+ */
 function user_activation(){
     checkPermissions('modo', true);
     $userID = clean_GET('userID');
@@ -531,6 +536,26 @@ function shop_add_to_basket_post($max_item_allowed){
     }
 
     header('Location: index.php?action=shop&signal_post_add_to_basket=' . $signal_post_add_to_basket);
+}
+
+function shop_article_change_availability(){
+    checkPermissions('modo', true);
+
+    $articleID = clean_GET('articleID');
+
+    $articleManager = new ShopArticleManager();
+    $article = $articleManager->getArticle_byID($articleID);
+
+    if (!empty($article['id'])) {
+        $article_availability_change_succeeded = $articleManager->changeArticleAvailability($articleID);
+        $article_availability_change_succeeded
+            ? $signal_post_articleChangeAvailability = 'succeeded'
+            : $signal_post_articleChangeAvailability = 'failed';
+    } else {
+        $signal_post_articleChangeAvailability = 'not_found';
+    }
+
+    header('Location: index.php?action=shop&signal_post_articleChangeAvailability=' . $signal_post_articleChangeAvailability);
 }
 
 /**

@@ -173,6 +173,10 @@ try {
                 shop_article_create_post();
                 break;
 
+            case 'shop_article_change_availability':
+                shop_article_change_availability();
+                break;
+
             case 'shop_article_update':
                 shop_article_update();
                 break;

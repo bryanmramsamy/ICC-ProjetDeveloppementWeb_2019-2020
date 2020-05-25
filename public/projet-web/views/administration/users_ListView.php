@@ -28,7 +28,7 @@ ob_start();
                 <td><?= permission_verbose($user['role_lvl']);; ?></td>
                 <td class="text-center"><?= $user['register_date']; ?></td>
                 <td class="text-center">
-                    <a class="btn-sm btn-block btn-primary" href="index.php?action=profile&userID=<?= $user['id']; ?>">Voir profile</a>
+                    <a class="btn-sm btn-block btn-info" href="index.php?action=profile&userID=<?= $user['id']; ?>">Voir profile</a>
                 </td>
                 <td class="text-center">
                     <a class="btn-sm btn-block btn-<?php if ($user['active']) echo("danger"); else echo("success"); ?>" href="index.php?action=user_activation&userID=<?= $user['id']; ?>">
