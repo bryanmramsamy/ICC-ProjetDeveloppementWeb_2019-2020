@@ -23,7 +23,7 @@ ob_start();
                     <td>XXXX-XXXX<?= $order['id']; ?></td>
                     <td><?= $order['date_ordered']; ?></td>
                     <td><?= $order['date_payed'] ?></td>
-                    <td><?= displayed_name($user['username'], $user['first_name'], $_user['last_name']) ?></td>
+                    <td><?= displayed_name($user['username'], $user['first_name'], $user['last_name']) ?></td>
                     <td><?= $number_items ?></td>
                     <td>€ <?= number_format((float)$order['total'], 2, ',', ''); ?></td>
                     <td><?= $order['bank_account']; ?></td>
@@ -56,8 +56,8 @@ ob_start();
     </table>
 
     <br>
-    <div>
-        <a class="btn btn-secondary" href="index.php?action=profile">Modifier votre panier</a>
+    <div class="text-right">
+        <a class="btn btn-secondary" href="index.php?action=profile&userID=<?= $user['id']; ?>#users_orders">Retourner voir les commandes de <?= displayed_name($user['username'], $user['first_name'], $user['last_name']) ?></a>
     </div>
 
 

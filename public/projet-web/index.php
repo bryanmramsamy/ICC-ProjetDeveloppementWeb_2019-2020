@@ -17,6 +17,10 @@ try {
 
     if (isset($_GET['action']) && !empty($_GET['action'])) {
         switch ($_GET['action']) {
+            case 'admin':
+                admin();
+                break;
+
             case 'basket':
                 basket();
                 break;
@@ -181,10 +185,6 @@ try {
                 shop_category_create();
                 break;
 
-            // case 'signin':
-            //     signin();
-            //     break;
-
             case 'signin_post':
                 signin_post();
                 break;
@@ -195,6 +195,10 @@ try {
 
             case 'thank_you':
                 thank_you();
+                break;
+
+            case 'user_activation':
+                user_activation();
                 break;
 
             default:

@@ -53,6 +53,18 @@ function not_found(){
 }
 
 
+# Administration
+
+function admin(){
+    checkPermissions('modo', true);
+
+    $userManager = new UserManager();
+    $allUsers = $userManager->getAllUsers();
+
+    require('views/administration/users_ListView.php');
+}
+
+
 # Authentication
 
 /**
@@ -466,6 +478,32 @@ function displayed_name($username, $first_name=null, $last_name=null){
     }
 
     return $displayed_name;
+}
+
+function permission_verbose($permission_lvl){
+    switch ($permission_lvl) {
+        case 10:
+            $permission_verbose_name = 'Membre';
+            break;
+
+        case 20:
+            $permission_verbose_name = 'Premium';
+            break;
+
+        case 30:
+            $permission_verbose_name = 'V.I.P.';
+            break;
+        
+        case 40:
+            $permission_verbose_name = 'Modérateur';
+            break;
+
+        case 50:
+            $permission_verbose_name = 'Administrateur';
+            break;
+    }
+
+    return $permission_verbose_name;
 }
 
 /**

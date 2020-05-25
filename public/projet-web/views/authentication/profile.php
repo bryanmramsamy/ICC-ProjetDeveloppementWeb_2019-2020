@@ -4,9 +4,9 @@ $title = 'Profile de ' . $user['username'];
 ob_start();
 ?>
 
-<section class="container border pb-3">
-    <br>
-    <section class="h5 container border pt-3">
+<section class="container border">
+    <h1>Profile de <?= displayed_name($user['username'], $user['first_name'], $user['last_name']);?></h1>
+    <section class="h5 container border">
         <div class="row">
             <div class="col">Pseudonyme:</div>
             <div class="col"><?= $user['username']; ?></div>
@@ -43,10 +43,21 @@ ob_start();
         </div>
         <hr>
 
-        <div class="text-right pb-2">
-            <a class="btn btn-primary" href="index.php?action=profile_update">Modifier votre profile d'utilisateur</a>
-            <a class="btn btn-secondary" href="index.php?action=password_change">Changer votre mot de passe</a>
-        </div>
+        <?php if ($user['id'] == $_SESSION['userID']) { ?>
+            <div class="text-right pb-2">
+                <a class="btn btn-primary" href="index.php?action=profile_update">Modifier votre profile d'utilisateur</a>
+                <a class="btn btn-secondary" href="index.php?action=password_change">Changer votre mot de passe</a>
+            </div>
+        <?php
+        } else if (checkPermissions('modo', false)) {
+        $user['active']
+            ? $activation_button = "<a class=\"btn btn-danger\" href=\"index.php?action=user_activation&userID=" . $user['id'] . "\">Désactiver le compte de l'utilisateur</a>"
+            : $activation_button = "<a class=\"btn btn-success\" href=\"index.php?action=user_activation&userID=" . $user['id'] . "\">Activer le compte de l'utilisateur</a>" ;
+        ?>
+            <div class="text-right pb-2">
+                <?= $activation_button; ?>
+            </div>
+        <?php } ?>
     </section>
 
     <section>
@@ -73,7 +84,7 @@ ob_start();
         </table>
     </section>
 
-    <section>
+    <section id="users_orders">
         <table class="table table-bordered table-striped">
             <thead class="table-primary">
                 <tr>

@@ -21,6 +21,31 @@ use \ProjetWeb\Model\UserManager;
 use \ProjetWeb\Model\UserLogsManager;
 
 
+# Administration
+
+function user_activation(){
+    checkPermissions('modo', true);
+    $userID = clean_GET('userID');
+
+    $userManager = new UserManager();
+    
+    $user = $userManager->getUser_byID($userID);
+
+    if (!empty($user['id'])) {
+        if ($user['active']) {
+            $activationStateSwitch = $userManager->deactivateUser($userID);
+        } else {
+            $activationStateSwitch = $userManager->activateUser($userID);
+        }
+        $activationStateSwitch ? $signal_post_user_activationStateSwitch = 'succeeded' : $signal_post_user_activationStateSwitch = 'failed';
+    } else {
+        $signal_post_user_activationStateSwitch = 'not_found';
+    }
+
+    header('Location: index.php?action=admin&signal_post_user_activationStateSwitch=' . $signal_post_user_activationStateSwitch);
+}
+
+
 # Authentication
 
 /**

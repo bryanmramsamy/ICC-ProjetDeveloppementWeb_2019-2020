@@ -1,4 +1,7 @@
 <?php
+# Administration management signals
+require('views/signals/signal_post_user_activationStateSwitch.php');
+
 # Article management signals
 require('views/signals/signal_post_articleCreation.php');
 require('views/signals/signal_post_articleUpdate.php');
