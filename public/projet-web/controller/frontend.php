@@ -97,17 +97,21 @@ function register(){
 }
 
 /**
- * Display a user profile to the user itself, or to a moderator or an administrator.
+ * Display a user profile of the current user, or a specific user.
+ * 
+ * Only moderators and administrators are allowed to see other user's profile.
+ * Otherwise, the current user's profile will be shown.
  *
  * @return void Display the user profile
  */
 function profile($nb_last_comment){
     checkPermissions('user', true);
 
-    if (isset($_SESSION['userID']) && !empty($_SESSION['userID'])) $userID = $_SESSION['userID'];
-    else if (checkPermissions('modo', false)) {
-        $userID = clean_userID();
+    if (checkPermissions('modo', false) && isset($_GET['userID']) && !empty($_GET['userID'])) {
+        $userID = htmlspecialchars($_GET['userID']);
         check_userExist($userID);
+    } else {
+        $userID = $_SESSION['userID'];
     }
 
     $userManager = new UserManager();
