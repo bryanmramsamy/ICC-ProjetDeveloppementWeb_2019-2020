@@ -119,6 +119,11 @@ function profile(){
     $userLogs_lastMonth = $userLogsManager->lastLogs($userID, 30);
     $userLogs_lastYear = $userLogsManager->lastLogs($userID, 365);
 
+    $orderManager = new OrderManager();
+    $purchaseManager = new PurchaseManager();
+    $user_orders = $orderManager->getAllOrders_ofUser($userID);
+    $all_purchases = $purchaseManager->getAllPurchases();
+
     require('views/authentication/profile.php');
 }
 
